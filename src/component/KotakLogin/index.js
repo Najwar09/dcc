@@ -8,7 +8,6 @@ import {
     TouchableOpacity,
 } from 'react-native';
 // import Modal from 'react-native-modal';
-import { widthPercentageToDP as w, heightPercentageToDP as h } from '../../../responsive';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const KotakLogin = () => {
