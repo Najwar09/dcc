@@ -1,190 +1,114 @@
-// import React, { useState, useEffect } from 'react';
-// import {
-//     StyleSheet,
-//     Text,
-//     View,
-//     Image,
-//     TouchableOpacity,
-//     ScrollView,
-//     Dimensions,
-// } from 'react-native';
-// import Swiper from 'react-native-swiper';
-// import StickyHeader from '../../component/Header/index';
-// import LinearGradient from 'react-native-linear-gradient';
-// import { useNavigation } from '@react-navigation/native';
-// import satu from '../../assets/images/satu.jpg';
-// import tiga from '../../assets/images/tiga.jpg';
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, ScrollView, Image } from 'react-native'
+import React from 'react'
+import StickyHeader from '../../component/Header'
+import Swiper from 'react-native-swiper';
+import ImageSwapper from '../../component/ImageSwapper';
+import { widthPercentageToDP as w, heightPercentageToDP as h } from '../../../responsive';
+// gambar
+import Treasure from '../../assets/icons/uang.png';
+import Secretary from '../../assets/icons/surat.png';
+import Members from '../../assets/icons/anggota.png';
+import Schedule from '../../assets/icons/skejul.png';
+import Absen from '../../assets/icons/absensi.png';
+import Organization from '../../assets/icons/organisasi.png';
+import Kepanitiaan from '../../assets/icons/panitia.png';
+import Another from '../../assets/icons/lain.png';
+import Content from '../../assets/images/konten.png';
 
-// const gambar = [satu, tiga];
+const Artikel = () => {
+    return (
+        <TouchableOpacity style={{marginRight: w(5),borderRadius: w(5),width: w('58%'), height: h('16.4%'),marginTop: w(5),}}>
+            <View style={{ width: w('58%'), height: h('16.4%'), borderRadius: w(5)}}>
+                <Image source={Content} style={{ resizeMode: 'cover', width: w(58), height: w(33.1),borderRadius: w(5)}} />
+            </View>
+        </TouchableOpacity>
+    )
+}
 
-// const Home = () => {
+
+const Home = () => {
+    return (
+        <View style={{ flex: 1, }}>
+            <StickyHeader name="Muh. Najwar Ramadhan" />
+
+            <View style={{ alignItems: 'center', }}>
+                <ImageSwapper />
+            </View>
+
+            <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: w(5), }}>
+                <Text style={{ fontWeight: 'bold', fontSize: w(4), color: 'black' }}>Kategori</Text>
+                <Text style={{ fontWeight: 'bold', fontSize: w(4), color: 'black' }}>More >></Text>
+            </View>
+
+            {/* Menu */}
+            <View>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginVertical: w(5), }}>
+                    <TouchableOpacity>
+                        <Image source={Treasure} style={styles.menu} />
+                        <Text style={styles.text}>Treasure</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Image source={Secretary} style={styles.menu} />
+                        <Text style={styles.text}>Secretary</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Image source={Members} style={styles.menu} />
+                        <Text style={styles.text}>Members</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Image source={Schedule} style={styles.menu} />
+                        <Text style={styles.text}>Schdule</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={{ flexDirection: 'row', justifyContent: 'space-around', }}>
+                    <TouchableOpacity>
+                        <Image source={Absen} style={styles.menu} />
+                        <Text style={styles.text}>Absen</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Image source={Organization} style={styles.menu} />
+                        <Text style={styles.text}>Organization</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Image source={Kepanitiaan} style={styles.menu} />
+                        <Text style={styles.text}>Committee</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Image source={Another} style={styles.menu} />
+                        <Text style={styles.text}>Other</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+            {/* end menu */}
+
+            <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: w(5), }}>
+                <Text style={{ fontWeight: 'bold', fontSize: w(4), color: 'black' }}>Latest Post</Text>
+                <Text style={{ fontWeight: 'bold', fontSize: w(4), color: 'black' }}>More >></Text>
+            </View>
+
+            {/* artikel */}
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                <Artikel />
+                <Artikel />
+                <Artikel />
+                <Artikel />
+            </ScrollView>
+            {/* end artikel */}
 
 
-//     const [currentIndex, setCurrentIndex] = useState(0);
+        </View>
+    )
+}
 
-//     useEffect(() => {
-//         const intervalId = setInterval(() => {
-//             const nextIndex = (currentIndex + 1) % gambar.length;
-//             setCurrentIndex(nextIndex);
-//         }, 2000);
-//         return () => clearInterval(intervalId);
-//     }, [currentIndex]);
+export default Home
 
-//     return (
-//         <View style={styles.container}>
-//             <LinearGradient
-//                 style={{ flex: 1, width: '100%' }}
-//                 colors={['white', '#d4f0fe']}
-//                 start={{ x: 0, y: 0 }}
-//                 end={{ x: 0, y: 1 }}>
-
-//                 {/* KOMPONEN HEADER */}
-//                 <StickyHeader title={'Muh. Najwar Ramadhan'} />
-//                 {/* AKHIR KOMPONEN HEADER */}
-
-//                 <ScrollView
-//                     style={{
-//                         width: '100%',
-//                     }}>
-//                     <View style={styles.container}>
-//                         <Image
-//                             source={gambar[currentIndex]}
-//                             style={{
-//                                 marginTop: 10,
-//                                 borderRadius: 20,
-//                                 resizeMode: 'cover',
-//                             }}
-//                         />
-
-//                         <View style={styles.menu}>
-//                             <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Kategori</Text>
-//                         </View>
-//                         <View
-//                             style={{
-//                                 flexDirection: 'row',
-//                                 justifyContent: 'space-between',
-//                                 width: '80%',
-//                                 paddingTop: 20,
-//                             }}>
-//                             <TouchableOpacity style={{ alignItems: 'center' }}>
-//                                 <Image source={uang} style={styles.fitur} />
-//                                 <Text style={styles.teks}>Treasurer</Text>
-//                             </TouchableOpacity>
-//                             <TouchableOpacity style={{ alignItems: 'center' }}>
-//                                 <Image source={surat} style={styles.fitur} />
-//                                 <Text style={styles.teks}>Secretary</Text>
-//                             </TouchableOpacity>
-//                             <TouchableOpacity
-//                                 style={{ alignItems: 'center' }}
-//                                 onPress={menuanggota}>
-//                                 <Image source={anggota} style={styles.fitur} />
-//                                 <Text style={styles.teks}>Member</Text>
-//                             </TouchableOpacity>
-//                             <TouchableOpacity style={{ alignItems: 'center' }}>
-//                                 <Image source={skejul} style={styles.fitur} />
-//                                 <Text style={styles.teks}>Schejuled</Text>
-//                             </TouchableOpacity>
-//                         </View>
-//                         <View
-//                             style={{
-//                                 flexDirection: 'row',
-//                                 justifyContent: 'space-between',
-//                                 width: '80%',
-//                                 paddingTop: 20,
-//                             }}>
-//                             <TouchableOpacity style={{ alignItems: 'center' }}>
-//                                 <Image source={absensi} style={styles.fitur} />
-//                                 <Text style={styles.teks}>Presence</Text>
-//                             </TouchableOpacity>
-//                             <TouchableOpacity style={{ alignItems: 'center' }}>
-//                                 <Image source={organisasi} style={styles.fitur} />
-//                                 <Text style={styles.teks}>Organization</Text>
-//                             </TouchableOpacity>
-//                             <TouchableOpacity
-//                                 style={{ alignItems: 'center' }}
-//                                 onPress={menukepanitiaan}>
-//                                 <Image source={panitia} style={styles.fitur} />
-//                                 <Text style={styles.teks}>Committee</Text>
-//                             </TouchableOpacity>
-//                             <TouchableOpacity style={{ alignItems: 'center' }}>
-//                                 <Image source={lain} style={styles.fitur} />
-//                                 <Text style={styles.teks}>More</Text>
-//                             </TouchableOpacity>
-//                         </View>
-
-//                         <View style={styles.menu}>
-//                             <Text style={{ fontWeight: 'bold', fontSize: 18, color: 'black' }}>
-//                                 Latest Post
-//                             </Text>
-//                             <TouchableOpacity>
-//                                 <Text style={{ fontSize: 15 }}>More</Text>
-//                             </TouchableOpacity>
-//                         </View>
-//                         <ScrollView
-//                             horizontal={true}
-//                             style={{ flexDirection: 'row', paddingVertical: 20 }}>
-//                             <Image
-//                                 source={konten}
-//                                 style={{
-//                                     width: 250,
-//                                     height: 150,
-//                                     marginHorizontal: 15,
-//                                     borderRadius: 20,
-//                                 }}
-//                             />
-//                             <Image
-//                                 source={konten}
-//                                 style={{
-//                                     width: 250,
-//                                     height: 150,
-//                                     marginHorizontal: 15,
-//                                     borderRadius: 20,
-//                                 }}
-//                             />
-//                             <Image
-//                                 source={konten}
-//                                 style={{
-//                                     width: 250,
-//                                     height: 150,
-//                                     marginHorizontal: 15,
-//                                     borderRadius: 20,
-//                                 }}
-//                             />
-//                         </ScrollView>
-//                     </View>
-//                 </ScrollView>
-//             </LinearGradient>
-//         </View>
-//     );
-// };
-
-// export default Home;
-
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         // justifyContent: 'center',
-//         alignItems: 'center',
-//     },
-//     foto: {
-//         marginTop: 10,
-//         borderRadius: 20,
-//         resizeMode: 'cover',
-//     },
-//     menu: {
-//         width: '100%',
-//         flexDirection: 'row',
-//         // backgroundColor: 'red',
-//         justifyContent: 'space-between',
-//         marginTop: 30,
-//         paddingHorizontal: 40,
-//         alignItems: 'center',
-//     },
-//     fitur: {
-//         width: 40,
-//         height: 40,
-//     },
-//     teks: {
-//         color: 'black',
-//     },
-// });
+const styles = StyleSheet.create({
+    menu: {
+        width: w(13),
+        height: w(13),
+    },
+    text: {
+        textAlign: 'center',
+    }
+})

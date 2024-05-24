@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     Dimensions,
     StyleSheet,
@@ -7,10 +7,31 @@ import {
     TextInput,
     TouchableOpacity,
 } from 'react-native';
-// import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
 
 const KotakLogin = () => {
+    
+    const [Username, setUsername] = useState("");
+    const [PassWord, setPassWord] = useState("");
+
+    const [hide,setHide] = useState(true);
+
+    const navigation = useNavigation();
+    
+    // handle logic login ke mainscreen
+    const HandleLogin = () => {
+        if (Username === "A" && PassWord === "A") {
+            navigation.replace('MainScreen');
+        } else {
+            alert('Invalid Username or Password');
+        }
+    };
+    // end handle logic login ke mainscreen
+
+
+
+
     return (
         <View style={styles.container}>
             <Text
@@ -33,6 +54,7 @@ const KotakLogin = () => {
                     onChangeText={text => setUsername(text)}
                 />
             </View>
+
             <View style={{ flexDirection: 'row', marginBottom: 20 }}>
                 <View style={styles.bulat}>
                     <Icon name="lock-closed-outline" size={30} color="#4F8EF7" />
@@ -40,18 +62,24 @@ const KotakLogin = () => {
                 <TextInput
                     style={styles.input}
                     placeholder="Password"
-                    onChangeText={text => setPassword(text)}
+                    onChangeText={text => setPassWord(text)}
+                    secureTextEntry = {hide}
                 />
+
                 <TouchableOpacity
+                onPress={() => setHide(!hide)}
                     style={styles.hide}>
-                    <Icon name="eye-outline" size={30} color="#4F8EF7" />
+                    <Icon name={hide ? 'eye-outline' : 'eye-off-outline'}  size={30} color="#4F8EF7" />
                     {/* <Text>{showPassword ? 'Hide Password' : 'Show Password'}</Text> */}
                 </TouchableOpacity>
+
             </View>
+
             <TouchableOpacity style={{ marginLeft: 110, marginBottom: 20 }}>
-                <Text style={{ color: '#00A9FF' }}>Forget Password ?</Text>
+                <Text style={{ color: '#00A9FF' }}>Forget Password?</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.loginButton}>
+
+            <TouchableOpacity style={styles.loginButton} onPress={HandleLogin}>
                 <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
         </View>
@@ -59,7 +87,6 @@ const KotakLogin = () => {
 };
 
 export default KotakLogin;
-
 
 const tinggi = Dimensions.get('window').height;
 const lebar = Dimensions.get('window').width;
@@ -78,7 +105,6 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.5,
         shadowRadius: 12.35,
-
         elevation: 19,
         marginTop: -tinggi * 0.04,
     },
@@ -90,7 +116,6 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.48,
         shadowRadius: 11.95,
-
         elevation: 18,
         backgroundColor: 'white',
         borderRadius: 10,
@@ -115,7 +140,6 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.48,
         shadowRadius: 11.95,
-
         elevation: 18,
     },
     hide: {
@@ -124,14 +148,6 @@ const styles = StyleSheet.create({
         marginLeft: -lebar * 0.07,
         position: 'relative',
         zIndex: 1,
-    },
-    orang: {
-        width: 30,
-        height: 30,
-    },
-    kunci: {
-        width: 18,
-        height: 23,
     },
     loginButton: {
         backgroundColor: '#00A9FF',
