@@ -20,7 +20,8 @@ const Splash = ({ navigation }) => {
                 end={{ x: 0, y: 1.3 }}>
                 <Image source={LogoDcc} style={styles.logo} />
                 <Text style={styles.teks}>DIPANEGARA COMPUTER CLUB</Text>
-                <ActivityIndicator size={'large'} style={{marginTop: 100,}}/>
+                <ActivityIndicator size={'large'} style={{ marginTop: 100, }} />
+                <Text style={{ textAlign: 'center' }}>Create By Najwar</Text>
             </LinearGradient>
         </View>
     );

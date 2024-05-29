@@ -8,29 +8,16 @@ import Splash from '../pages/Splash';
 import Login from '../pages/Login';
 import Home from '../pages/Home';
 import Article from '../pages/Article';
+import Activity from '../pages/Activity';
+import Profile from '../pages/Profile';
 
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!</Text>
-    </View>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
 
 const Tab = createBottomTabNavigator();
 const MainScreen = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        headerShown:false,
+        headerShown: false,
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
@@ -38,8 +25,11 @@ const MainScreen = () => {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Article') {
             iconName = focused ? 'newspaper' : 'newspaper-outline';
+          } else if (route.name === 'Activity') {
+            iconName = focused ? 'compass' : 'compass-outline';
+          }else if (route.name === 'Profile') {
+            iconName = focused ? 'person-circle' : 'person-circle-outline';
           }
-
           // Anda bisa mengembalikan komponen Icon di sini
           return <Icon name={iconName} size={size} color={color} />;
         },
@@ -47,8 +37,10 @@ const MainScreen = () => {
         tabBarInactiveTintColor: 'gray',
       })}
     >
-      <Tab.Screen name="Home" component={Home} />
+      {/* <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Article" component={Article} />
+      <Tab.Screen name="Activity" component={Activity} /> */}
+      <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   )
 }
