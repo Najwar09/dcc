@@ -4,6 +4,7 @@ import StickyHeader from '../../component/Header'
 import Swiper from 'react-native-swiper';
 import ImageSwapper from '../../component/ImageSwapper';
 import { widthPercentageToDP as w, heightPercentageToDP as h } from '../../../responsive';
+import { useNavigation } from '@react-navigation/native';
 // gambar
 import Treasure from '../../assets/icons/uang.png';
 import Secretary from '../../assets/icons/surat.png';
@@ -14,6 +15,7 @@ import Organization from '../../assets/icons/organisasi.png';
 import Kepanitiaan from '../../assets/icons/panitia.png';
 import Another from '../../assets/icons/lain.png';
 import Content from '../../assets/images/konten.png';
+import Quiz from '../Quiz';
 
 const Artikel = () => {
     return (
@@ -26,6 +28,7 @@ const Artikel = () => {
 }
 
 const Home = () => {
+    const navigation = useNavigation();
     return (
         <View style={{ flex: 1 }}>
             <StickyHeader name="Muh. Najwar Ramadhan" />
@@ -73,9 +76,9 @@ const Home = () => {
                         <Image source={Kepanitiaan} style={styles.menu} />
                         <Text style={styles.text}>Committee</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.box}>
+                    <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Quiz')}>
                         <Image source={Another} style={styles.menu} />
-                        <Text style={styles.text}>Other</Text>
+                        <Text style={styles.text}>Quiz</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -134,7 +137,7 @@ const styles = StyleSheet.create({
         width: w('58%'),
         height: h('16.4%'),
         borderRadius: w(5),
-        overflow: 'hidden', 
+        overflow: 'hidden',
     },
     image: {
         resizeMode: 'cover',

@@ -26,7 +26,11 @@ const Login = () => {
                         <Image source={require('../../assets/icons/logo.png')} style={styles.logo} />
                         <Text style={styles.teks}>Welcome !</Text>
                     </LinearGradient>
+
+
+                    {/* login card */}
                     <KotakLogin/>
+                    {/* end login card */}
 
                     {/* login fb dan google */}
                     <View>
