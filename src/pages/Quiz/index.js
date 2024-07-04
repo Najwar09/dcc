@@ -1,13 +1,13 @@
 import React from 'react';
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import bg from '../../assets/images/bg.jpg';
 
-const Quiz = ({ route }) => {
-    
+const Quiz = () => {
+    const root = useRoute();
     const navigation = useNavigation();
-    const { lastscore } = route.params;
-    // Pastikan Anda mengambil lastscore dari route.params, bukan route.params.Quiz
+    const lastscore = root.params?.lastscore;
+    // console.log(lastscore);
     return (
         <ImageBackground
             source={bg}
@@ -17,7 +17,7 @@ const Quiz = ({ route }) => {
             <TouchableOpacity style={styles.overlay} onPress={() => navigation.navigate('Question')}>
                 <Text style={styles.text}>PLAY</Text>
             </TouchableOpacity>
-            {/* <Text>{lastscore}</Text> */}
+            <Text style={{fontSize:30}}>Score Anda : {lastscore}</Text>
         </ImageBackground>
     );
 };

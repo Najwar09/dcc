@@ -1,44 +1,45 @@
 // StickyHeader.js
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { widthPercentageToDP as w } from '../../../responsive';
 
-const StickyHeader = (props) => {
+const StickyHeader = ({ name }) => {
     return (
         <View style={styles.header}>
             <View>
-                <Text style={{ fontWeight: 'bold', fontSize: 25, color: 'black' }}>
-                    Hello!
-                </Text>
-                <Text style={{ fontSize: 15 }}>{props.name}</Text>
+                <Text style={styles.greeting}>Hello!</Text>
+                <Text style={styles.name}>{name}</Text>
             </View>
 
-            {/* icon notif */}
+            {/* Icon Notification */}
             <TouchableOpacity>
-                <Icon name="build" color="#3b5998" size={w(10)} />
+                <Icon name="notifications-outline" color="#3b5998" size={w(7)} />
             </TouchableOpacity>
-            {/* end icon notif */}
-
+            {/* End Icon Notification */}
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     header: {
-        paddingHorizontal: 20,
-        padding: 10,
-        position: 'relative',
-        // marginTop: 25,
+        paddingHorizontal: w(5),
+        paddingVertical: w(3),
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        // paddingTop: 20,
-        // backgroundColor: 'red',
+        backgroundColor: '#fff',
+        borderBottomWidth: 1,
+        borderBottomColor: '#e0e0e0',
     },
-    title: {
-        fontSize: 20,
+    greeting: {
         fontWeight: 'bold',
+        fontSize: w(5),
+        color: 'black',
+    },
+    name: {
+        fontSize: w(4),
+        color: '#555',
     },
 });
 

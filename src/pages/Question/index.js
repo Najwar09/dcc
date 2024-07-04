@@ -11,39 +11,38 @@ const Question = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [score, setScore] = useState(0);
-    const [timeRemaining, setTimeRemaining] = useState(10); // Waktu pengerjaan dalam detik
+    const [timeRemaining, setTimeRemaining] = useState(5); 
 
-    // Mengambil 5 soal secara acak saat komponen dimuat
+    // mengacak soal array dan simpan ke variabel question pada saat render pertama kali
     useEffect(() => {
         const shuffledQuestions = shuffleArray(quizData.it_questions).slice(0, 5);
         setQuestions(shuffledQuestions);
     }, []);
 
-    // Timer untuk menghitung mundur waktu pengerjaan
+    // timer hitung mundur dan setelah waktu habis maka navigasi ke quiz dan kirim params score
     useEffect(() => {
         const timer = setTimeout(() => {
             if (timeRemaining > 0) {
                 setTimeRemaining(timeRemaining - 1);
             } else {
-                // Logika jika waktu habis, misalnya menampilkan hasil atau navigasi ke halaman lain
                 Alert.alert(
                     'Waktu Habis!',
                     'Anda telah menyelesaikan quiz.',
                     [
                       {
                         text: 'OK',
-                        onPress: () => navigation.navigate('Quiz', { lastscore: 90 }),// Ganti 'DestinationScreen' dengan nama screen tujuan
+                        onPress: () => navigation.replace('Quiz', { lastscore: score }),// Ganti 'DestinationScreen' dengan nama screen tujuan
                       },
                     ],
                     { cancelable: false }
                   );
-                console.log(score);
             }
         }, 1000);
 
-        // Membersihkan timer saat komponen dibongkar
+
         return () => clearTimeout(timer);
     }, [timeRemaining]);
+    
 
     const handleAnswerSelect = (index) => {
         setSelectedAnswer(index);
@@ -51,31 +50,25 @@ const Question = () => {
 
     const handleNextQuestion = () => {
         if (selectedAnswer !== null) {
-            // Menambah skor jika jawaban benar
             if (questions[currentQuestionIndex].options[selectedAnswer] === questions[currentQuestionIndex].answer) {
                 setScore(score + 1);
             }
 
-            // Pindah ke soal berikutnya
             setSelectedAnswer(null);
             if (currentQuestionIndex < questions.length - 1) {
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
             } else {
-                // Jika sudah pada soal terakhir, Anda bisa menavigasi ke halaman lain atau menampilkan hasil skor di sini
                 Alert.alert(
                     'Quiz Selesai!',
                     'Anda telah menyelesaikan quiz.',
                     [
                         {
                             text: 'OK',
-                            onPress: () => navigation.navigate('Quiz', { lastscore: 89 }),
-                            // Ganti 'DestinationScreen' dengan nama screen tujuan
+                            onPress: () => navigation.navigate('Quiz', { lastscore: score }),
                         },
                     ],
                     { cancelable: false }
                 );
-                console.log(score);
-                // navigation.replace('Quiz');
 
             }
         } else {
@@ -85,9 +78,11 @@ const Question = () => {
 
     return (
         <View style={styles.container}>
+
             <Text style={styles.question}>
                 {questions.length > 0 && questions[currentQuestionIndex].question}
             </Text>
+
             {questions.length > 0 && questions[currentQuestionIndex].options.map((option, index) => (
                 <TouchableOpacity
                     key={index}
@@ -101,6 +96,7 @@ const Question = () => {
                 <Text style={styles.nextButtonText}>Next</Text>
             </TouchableOpacity>
             <Text style={styles.timer}>Waktu Tersisa: {timeRemaining} detik</Text>
+            
         </View>
     );
 };
@@ -151,9 +147,8 @@ const styles = StyleSheet.create({
     },
 });
 
-// Fungsi untuk mengacak array
 const shuffleArray = (array) => {
-    const shuffledArray = [...array]; // Salin array agar tidak mengubah array asli
+    const shuffledArray = [...array];
     for (let i = shuffledArray.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];

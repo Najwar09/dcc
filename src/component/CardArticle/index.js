@@ -4,7 +4,6 @@ import { widthPercentageToDP as w, heightPercentageToDP as h } from '../../../re
 import article from '../../assets/images/article.png';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-
 const ArticleCard = ({ title, description, imageUri }) => {
   return (
     <View style={styles.card}>
@@ -16,13 +15,11 @@ const ArticleCard = ({ title, description, imageUri }) => {
       <View style={styles.content}>
         <Text style={styles.title}>{title}</Text>
 
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between',alignItems: 'center', }}>
-          <Text style={{ borderWidth: 1, paddingRight: w(8), paddingLeft: w(8), borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopLeftRadius: 10, borderTopRightRadius: 10, textAlign: 'center', height: w(6), }}>HTML</Text>
-
-          <View style={{flexDirection: 'row',alignItems: 'center',}}>
-
-          <Icon name="calendar-outline" color="#0088FF" size={w(5)}/>
-          <Text>Desember 11, 2024</Text>
+        <View style={styles.tagAndDateContainer}>
+          <Text style={styles.tag}>HTML</Text>
+          <View style={styles.dateContainer}>
+            <Icon name="calendar-outline" color="#0088FF" size={w(4)} />
+            <Text style={styles.dateText}>Desember 11, 2024</Text>
           </View>
         </View>
       </View>
@@ -46,19 +43,41 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: h('20%'),
-    resizeMode: 'contain', // Ensures the image is contained within its box
+    resizeMode: 'cover', // Changed to cover for better image fit
   },
   content: {
-    padding: w('3%'),
+    padding: w('4%'),
   },
   title: {
     fontSize: w('5%'),
     fontWeight: 'bold',
     marginBottom: h('1%'),
   },
-  description: {
-    fontSize: w('4%'),
-    color: '#666',
+  tagAndDateContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: h('1%'),
+  },
+  tag: {
+    borderWidth: 1,
+    paddingHorizontal: w(3),
+    paddingVertical: h(0.5),
+    borderRadius: 10,
+    textAlign: 'center',
+    height: w(6),
+    backgroundColor: '#f0f0f0',
+    borderColor: '#dcdcdc',
+    fontSize: w('3.5%'),
+  },
+  dateContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  dateText: {
+    marginLeft: w('1%'),
+    fontSize: w('3.5%'),
+    color: '#333',
   },
 });
 
