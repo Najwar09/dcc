@@ -7,14 +7,16 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  Pressable,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
 import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
 } from '../../../responsive';
-import LogoImage from '../../assets/icons/logo.png'; // Pastikan logo.png sudah ada di direktori assets/icons
+import LogoImage from '../../assets/icons/logo.png'; // Ensure logo.png exists in assets/icons
 
 const CustomRadioButton = ({label, value, selectedValue, onPress}) => {
   return (
@@ -256,9 +258,20 @@ const FormRegis = () => {
       {/* End Foto */}
 
       {/* Submit Button */}
-      <TouchableOpacity style={styles.submitButton} onPress={handleSubmission}>
-        <Text style={styles.submitText}>Daftar</Text>
-      </TouchableOpacity>
+      <Pressable
+        style={({pressed}) => [
+          {
+            transform: pressed ? [{scale: 0.95}] : [{scale: 1}],
+          },
+          styles.submitButton,
+        ]}
+        onPress={handleSubmission}>
+        <LinearGradient
+          colors={['#4c669f', '#3b5998', '#192f6a']}
+          style={styles.gradient}>
+          <Text style={styles.submitText}>Daftar</Text>
+        </LinearGradient>
+      </Pressable>
       {/* End Submit Button */}
     </ScrollView>
   );
@@ -324,6 +337,7 @@ const styles = StyleSheet.create({
     borderRadius: w(2),
     alignItems: 'center',
     marginBottom: h(1),
+    elevation: 3,
   },
   uploadText: {
     color: 'white',
@@ -337,11 +351,16 @@ const styles = StyleSheet.create({
     marginTop: h(1),
   },
   submitButton: {
-    backgroundColor: '#0088FF',
-    padding: w(4),
-    borderRadius: w(2),
-    alignItems: 'center',
+    elevation: 3,
+    borderRadius: w(5),
+    overflow: 'hidden',
     marginTop: h(3),
+  },
+  gradient: {
+    paddingVertical: h(2),
+    paddingHorizontal: w(10),
+    borderRadius: w(5),
+    alignItems: 'center',
   },
   submitText: {
     color: 'white',

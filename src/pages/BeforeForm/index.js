@@ -1,5 +1,13 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Pressable,
+} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
@@ -19,9 +27,20 @@ const BeforeForm = ({navigation}) => {
       <Text style={styles.subtitle}>
         Silakan isi form pendaftaran untuk bergabung dengan kami.
       </Text>
-      <TouchableOpacity style={styles.button} onPress={handlePress}>
-        <Text style={styles.buttonText}>Mulai Pendaftaran</Text>
-      </TouchableOpacity>
+      <Pressable
+        style={({pressed}) => [
+          {
+            transform: pressed ? [{scale: 0.95}] : [{scale: 1}],
+          },
+          styles.button,
+        ]}
+        onPress={handlePress}>
+        <LinearGradient
+          colors={['#4c669f', '#3b5998', '#192f6a']}
+          style={styles.gradient}>
+          <Text style={styles.buttonText}>Mulai Pendaftaran</Text>
+        </LinearGradient>
+      </Pressable>
     </View>
   );
 };
@@ -54,10 +73,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    backgroundColor: '#0088FF',
+    elevation: 3,
+    borderRadius: w(5),
+    overflow: 'hidden',
+  },
+  gradient: {
     paddingVertical: h(2),
     paddingHorizontal: w(10),
     borderRadius: w(5),
+    alignItems: 'center',
   },
   buttonText: {
     color: 'white',

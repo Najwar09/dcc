@@ -1,11 +1,18 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import LottieView from 'lottie-react-native'; // Import LottieView
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Pressable,
+} from 'react-native';
+import LottieView from 'lottie-react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
 } from '../../../responsive';
-import successAnimation from '../../assets/animation/done.json'; // Ganti dengan path animasi Lottie yang sesuai
+import successAnimation from '../../assets/animation/done.json';
 
 const AfterForm = ({navigation}) => {
   const handleContinue = () => {
@@ -14,20 +21,30 @@ const AfterForm = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      {/* Ganti Image dengan LottieView */}
       <LottieView
-        source={successAnimation} // Sumber file animasi Lottie
+        source={successAnimation}
         autoPlay
-        loop={true} // Set loop false jika animasi hanya berjalan sekali
+        loop={true}
         style={styles.animation}
       />
       <Text style={styles.title}>Pendaftaran Berhasil!</Text>
       <Text style={styles.subtitle}>
         Terima kasih telah mendaftar dengan kami.
       </Text>
-      <TouchableOpacity style={styles.button} onPress={handleContinue}>
-        <Text style={styles.buttonText}>Lanjutkan</Text>
-      </TouchableOpacity>
+      <Pressable
+        style={({pressed}) => [
+          {
+            transform: pressed ? [{scale: 0.95}] : [{scale: 1}],
+          },
+          styles.button,
+        ]}
+        onPress={handleContinue}>
+        <LinearGradient
+          colors={['#4c669f', '#3b5998', '#192f6a']}
+          style={styles.gradient}>
+          <Text style={styles.buttonText}>Lanjutkan</Text>
+        </LinearGradient>
+      </Pressable>
     </View>
   );
 };
@@ -59,10 +76,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    backgroundColor: '#0088FF',
+    elevation: 3,
+    borderRadius: w(5),
+    overflow: 'hidden',
+  },
+  gradient: {
     paddingVertical: h(2),
     paddingHorizontal: w(10),
     borderRadius: w(5),
+    alignItems: 'center',
   },
   buttonText: {
     color: 'white',

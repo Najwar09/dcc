@@ -53,7 +53,7 @@ const MainScreen = () => {
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Article" component={Article} />
       <Tab.Screen name="Activity" component={Activity} />
-      <Tab.Screen name="Profile" component={Profile} />
+      {/* <Tab.Screen name="Profile" component={Profile} /> */}
     </Tab.Navigator>
   );
 };

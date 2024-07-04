@@ -46,7 +46,11 @@ const Home = () => {
   const menuItems = [
     {icon: Treasure, label: 'Treasure', action: Reset},
     {icon: Secretary, label: 'Secretary'},
-    {icon: Members, label: 'Members',action: ()=>navigation.navigate('BeforeForm')},
+    {
+      icon: Members,
+      label: 'Members',
+      action: () => navigation.navigate('BeforeForm'),
+    },
     {icon: Schedule, label: 'Schedule'},
     {icon: Absen, label: 'Absen'},
     {icon: Organization, label: 'Organization'},
@@ -55,53 +59,64 @@ const Home = () => {
   ];
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <StickyHeader name="Muh. Najwar Ramadhan" />
-
-      <View style={styles.swapperContainer}>
-        <ImageSwapper />
-      </View>
-
-      <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>Kategori</Text>
-      </View>
-
-      <View style={styles.menuContainer}>
-        {menuItems.map((item, index) => (
-          <TouchableOpacity
-            key={index}
-            style={styles.box}
-            onPress={item.action}>
-            <Image source={item.icon} style={styles.menu} />
-            <Text style={styles.text}>{item.label}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-
-      <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>Latest Post</Text>
-      </View>
-
+    <View style={styles.container}>
+      <LottieView
+        resizeMode="center"
+        source={require('../../assets/animation/tet.json')}
+        autoPlay
+        loop
+        style={styles.backgroundLottie}
+      />
       <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.articleContainer}>
-        <Artikel />
-        <Artikel />
-        <Artikel />
-        <Artikel />
-      </ScrollView>
+        style={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}>
+        <StickyHeader name="Muh. Najwar Ramadhan" />
 
-      {showLottie && (
-        <LottieView
-          source={require('../../assets/animation/confetti.json')}
-          autoPlay
-          loop={false}
-          style={styles.lottie}
-          onAnimationFinish={() => setShowLottie(false)}
-        />
-      )}
-    </ScrollView>
+        <View style={styles.swapperContainer}>
+          <ImageSwapper />
+        </View>
+
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Kategori</Text>
+        </View>
+
+        <View style={styles.menuContainer}>
+          {menuItems.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.box}
+              onPress={item.action}>
+              <Image source={item.icon} style={styles.menu} />
+              <Text style={styles.text}>{item.label}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Latest Post</Text>
+        </View>
+
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.articleContainer}>
+          <Artikel />
+          <Artikel />
+          <Artikel />
+          <Artikel />
+        </ScrollView>
+
+        {showLottie && (
+          <LottieView
+            source={require('../../assets/animation/confetti.json')}
+            autoPlay
+            loop={false}
+            style={styles.lottie}
+            onAnimationFinish={() => setShowLottie(false)}
+          />
+        )}
+      </ScrollView>
+    </View>
   );
 };
 
@@ -111,7 +126,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F8F8F8',
+  },
+  scrollContainer: {
+    flex: 1,
     padding: w(5),
+  },
+  backgroundLottie: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    zIndex: -1,
   },
   swapperContainer: {
     alignItems: 'center',
@@ -121,7 +145,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    // marginBottom: h(2),
     paddingHorizontal: w(2),
   },
   sectionTitle: {
@@ -159,7 +182,6 @@ const styles = StyleSheet.create({
     borderRadius: w(5),
     width: w(58),
     height: h(16.4),
-    // marginTop: w(1),
     marginBottom: w(10),
     shadowColor: '#000',
     shadowOffset: {
