@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Pressable,
-} from 'react-native';
+import {View, Text, StyleSheet, Pressable} from 'react-native';
 import LottieView from 'lottie-react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {
@@ -13,8 +7,13 @@ import {
   heightPercentageToDP as h,
 } from '../../../responsive';
 import successAnimation from '../../assets/animation/done.json';
+import {useRoute, useNavigation} from '@react-navigation/native';
 
-const AfterForm = ({navigation}) => {
+const AfterForm = () => {
+  const navigation = useNavigation();
+  const route = useRoute();
+  const code = route.params?.code;
+
   const handleContinue = () => {
     navigation.navigate('Home');
   };
@@ -45,6 +44,10 @@ const AfterForm = ({navigation}) => {
           <Text style={styles.buttonText}>Lanjutkan</Text>
         </LinearGradient>
       </Pressable>
+      <View style={styles.codeContainer}>
+        <Text style={styles.codeLabel}>Kode Unik Anda:</Text>
+        <Text style={styles.code}>{code}</Text>
+      </View>
     </View>
   );
 };
@@ -60,25 +63,27 @@ const styles = StyleSheet.create({
     padding: w(5),
   },
   animation: {
-    width: w(80),
-    height: h(40),
-    marginBottom: h(5),
+    width: w(60),
+    height: h(30),
+    marginBottom: h(3),
   },
   title: {
     fontSize: w(8),
     fontWeight: 'bold',
-    marginBottom: h(2),
+    marginBottom: h(1),
     textAlign: 'center',
   },
   subtitle: {
     fontSize: w(5),
-    marginBottom: h(5),
+    marginBottom: h(4),
     textAlign: 'center',
+    paddingHorizontal: w(10),
   },
   button: {
     elevation: 3,
     borderRadius: w(5),
     overflow: 'hidden',
+    marginTop: h(2),
   },
   gradient: {
     paddingVertical: h(2),
@@ -89,6 +94,27 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: w(5),
+    fontWeight: 'bold',
+  },
+  codeContainer: {
+    marginTop: h(4),
+    alignItems: 'center',
+    backgroundColor: '#FFF',
+    paddingVertical: h(1),
+    paddingHorizontal: w(5),
+    borderRadius: w(2),
+    borderWidth: 1,
+    borderColor: '#ccc',
+  },
+  codeLabel: {
+    fontSize: w(4.5),
+    marginBottom: h(1),
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  code: {
+    fontSize: w(6),
+    color: '#0088FF',
     fontWeight: 'bold',
   },
 });

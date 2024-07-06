@@ -1,105 +1,267 @@
 {
-    "it_questions": [
-      {
-        "question": "Apa kepanjangan dari CPU?",
-        "options": ["Central Processing Unit", "Central Power Unit", "Control Processing Unit", "Central Program Unit"],
-        "answer": "Central Processing Unit"
-      },
-      {
-        "question": "Perangkat apa yang digunakan untuk menyimpan data secara permanen?",
-        "options": ["RAM", "ROM", "Hard Drive", "Cache"],
-        "answer": "Hard Drive"
-      },
-      {
-        "question": "Apa fungsi dari sistem operasi (OS)?",
-        "options": ["Mengolah data", "Mengendalikan perangkat keras", "Menghapus virus", "Menjalankan aplikasi"],
-        "answer": "Mengendalikan perangkat keras"
-      },
-      {
-        "question": "Apa kepanjangan dari HTML?",
-        "options": ["HyperText Markup Language", "HyperText Machine Language", "HyperTransfer Markup Language", "HyperTransfer Machine Language"],
-        "answer": "HyperText Markup Language"
-      },
-      {
-        "question": "Apa itu 'phishing' dalam dunia keamanan komputer?",
-        "options": ["Serangan yang merusak data", "Usaha mendapatkan informasi pribadi", "Mengirim spam email", "Menghapus file sistem"],
-        "answer": "Usaha mendapatkan informasi pribadi"
-      },
-      {
-        "question": "Perangkat apa yang digunakan untuk menghubungkan komputer ke jaringan internet?",
-        "options": ["Modem", "Router", "Switch", "Hub"],
-        "answer": "Router"
-      },
-      {
-        "question": "Apa nama sistem operasi berbasis open-source yang populer?",
-        "options": ["Windows", "MacOS", "Linux", "DOS"],
-        "answer": "Linux"
-      },
-      {
-        "question": "Apa kepanjangan dari URL?",
-        "options": ["Uniform Resource Locator", "Unified Resource Locator", "Uniform Retrieval Locator", "Unified Retrieval Locator"],
-        "answer": "Uniform Resource Locator"
-      },
-      {
-        "question": "Apa fungsi dari firewall?",
-        "options": ["Meningkatkan kecepatan internet", "Melindungi dari ancaman jaringan", "Memperbaiki perangkat keras", "Mengelola database"],
-        "answer": "Melindungi dari ancaman jaringan"
-      },
-      {
-        "question": "Apa itu 'cloud computing'?",
-        "options": ["Komputasi menggunakan server jarak jauh", "Komputasi menggunakan perangkat keras lama", "Komputasi menggunakan perangkat keras baru", "Komputasi menggunakan perangkat lunak lama"],
-        "answer": "Komputasi menggunakan server jarak jauh"
-      },
-      {
-        "question": "Apa kepanjangan dari SQL?",
-        "options": ["Standard Query Language", "Structured Query Language", "Simple Query Language", "System Query Language"],
-        "answer": "Structured Query Language"
-      },
-      {
-        "question": "Apa itu 'enkripsi' dalam keamanan data?",
-        "options": ["Mengubah data menjadi format tidak terbaca", "Menghapus data yang tidak perlu", "Membuat cadangan data", "Memperbaiki data yang rusak"],
-        "answer": "Mengubah data menjadi format tidak terbaca"
-      },
-      {
-        "question": "Apa itu 'malware'?",
-        "options": ["Perangkat keras yang rusak", "Perangkat lunak berbahaya", "Virus komputer", "Program antivirus"],
-        "answer": "Perangkat lunak berbahaya"
-      },
-      {
-        "question": "Perangkat apa yang digunakan untuk menghubungkan beberapa jaringan komputer?",
-        "options": ["Switch", "Router", "Modem", "Hub"],
-        "answer": "Router"
-      },
-      {
-        "question": "Apa kepanjangan dari IP dalam konteks jaringan?",
-        "options": ["Internet Protocol", "Internet Program", "Internal Protocol", "Internal Program"],
-        "answer": "Internet Protocol"
-      },
-      {
-        "question": "Apa itu 'open-source software'?",
-        "options": ["Perangkat lunak gratis untuk diunduh", "Perangkat lunak dengan kode sumber yang dapat diakses dan diubah oleh siapa saja", "Perangkat lunak berbayar", "Perangkat lunak yang dijual secara komersial"],
-        "answer": "Perangkat lunak dengan kode sumber yang dapat diakses dan diubah oleh siapa saja"
-      },
-      {
-        "question": "Apa fungsi dari RAM dalam komputer?",
-        "options": ["Menyimpan data secara permanen", "Menyimpan data sementara", "Mengendalikan perangkat keras", "Memproses grafik"],
-        "answer": "Menyimpan data sementara"
-      },
-      {
-        "question": "Apa itu 'DNS'?",
-        "options": ["Domain Name System", "Domain Network System", "Data Network System", "Data Name System"],
-        "answer": "Domain Name System"
-      },
-      {
-        "question": "Apa kepanjangan dari HTTP?",
-        "options": ["HyperText Transfer Protocol", "HyperText Transmission Protocol", "HyperTransfer Text Protocol", "HyperTransmission Text Protocol"],
-        "answer": "HyperText Transfer Protocol"
-      },
-      {
-        "question": "Apa itu 'virtual reality' (VR)?",
-        "options": ["Teknologi yang menciptakan lingkungan simulasi", "Teknologi yang meningkatkan kenyataan", "Teknologi yang menghapus data", "Teknologi yang mengirim data"],
-        "answer": "Teknologi yang menciptakan lingkungan simulasi"
-      }
-    ]
-  }
-  
+  "participants": [
+    {
+      "stambuk": "20234567",
+      "nama": "Budi Santoso",
+      "angkatan": "2020",
+      "tempatLahir": "Jakarta",
+      "tanggalLahir": "2001-05-15",
+      "jenisKelamin": "male",
+      "agama": "Islam",
+      "noTelpon": "081234567890",
+      "email": "budi@example.com",
+      "alamat": "Jl. Kebon Jeruk No. 5, Jakarta",
+      "asal": "SMA Negeri 1 Jakarta",
+      "namaAyah": "Santoso",
+      "namaIbu": "Sulastri",
+      "organisasi": "OSIS",
+      "alasanDaftar": "Ingin mengembangkan diri dan menambah pengalaman organisasi.",
+      "foto": "path/to/foto.jpg",
+      "uniqueNumber": 12345,
+      "id": "1f47"
+    },
+    {
+      "stambuk": "20234568",
+      "nama": "Siti Nurhaliza",
+      "angkatan": "2021",
+      "tempatLahir": "Bandung",
+      "tanggalLahir": "2002-07-20",
+      "jenisKelamin": "female",
+      "agama": "Kristen",
+      "noTelpon": "082345678901",
+      "email": "siti@example.com",
+      "alamat": "Jl. Dago No. 7, Bandung",
+      "asal": "SMA Negeri 2 Bandung",
+      "namaAyah": "Nurhalim",
+      "namaIbu": "Siti Aminah",
+      "organisasi": "Pramuka",
+      "alasanDaftar": "Ingin berkontribusi dalam kegiatan sosial dan memperluas jaringan pertemanan.",
+      "foto": "path/to/foto2.jpg",
+      "uniqueNumber": 12346,
+      "id": "812e"
+    }
+    
+  ],
+  "it_questions": [
+    {
+      "question": "Apa kepanjangan dari CPU?",
+      "options": [
+        "Central Processing Unit",
+        "Central Power Unit",
+        "Control Processing Unit",
+        "Central Program Unit"
+      ],
+      "answer": "Central Processing Unit",
+      "id": "568b"
+    },
+    {
+      "question": "Perangkat apa yang digunakan untuk menyimpan data secara permanen?",
+      "options": [
+        "RAM",
+        "ROM",
+        "Hard Drive",
+        "Cache"
+      ],
+      "answer": "Hard Drive",
+      "id": "386e"
+    },
+    {
+      "question": "Apa fungsi dari sistem operasi (OS)?",
+      "options": [
+        "Mengolah data",
+        "Mengendalikan perangkat keras",
+        "Menghapus virus",
+        "Menjalankan aplikasi"
+      ],
+      "answer": "Mengendalikan perangkat keras",
+      "id": "91ab"
+    },
+    {
+      "question": "Apa kepanjangan dari HTML?",
+      "options": [
+        "HyperText Markup Language",
+        "HyperText Machine Language",
+        "HyperTransfer Markup Language",
+        "HyperTransfer Machine Language"
+      ],
+      "answer": "HyperText Markup Language",
+      "id": "8518"
+    },
+    {
+      "question": "Apa itu 'phishing' dalam dunia keamanan komputer?",
+      "options": [
+        "Serangan yang merusak data",
+        "Usaha mendapatkan informasi pribadi",
+        "Mengirim spam email",
+        "Menghapus file sistem"
+      ],
+      "answer": "Usaha mendapatkan informasi pribadi",
+      "id": "e7b8"
+    },
+    {
+      "question": "Perangkat apa yang digunakan untuk menghubungkan komputer ke jaringan internet?",
+      "options": [
+        "Modem",
+        "Router",
+        "Switch",
+        "Hub"
+      ],
+      "answer": "Router",
+      "id": "f060"
+    },
+    {
+      "question": "Apa nama sistem operasi berbasis open-source yang populer?",
+      "options": [
+        "Windows",
+        "MacOS",
+        "Linux",
+        "DOS"
+      ],
+      "answer": "Linux",
+      "id": "71e4"
+    },
+    {
+      "question": "Apa kepanjangan dari URL?",
+      "options": [
+        "Uniform Resource Locator",
+        "Unified Resource Locator",
+        "Uniform Retrieval Locator",
+        "Unified Retrieval Locator"
+      ],
+      "answer": "Uniform Resource Locator",
+      "id": "3e31"
+    },
+    {
+      "question": "Apa fungsi dari firewall?",
+      "options": [
+        "Meningkatkan kecepatan internet",
+        "Melindungi dari ancaman jaringan",
+        "Memperbaiki perangkat keras",
+        "Mengelola database"
+      ],
+      "answer": "Melindungi dari ancaman jaringan",
+      "id": "df22"
+    },
+    {
+      "question": "Apa itu 'cloud computing'?",
+      "options": [
+        "Komputasi menggunakan server jarak jauh",
+        "Komputasi menggunakan perangkat keras lama",
+        "Komputasi menggunakan perangkat keras baru",
+        "Komputasi menggunakan perangkat lunak lama"
+      ],
+      "answer": "Komputasi menggunakan server jarak jauh",
+      "id": "8910"
+    },
+    {
+      "question": "Apa kepanjangan dari SQL?",
+      "options": [
+        "Standard Query Language",
+        "Structured Query Language",
+        "Simple Query Language",
+        "System Query Language"
+      ],
+      "answer": "Structured Query Language",
+      "id": "bc9a"
+    },
+    {
+      "question": "Apa itu 'enkripsi' dalam keamanan data?",
+      "options": [
+        "Mengubah data menjadi format tidak terbaca",
+        "Menghapus data yang tidak perlu",
+        "Membuat cadangan data",
+        "Memperbaiki data yang rusak"
+      ],
+      "answer": "Mengubah data menjadi format tidak terbaca",
+      "id": "f349"
+    },
+    {
+      "question": "Apa itu 'malware'?",
+      "options": [
+        "Perangkat keras yang rusak",
+        "Perangkat lunak berbahaya",
+        "Virus komputer",
+        "Program antivirus"
+      ],
+      "answer": "Perangkat lunak berbahaya",
+      "id": "0c01"
+    },
+    {
+      "question": "Perangkat apa yang digunakan untuk menghubungkan beberapa jaringan komputer?",
+      "options": [
+        "Switch",
+        "Router",
+        "Modem",
+        "Hub"
+      ],
+      "answer": "Router",
+      "id": "9e2a"
+    },
+    {
+      "question": "Apa kepanjangan dari IP dalam konteks jaringan?",
+      "options": [
+        "Internet Protocol",
+        "Internet Program",
+        "Internal Protocol",
+        "Internal Program"
+      ],
+      "answer": "Internet Protocol",
+      "id": "3308"
+    },
+    {
+      "question": "Apa itu 'open-source software'?",
+      "options": [
+        "Perangkat lunak gratis untuk diunduh",
+        "Perangkat lunak dengan kode sumber yang dapat diakses dan diubah oleh siapa saja",
+        "Perangkat lunak berbayar",
+        "Perangkat lunak yang dijual secara komersial"
+      ],
+      "answer": "Perangkat lunak dengan kode sumber yang dapat diakses dan diubah oleh siapa saja",
+      "id": "2834"
+    },
+    {
+      "question": "Apa fungsi dari RAM dalam komputer?",
+      "options": [
+        "Menyimpan data secara permanen",
+        "Menyimpan data sementara",
+        "Mengendalikan perangkat keras",
+        "Memproses grafik"
+      ],
+      "answer": "Menyimpan data sementara",
+      "id": "a910"
+    },
+    {
+      "question": "Apa itu 'DNS'?",
+      "options": [
+        "Domain Name System",
+        "Domain Network System",
+        "Data Network System",
+        "Data Name System"
+      ],
+      "answer": "Domain Name System",
+      "id": "faa0"
+    },
+    {
+      "question": "Apa kepanjangan dari HTTP?",
+      "options": [
+        "HyperText Transfer Protocol",
+        "HyperText Transmission Protocol",
+        "HyperTransfer Text Protocol",
+        "HyperTransmission Text Protocol"
+      ],
+      "answer": "HyperText Transfer Protocol",
+      "id": "1c69"
+    },
+    {
+      "question": "Apa itu 'virtual reality' (VR)?",
+      "options": [
+        "Teknologi yang menciptakan lingkungan simulasi",
+        "Teknologi yang meningkatkan kenyataan",
+        "Teknologi yang menghapus data",
+        "Teknologi yang mengirim data"
+      ],
+      "answer": "Teknologi yang menciptakan lingkungan simulasi",
+      "id": "3a62"
+    }
+  ]
+}

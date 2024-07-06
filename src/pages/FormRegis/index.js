@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -16,24 +16,27 @@ import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
 } from '../../../responsive';
-import LogoImage from '../../assets/icons/logo.png'; // Ensure logo.png exists in assets/icons
+import axios from 'axios';
+import LogoImage from '../../assets/icons/logo.png';
 
-const CustomRadioButton = ({label, value, selectedValue, onPress}) => {
-  return (
-    <TouchableOpacity
-      style={styles.radioButtonContainer}
-      onPress={() => onPress(value)}>
-      <Icon
-        name={selectedValue === value ? 'radio-button-on' : 'radio-button-off'}
-        size={24}
-        color={selectedValue === value ? '#0088FF' : '#ccc'}
-      />
-      <Text style={styles.radioButtonText}>{label}</Text>
-    </TouchableOpacity>
-  );
-};
+// kustom tombol radio button
+const CustomRadioButton = ({label, value, selectedValue, onPress}) => (
+  <TouchableOpacity
+    style={styles.radioButtonContainer}
+    onPress={() => onPress(value)}>
+    <Icon
+      name={selectedValue === value ? 'radio-button-on' : 'radio-button-off'}
+      size={24}
+      color={selectedValue === value ? '#0088FF' : '#ccc'}
+    />
+    <Text style={styles.radioButtonText}>{label}</Text>
+  </TouchableOpacity>
+);
 
 const FormRegis = () => {
+  const navigation = useNavigation();
+
+  // useState setiap inputan pada form
   const [stambuk, setStambuk] = useState('');
   const [nama, setNama] = useState('');
   const [angkatan, setAngkatan] = useState('');
@@ -49,13 +52,14 @@ const FormRegis = () => {
   const [namaIbu, setNamaIbu] = useState('');
   const [organisasi, setOrganisasi] = useState('');
   const [alasanDaftar, setAlasanDaftar] = useState('');
-  const [foto, setFoto] = useState(null);
 
-  const navigation = useNavigation();
+  // fungsi ini dijalankan ketika tombol daftar ditekan
+  const handleSubmission = async () => {
+    // membuat kode random
+    const uniqueNumber = Math.floor(10000 + Math.random() * 90000);
 
-  const handleSubmission = () => {
-    navigation.navigate('AfterForm');
-    console.log('Data Pendaftaran:', {
+    // membuat const untuk menampung semua nilai dari useState form
+    const newParticipant = {
       stambuk,
       nama,
       angkatan,
@@ -71,8 +75,36 @@ const FormRegis = () => {
       namaIbu,
       organisasi,
       alasanDaftar,
-      foto,
-    });
+      uniqueNumber,
+    };
+    // POST DATA
+    try {
+      await axios.post(
+        'http://192.168.60.252:3000/participants',
+        newParticipant,
+      );
+      // setelah data berhasil disimpan, kemudian pindah ke afterForm dan kirim nilai uniquNumber
+      navigation.replace('AfterForm', {code: uniqueNumber});
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getDATA();
+  }, [])
+  
+  // GET DATA
+  const getDATA = async () => {
+    try {
+      const res = await axios.get(
+        'http://192.168.60.252:3000/participants/',
+      );
+      // setDataUser(res.data.data);
+      console.log(res.data);
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
@@ -89,18 +121,20 @@ const FormRegis = () => {
         <TextInput
           style={styles.input}
           value={stambuk}
-          onChangeText={text => setStambuk(text)}
+          onChangeText={setStambuk}
           placeholder="Masukkan Stambuk"
+          keyboardType="default"
         />
       </View>
 
       <View style={styles.formGroup}>
-        <Text style={styles.label}>Nama Lengkap</Text>
+        <Text style={styles.label}>Nama</Text>
         <TextInput
           style={styles.input}
           value={nama}
-          onChangeText={text => setNama(text)}
-          placeholder="Masukkan Nama Lengkap"
+          onChangeText={setNama}
+          placeholder="Masukkan Nama"
+          keyboardType="default"
         />
       </View>
 
@@ -109,7 +143,7 @@ const FormRegis = () => {
         <TextInput
           style={styles.input}
           value={angkatan}
-          onChangeText={text => setAngkatan(text)}
+          onChangeText={setAngkatan}
           placeholder="Masukkan Angkatan"
           keyboardType="numeric"
         />
@@ -120,8 +154,9 @@ const FormRegis = () => {
         <TextInput
           style={styles.input}
           value={tempatLahir}
-          onChangeText={text => setTempatLahir(text)}
+          onChangeText={setTempatLahir}
           placeholder="Masukkan Tempat Lahir"
+          keyboardType="default"
         />
       </View>
 
@@ -130,8 +165,9 @@ const FormRegis = () => {
         <TextInput
           style={styles.input}
           value={tanggalLahir}
-          onChangeText={text => setTanggalLahir(text)}
+          onChangeText={setTanggalLahir}
           placeholder="Masukkan Tanggal Lahir"
+          keyboardType="default"
         />
       </View>
 
@@ -158,8 +194,9 @@ const FormRegis = () => {
         <TextInput
           style={styles.input}
           value={agama}
-          onChangeText={text => setAgama(text)}
+          onChangeText={setAgama}
           placeholder="Masukkan Agama"
+          keyboardType="default"
         />
       </View>
 
@@ -168,7 +205,7 @@ const FormRegis = () => {
         <TextInput
           style={styles.input}
           value={noTelpon}
-          onChangeText={text => setNoTelpon(text)}
+          onChangeText={setNoTelpon}
           placeholder="Masukkan No Telpon"
           keyboardType="numeric"
         />
@@ -179,19 +216,20 @@ const FormRegis = () => {
         <TextInput
           style={styles.input}
           value={email}
-          onChangeText={text => setEmail(text)}
+          onChangeText={setEmail}
           placeholder="Masukkan Email"
-          keyboardType="email-address"
+          keyboardType="default"
         />
       </View>
 
       <View style={styles.formGroup}>
         <Text style={styles.label}>Alamat</Text>
         <TextInput
-          style={[styles.input, {height: h(10)}]}
+          style={styles.input}
           value={alamat}
-          onChangeText={text => setAlamat(text)}
+          onChangeText={setAlamat}
           placeholder="Masukkan Alamat"
+          keyboardType="default"
           multiline
         />
       </View>
@@ -201,8 +239,9 @@ const FormRegis = () => {
         <TextInput
           style={styles.input}
           value={asal}
-          onChangeText={text => setAsal(text)}
+          onChangeText={setAsal}
           placeholder="Masukkan Asal"
+          keyboardType="default"
         />
       </View>
 
@@ -211,8 +250,9 @@ const FormRegis = () => {
         <TextInput
           style={styles.input}
           value={namaAyah}
-          onChangeText={text => setNamaAyah(text)}
+          onChangeText={setNamaAyah}
           placeholder="Masukkan Nama Ayah"
+          keyboardType="default"
         />
       </View>
 
@@ -221,8 +261,9 @@ const FormRegis = () => {
         <TextInput
           style={styles.input}
           value={namaIbu}
-          onChangeText={text => setNamaIbu(text)}
+          onChangeText={setNamaIbu}
           placeholder="Masukkan Nama Ibu"
+          keyboardType="default"
         />
       </View>
 
@@ -231,33 +272,24 @@ const FormRegis = () => {
         <TextInput
           style={styles.input}
           value={organisasi}
-          onChangeText={text => setOrganisasi(text)}
+          onChangeText={setOrganisasi}
           placeholder="Masukkan Organisasi"
+          keyboardType="default"
         />
       </View>
 
       <View style={styles.formGroup}>
-        <Text style={styles.label}>Alasan Mendaftar</Text>
+        <Text style={styles.label}>Alasan Daftar</Text>
         <TextInput
-          style={[styles.input, {height: h(10)}]}
+          style={styles.input}
           value={alasanDaftar}
-          onChangeText={text => setAlasanDaftar(text)}
-          placeholder="Masukkan Alasan Mendaftar"
+          onChangeText={setAlasanDaftar}
+          placeholder="Masukkan Alasan Daftar"
+          keyboardType="default"
           multiline
         />
       </View>
 
-      {/* Foto */}
-      <View style={styles.formGroup}>
-        <Text style={styles.label}>Foto</Text>
-        <TouchableOpacity style={styles.uploadButton}>
-          <Text style={styles.uploadText}>Upload Foto</Text>
-        </TouchableOpacity>
-        {foto && <Image source={{uri: foto}} style={styles.uploadedImage} />}
-      </View>
-      {/* End Foto */}
-
-      {/* Submit Button */}
       <Pressable
         style={({pressed}) => [
           {
@@ -272,7 +304,6 @@ const FormRegis = () => {
           <Text style={styles.submitText}>Daftar</Text>
         </LinearGradient>
       </Pressable>
-      {/* End Submit Button */}
     </ScrollView>
   );
 };
@@ -330,25 +361,6 @@ const styles = StyleSheet.create({
   radioButtonText: {
     marginLeft: w(2),
     fontSize: w(4.5),
-  },
-  uploadButton: {
-    backgroundColor: '#0088FF',
-    padding: w(3),
-    borderRadius: w(2),
-    alignItems: 'center',
-    marginBottom: h(1),
-    elevation: 3,
-  },
-  uploadText: {
-    color: 'white',
-    fontSize: w(4.5),
-  },
-  uploadedImage: {
-    width: '100%',
-    height: h(30),
-    resizeMode: 'cover',
-    borderRadius: w(2),
-    marginTop: h(1),
   },
   submitButton: {
     elevation: 3,

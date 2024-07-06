@@ -16,7 +16,7 @@ export const getItem = async key => {
     return value;
   } catch (error) {
     console.error('Gagal mengambil item', error);
-    return null; // Tambahkan pengembalian null jika terjadi kesalahan
+    return null; 
   }
 };
 
