@@ -80,7 +80,7 @@ const FormRegis = () => {
     // POST DATA
     try {
       await axios.post(
-        'http://192.168.60.252:3000/participants',
+        'http://192.168.60.241:3000/participants',
         newParticipant,
       );
       // setelah data berhasil disimpan, kemudian pindah ke afterForm dan kirim nilai uniquNumber
@@ -90,22 +90,6 @@ const FormRegis = () => {
     }
   };
 
-  useEffect(() => {
-    getDATA();
-  }, [])
-  
-  // GET DATA
-  const getDATA = async () => {
-    try {
-      const res = await axios.get(
-        'http://192.168.60.252:3000/participants/',
-      );
-      // setDataUser(res.data.data);
-      console.log(res.data);
-    } catch (error) {
-      alert(error.message);
-    }
-  };
 
   return (
     <ScrollView

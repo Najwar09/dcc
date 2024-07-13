@@ -17,8 +17,8 @@ const OnboardingSreen = () => {
 
   const doneButton = ({...props}) => {
     return(
-      <TouchableOpacity style={{padding:w(4),borderTopLeftRadius:20,borderBottomLeftRadius:20,backgroundColor:'white'}} {...props}>
-        <Text style={{fontSize:w(4),fontWeight:'bold'}}>Done</Text>
+      <TouchableOpacity style={styles.doneButton} {...props}>
+        <Text style={styles.doneButtonText}>Done</Text>
       </TouchableOpacity>
     )
   }
@@ -108,12 +108,20 @@ export default OnboardingSreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'red',
-    // paddingHorizontal:20
+    backgroundColor: '#F8F8F8', 
   },
   animation:{
     width: 393,
     height: 400,
-    // backgroundColor: 'red',
+  },
+  doneButton: {
+    padding: w(4),
+    borderTopLeftRadius: 20,
+    borderBottomLeftRadius: 20,
+    backgroundColor: 'white',
+  },
+  doneButtonText: {
+    fontSize: w(4),
+    fontWeight: 'bold',
   }
 });

@@ -9,7 +9,7 @@ const ArticleCard = ({ title, description, imageUri }) => {
     <View style={styles.card}>
 
       {/* gambar */}
-      <Image source={imageUri || article} style={styles.image} />
+      <Image source={{uri:imageUri}} style={styles.image} />
       {/* end gambar */}
 
       <View style={styles.content}>

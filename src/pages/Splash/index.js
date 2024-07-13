@@ -11,7 +11,7 @@ const Splash = ({navigation}) => {
       checkNavigation();
     }, 1000);
 
-    // Clear the timeout if the component unmounts before the timeout is reached
+ 
     return () => clearTimeout(timer);
   }, []);
 
@@ -20,10 +20,10 @@ const Splash = ({navigation}) => {
       const onboarded = await AsyncStorage.getItem('onboarded');
       console.log(onboarded);
       if (onboarded === '1') {
-        // Hide onboarding
+        // sembunyikan onboarding
         navigation.replace('MainScreen');
       } else {
-        // Show onboarding
+        // tampilkan onboarding
         navigation.replace('OnboardingScreen');
       }
     } catch (error) {

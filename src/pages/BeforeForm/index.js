@@ -12,7 +12,7 @@ import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
 } from '../../../responsive';
-import logo from '../../assets/icons/logo.png'; // Pastikan file logo.png sudah tersedia di folder assets/icons
+import logo from '../../assets/icons/logo.png'; 
 
 const BeforeForm = ({navigation}) => {
   const handlePress = () => {

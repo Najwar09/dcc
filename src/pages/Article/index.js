@@ -1,10 +1,29 @@
 import { StyleSheet, Text, View, TextInput, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import CardArticle from '../../component/CardArticle'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { widthPercentageToDP as w, heightPercentageToDP as h } from '../../../responsive';
+import axios from 'axios';
 
 const Article = () => {
+
+  const [dataArticle,setDataArticle] = useState([]);
+
+  
+  const GetDataArticle = async () => {
+    try {
+      const res = await axios.get('http://192.168.1.36:3000/article');
+      setDataArticle(res.data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    GetDataArticle();
+  }, [])
+
+  
   return (
     <>
       <View style={{ flex: 1, alignItems: 'center', }}>
@@ -22,11 +41,9 @@ const Article = () => {
 
         {/* article component */}
         <ScrollView showsVerticalScrollIndicator={false}>
-          <CardArticle title='How To Make CRUD In Laravel' />
-          <CardArticle title='How To Make CRUD In Laravel' />
-          <CardArticle title='How To Make CRUD In Laravel' />
-          <CardArticle title='How To Make CRUD In Laravel' />
-          <CardArticle title='How To Make CRUD In Laravel' />
+          {dataArticle.map((article) => (
+            <CardArticle title={article.Title} imageUri={article.url} key={article.id}/>
+          ))}
         </ScrollView>
         {/* end article component */}
       </View>

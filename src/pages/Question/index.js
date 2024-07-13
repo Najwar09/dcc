@@ -1,66 +1,91 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
-import quizData from '../../../db.json'; // Ganti dengan path sesuai tempat menyimpan file JSON
-import { useNavigation } from '@react-navigation/native'
-
+import LottieView from 'lottie-react-native';
+import quizData from '../../../db.json';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { widthPercentageToDP as w, heightPercentageToDP as h } from '../../../responsive';
+import LinearGradient from 'react-native-linear-gradient';
+import axios from 'axios';
 
 const Question = () => {
+    const route = useRoute();
     const navigation = useNavigation();
 
-    const [questions, setQuestions] = useState([]);
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [selectedAnswer, setSelectedAnswer] = useState(null);
-    const [score, setScore] = useState(0);
-    const [timeRemaining, setTimeRemaining] = useState(5); 
 
-    // mengacak soal array dan simpan ke variabel question pada saat render pertama kali
+    const [questions, setQuestions] = useState([]); //semua soal
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); //index soal saat ini
+    const [selectedAnswer, setSelectedAnswer] = useState(null); //index dari jawaban
+    const [score, setScore] = useState(0);//score soal
+    const [timeRemaining, setTimeRemaining] = useState(30);
+
+    // Get Data Soal
+
+    const DataQuestions = async (agama) => {
+
+        if (agama === 'Islam') {
+            const res = await axios.get('http://192.168.60.241:3000/agama_questions');
+            const shuffledQuestions = shuffleArray(res.data).slice(0, 5);
+            setQuestions(shuffledQuestions);
+        } else {
+            const res = await axios.get('http://192.168.60.241:3000/pkn_questions');
+            const shuffledQuestions = shuffleArray(res.data).slice(0, 5);
+            setQuestions(shuffledQuestions);
+        }
+
+    }
+    // Pertama Kali dijalankan ketika halaman ini terbuka
     useEffect(() => {
-        const shuffledQuestions = shuffleArray(quizData.it_questions).slice(0, 5);
-        setQuestions(shuffledQuestions);
+        const agama = route.params?.agama;
+        DataQuestions(agama);
+
     }, []);
 
-    // timer hitung mundur dan setelah waktu habis maka navigasi ke quiz dan kirim params score
     useEffect(() => {
-        const timer = setTimeout(() => {
-            if (timeRemaining > 0) {
-                setTimeRemaining(timeRemaining - 1);
-            } else {
-                Alert.alert(
-                    'Waktu Habis!',
-                    'Anda telah menyelesaikan quiz.',
-                    [
-                      {
-                        text: 'OK',
-                        onPress: () => navigation.replace('Quiz', { lastscore: score }),// Ganti 'DestinationScreen' dengan nama screen tujuan
-                      },
-                    ],
-                    { cancelable: false }
-                  );
-            }
+        const timer = setInterval(() => {
+            setTimeRemaining(prevTime => {
+                if (prevTime > 0) {
+                    return prevTime - 1;
+                } else {
+                    clearInterval(timer);
+                    Alert.alert(
+                        'Time Up!',
+                        'You have completed the quiz.',
+                        [
+                            {
+                                text: 'OK',
+                                onPress: () => navigation.replace('Quiz', { lastscore: score }),
+                            },
+                        ],
+                        { cancelable: false }
+                    );
+                    return 0;
+                }
+            });
         }, 1000);
 
-
-        return () => clearTimeout(timer);
-    }, [timeRemaining]);
-    
+        return () => clearInterval(timer);
+    }, [navigation, score]);
 
     const handleAnswerSelect = (index) => {
         setSelectedAnswer(index);
     };
 
     const handleNextQuestion = () => {
+
         if (selectedAnswer !== null) {
+            // jika jawaban yg dipilih sesuai denga kunci jawaban maka score+1
             if (questions[currentQuestionIndex].options[selectedAnswer] === questions[currentQuestionIndex].answer) {
                 setScore(score + 1);
             }
 
             setSelectedAnswer(null);
+
             if (currentQuestionIndex < questions.length - 1) {
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
             } else {
                 Alert.alert(
-                    'Quiz Selesai!',
-                    'Anda telah menyelesaikan quiz.',
+                    'Quiz Completed!',
+                    'You have finished the quiz.',
                     [
                         {
                             text: 'OK',
@@ -69,34 +94,51 @@ const Question = () => {
                     ],
                     { cancelable: false }
                 );
-
             }
         } else {
-            alert('Pilih jawaban terlebih dahulu!');
+            Alert.alert('Select an answer first!');
         }
     };
 
     return (
         <View style={styles.container}>
+            <LottieView
+                source={require('../../assets/animation/bgsoal.json')}
+                autoPlay
+                loop
+                style={styles.backgroundAnimation}
+            />
+            <View style={styles.timerContainer}>
+                <Text style={styles.timerText}>{timeRemaining} seconds</Text>
+            </View>
+            <View style={styles.content}>
+                <Text style={styles.question}>
+                    {questions.length > 0 && questions[currentQuestionIndex].question}
+                </Text>
 
-            <Text style={styles.question}>
-                {questions.length > 0 && questions[currentQuestionIndex].question}
-            </Text>
-
-            {questions.length > 0 && questions[currentQuestionIndex].options.map((option, index) => (
-                <TouchableOpacity
-                    key={index}
-                    style={[styles.option, selectedAnswer === index ? styles.selectedOption : null]}
-                    onPress={() => handleAnswerSelect(index)}
-                >
-                    <Text style={styles.optionText}>{option}</Text>
+                {questions.length > 0 && questions[currentQuestionIndex].options.map((option, index) => (
+                    <TouchableOpacity
+                        key={index}
+                        style={[styles.option, selectedAnswer === index ? styles.selectedOption : null]}
+                        onPress={() => handleAnswerSelect(index)}
+                    >
+                        <LinearGradient
+                            colors={['#4c669f', '#3b5998', '#192f6a']}
+                            style={styles.optionBackground}
+                        >
+                            <Text style={styles.optionText}>{option}</Text>
+                        </LinearGradient>
+                    </TouchableOpacity>
+                ))}
+                <TouchableOpacity style={styles.nextButton} onPress={handleNextQuestion}>
+                    <LinearGradient
+                        colors={['#FF512F', '#DD2476']}
+                        style={styles.nextButtonBackground}
+                    >
+                        <Text style={styles.nextButtonText}>Next</Text>
+                    </LinearGradient>
                 </TouchableOpacity>
-            ))}
-            <TouchableOpacity style={styles.nextButton} onPress={handleNextQuestion}>
-                <Text style={styles.nextButtonText}>Next</Text>
-            </TouchableOpacity>
-            <Text style={styles.timer}>Waktu Tersisa: {timeRemaining} detik</Text>
-            
+            </View>
         </View>
     );
 };
@@ -107,43 +149,73 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
+        backgroundColor: '#f5f5f5',
+    },
+    backgroundAnimation: {
+        position: 'absolute',
+        width: w(114),
+        height: h(110),
+    },
+    content: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
     },
     question: {
-        fontSize: 18,
+        fontSize: 22,
         fontWeight: 'bold',
         marginBottom: 20,
         textAlign: 'center',
+        color: '#333',
     },
     option: {
         width: '100%',
-        padding: 10,
-        marginVertical: 5,
-        backgroundColor: '#f0f0f0',
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
+        marginVertical: 8,
+        borderRadius: 10,
+        overflow: 'hidden',
+    },
+    optionBackground: {
+        padding: 15,
+        alignItems: 'center',
     },
     optionText: {
-        fontSize: 16,
+        fontSize: 18,
+        color: '#FFF',
     },
     selectedOption: {
-        backgroundColor: '#4CAF50',
+        borderColor: 'gold',
+        borderWidth: 5,
     },
     nextButton: {
         marginTop: 20,
-        padding: 10,
-        backgroundColor: '#2196F3',
-        borderRadius: 5,
+        borderRadius: 10,
+        overflow: 'hidden',
+    },
+    nextButtonBackground: {
+        paddingVertical: 15,
+        paddingHorizontal: 40,
+        alignItems: 'center',
+        borderRadius: 10,
     },
     nextButtonText: {
         color: 'white',
         fontWeight: 'bold',
-        fontSize: 16,
+        fontSize: 18,
     },
-    timer: {
-        marginTop: 10,
-        fontSize: 16,
+    timerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 20,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 10,
+    },
+    timerText: {
+        fontSize: 24,
         fontWeight: 'bold',
+        color: '#FFF',
     },
 });
 

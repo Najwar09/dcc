@@ -39,229 +39,501 @@
       "foto": "path/to/foto2.jpg",
       "uniqueNumber": 12346,
       "id": "812e"
+    },
+    {
+      "id": "8be0",
+      "stambuk": "",
+      "nama": "",
+      "angkatan": "",
+      "tempatLahir": "",
+      "tanggalLahir": "",
+      "jenisKelamin": "",
+      "agama": "",
+      "noTelpon": "",
+      "email": "",
+      "alamat": "",
+      "asal": "",
+      "namaAyah": "",
+      "namaIbu": "",
+      "organisasi": "",
+      "alasanDaftar": "",
+      "uniqueNumber": 99449
+    },
+    {
+      "id": "69c7",
+      "stambuk": "",
+      "nama": "",
+      "angkatan": "",
+      "tempatLahir": "",
+      "tanggalLahir": "",
+      "jenisKelamin": "",
+      "agama": "",
+      "noTelpon": "",
+      "email": "",
+      "alamat": "",
+      "asal": "",
+      "namaAyah": "",
+      "namaIbu": "",
+      "organisasi": "",
+      "alasanDaftar": "",
+      "uniqueNumber": 12209
+    },
+    {
+      "id": "066a",
+      "stambuk": "202018",
+      "nama": "Muh. Najwar Ramadhan",
+      "angkatan": "2020",
+      "tempatLahir": "Makassar",
+      "tanggalLahir": "20 Januari 2002",
+      "jenisKelamin": "male",
+      "agama": "Islam",
+      "noTelpon": "082266558770",
+      "email": "Wasih09@gmail.com",
+      "alamat": "Cendrawasih",
+      "asal": "Makassar",
+      "namaAyah": "Ramadhan",
+      "namaIbu": "Anna",
+      "organisasi": "Dcc",
+      "alasanDaftar": "Cari ilmu",
+      "uniqueNumber": 41708
+    },
+    {
+      "id": "b4fa",
+      "stambuk": "",
+      "nama": "",
+      "angkatan": "",
+      "tempatLahir": "",
+      "tanggalLahir": "",
+      "jenisKelamin": "",
+      "agama": "Kristen",
+      "noTelpon": "",
+      "email": "",
+      "alamat": "",
+      "asal": "",
+      "namaAyah": "",
+      "namaIbu": "",
+      "organisasi": "",
+      "alasanDaftar": "",
+      "uniqueNumber": 83374
+    },
+    {
+      "id": "b374",
+      "stambuk": "",
+      "nama": "",
+      "angkatan": "",
+      "tempatLahir": "",
+      "tanggalLahir": "",
+      "jenisKelamin": "",
+      "agama": "Islam",
+      "noTelpon": "",
+      "email": "",
+      "alamat": "",
+      "asal": "",
+      "namaAyah": "",
+      "namaIbu": "",
+      "organisasi": "",
+      "alasanDaftar": "",
+      "uniqueNumber": 68499
+    },
+    {
+      "id": "e002",
+      "stambuk": "",
+      "nama": "",
+      "angkatan": "",
+      "tempatLahir": "",
+      "tanggalLahir": "",
+      "jenisKelamin": "",
+      "agama": "",
+      "noTelpon": "",
+      "email": "",
+      "alamat": "",
+      "asal": "",
+      "namaAyah": "",
+      "namaIbu": "",
+      "organisasi": "",
+      "alasanDaftar": "",
+      "uniqueNumber": 15802
+    },
+    {
+      "id": "73c2",
+      "stambuk": "",
+      "nama": "",
+      "angkatan": "",
+      "tempatLahir": "",
+      "tanggalLahir": "",
+      "jenisKelamin": "",
+      "agama": "",
+      "noTelpon": "",
+      "email": "",
+      "alamat": "",
+      "asal": "",
+      "namaAyah": "",
+      "namaIbu": "",
+      "organisasi": "",
+      "alasanDaftar": "",
+      "uniqueNumber": 46196
+    },
+    {
+      "id": "dd37",
+      "stambuk": "",
+      "nama": "",
+      "angkatan": "",
+      "tempatLahir": "",
+      "tanggalLahir": "",
+      "jenisKelamin": "",
+      "agama": "",
+      "noTelpon": "",
+      "email": "",
+      "alamat": "",
+      "asal": "",
+      "namaAyah": "",
+      "namaIbu": "",
+      "organisasi": "",
+      "alasanDaftar": "",
+      "uniqueNumber": 98571
+    },
+    {
+      "id": "5a38",
+      "stambuk": "",
+      "nama": "Abi",
+      "angkatan": "",
+      "tempatLahir": "",
+      "tanggalLahir": "",
+      "jenisKelamin": "",
+      "agama": "Konghuchu",
+      "noTelpon": "",
+      "email": "",
+      "alamat": "",
+      "asal": "",
+      "namaAyah": "",
+      "namaIbu": "",
+      "organisasi": "",
+      "alasanDaftar": "",
+      "uniqueNumber": 75224
+    },
+    {
+      "id": "965f",
+      "stambuk": "",
+      "nama": "",
+      "angkatan": "",
+      "tempatLahir": "",
+      "tanggalLahir": "",
+      "jenisKelamin": "",
+      "agama": "",
+      "noTelpon": "",
+      "email": "",
+      "alamat": "",
+      "asal": "",
+      "namaAyah": "",
+      "namaIbu": "",
+      "organisasi": "",
+      "alasanDaftar": "",
+      "uniqueNumber": 41863
+    },
+    {
+      "id": "f830",
+      "stambuk": "",
+      "nama": "",
+      "angkatan": "",
+      "tempatLahir": "",
+      "tanggalLahir": "",
+      "jenisKelamin": "",
+      "agama": "",
+      "noTelpon": "",
+      "email": "",
+      "alamat": "",
+      "asal": "",
+      "namaAyah": "",
+      "namaIbu": "",
+      "organisasi": "",
+      "alasanDaftar": "",
+      "uniqueNumber": 24333
     }
-    
   ],
-  "it_questions": [
+  "agama_questions": [
     {
-      "question": "Apa kepanjangan dari CPU?",
+      "question": "Apa hukum zakat fitrah bagi orang yang mampu?",
       "options": [
-        "Central Processing Unit",
-        "Central Power Unit",
-        "Control Processing Unit",
-        "Central Program Unit"
+        "Sunnah",
+        "Fardhu kifayah",
+        "Fardhu 'ain",
+        "Mustahabb"
       ],
-      "answer": "Central Processing Unit",
-      "id": "568b"
+      "answer": "Fardhu 'ain",
+      "id": "ag1"
     },
     {
-      "question": "Perangkat apa yang digunakan untuk menyimpan data secara permanen?",
+      "question": "Berapakah jumlah rukun iman?",
       "options": [
-        "RAM",
-        "ROM",
-        "Hard Drive",
-        "Cache"
+        "4",
+        "5",
+        "6",
+        "7"
       ],
-      "answer": "Hard Drive",
-      "id": "386e"
+      "answer": "6",
+      "id": "ag2"
     },
     {
-      "question": "Apa fungsi dari sistem operasi (OS)?",
+      "question": "Siapakah yang pertama kali beriman pada Rasulullah SAW?",
       "options": [
-        "Mengolah data",
-        "Mengendalikan perangkat keras",
-        "Menghapus virus",
-        "Menjalankan aplikasi"
+        "Abu Bakar",
+        "Ali bin Abi Thalib",
+        "Khadijah",
+        "Zaid bin Haritsah"
       ],
-      "answer": "Mengendalikan perangkat keras",
-      "id": "91ab"
+      "answer": "Khadijah",
+      "id": "ag3"
     },
     {
-      "question": "Apa kepanjangan dari HTML?",
+      "question": "Apakah ibadah yang dilakukan selama bulan Ramadan?",
       "options": [
-        "HyperText Markup Language",
-        "HyperText Machine Language",
-        "HyperTransfer Markup Language",
-        "HyperTransfer Machine Language"
+        "Shalat Tarawih",
+        "Shalat Sunnah",
+        "Shalat Fardhu",
+        "Shalat Dhuha"
       ],
-      "answer": "HyperText Markup Language",
-      "id": "8518"
+      "answer": "Shalat Tarawih",
+      "id": "ag4"
     },
     {
-      "question": "Apa itu 'phishing' dalam dunia keamanan komputer?",
+      "question": "Siapakah nama anak Nabi Ibrahim AS yang menjadi Nabi?",
       "options": [
-        "Serangan yang merusak data",
-        "Usaha mendapatkan informasi pribadi",
-        "Mengirim spam email",
-        "Menghapus file sistem"
+        "Ismail",
+        "Ishaq",
+        "Ya'qub",
+        "Yusuf"
       ],
-      "answer": "Usaha mendapatkan informasi pribadi",
-      "id": "e7b8"
+      "answer": "Ismail",
+      "id": "ag5"
     },
     {
-      "question": "Perangkat apa yang digunakan untuk menghubungkan komputer ke jaringan internet?",
+      "question": "Apakah ibadah wajib yang dilakukan sebelum menunaikan ibadah haji?",
       "options": [
-        "Modem",
-        "Router",
-        "Switch",
-        "Hub"
+        "Shalat Dhuha",
+        "Shalat Wajib",
+        "Shalat Istikharah",
+        "Shalat Tahiyyatul Masjid"
       ],
-      "answer": "Router",
-      "id": "f060"
+      "answer": "Shalat Wajib",
+      "id": "ag6"
     },
     {
-      "question": "Apa nama sistem operasi berbasis open-source yang populer?",
+      "question": "Siapakah istri pertama Nabi Muhammad SAW?",
       "options": [
-        "Windows",
-        "MacOS",
-        "Linux",
-        "DOS"
+        "Khadijah",
+        "Aisyah",
+        "Hafsah",
+        "Zainab binti Khuzaimah"
       ],
-      "answer": "Linux",
-      "id": "71e4"
+      "answer": "Khadijah",
+      "id": "ag7"
     },
     {
-      "question": "Apa kepanjangan dari URL?",
+      "question": "Apakah ibadah wajib dalam haji yang dilakukan di Arafah?",
       "options": [
-        "Uniform Resource Locator",
-        "Unified Resource Locator",
-        "Uniform Retrieval Locator",
-        "Unified Retrieval Locator"
+        "Shalat Dhuha",
+        "Shalat Istikharah",
+        "Wuquf",
+        "Shalat Tahajjud"
       ],
-      "answer": "Uniform Resource Locator",
-      "id": "3e31"
+      "answer": "Wuquf",
+      "id": "ag8"
     },
     {
-      "question": "Apa fungsi dari firewall?",
+      "question": "Berapa jumlah rukun Islam?",
       "options": [
-        "Meningkatkan kecepatan internet",
-        "Melindungi dari ancaman jaringan",
-        "Memperbaiki perangkat keras",
-        "Mengelola database"
+        "3",
+        "4",
+        "5",
+        "6"
       ],
-      "answer": "Melindungi dari ancaman jaringan",
-      "id": "df22"
+      "answer": "5",
+      "id": "ag9"
     },
     {
-      "question": "Apa itu 'cloud computing'?",
+      "question": "Apakah ibadah wajib setelah menunaikan ibadah haji?",
       "options": [
-        "Komputasi menggunakan server jarak jauh",
-        "Komputasi menggunakan perangkat keras lama",
-        "Komputasi menggunakan perangkat keras baru",
-        "Komputasi menggunakan perangkat lunak lama"
+        "Shalat Dhuha",
+        "Shalat Wajib",
+        "Shalat Istikharah",
+        "Shalat Tahiyyatul Masjid"
       ],
-      "answer": "Komputasi menggunakan server jarak jauh",
-      "id": "8910"
+      "answer": "Shalat Wajib",
+      "id": "ag10"
+    }
+  ],
+  "pkn_questions": [
+    {
+      "question": "Apa makna dari sila pertama Pancasila, Ketuhanan yang Maha Esa?",
+      "options": [
+        "Kepercayaan kepada Tuhan YME",
+        "Kerukunan sosial",
+        "Kemerdekaan",
+        "Kedaulatan rakyat"
+      ],
+      "answer": "Kepercayaan kepada Tuhan YME",
+      "id": "pkn1"
     },
     {
-      "question": "Apa kepanjangan dari SQL?",
+      "question": "Siapakah Presiden pertama Indonesia?",
       "options": [
-        "Standard Query Language",
-        "Structured Query Language",
-        "Simple Query Language",
-        "System Query Language"
+        "Ir. Soekarno",
+        "Jenderal Soeharto",
+        "Dr. H. Susilo Bambang Yudhoyono",
+        "Ir. H. Joko Widodo"
       ],
-      "answer": "Structured Query Language",
-      "id": "bc9a"
+      "answer": "Ir. Soekarno",
+      "id": "pkn2"
     },
     {
-      "question": "Apa itu 'enkripsi' dalam keamanan data?",
+      "question": "Apa yang dimaksud dengan UUD 1945?",
       "options": [
-        "Mengubah data menjadi format tidak terbaca",
-        "Menghapus data yang tidak perlu",
-        "Membuat cadangan data",
-        "Memperbaiki data yang rusak"
+        "Undang-Undang Dasar 1945",
+        "Undang-Undang Dasa Siyar",
+        "Undang-Undang Dasar Negara",
+        "Undang-Undang Dasar Persatuan"
       ],
-      "answer": "Mengubah data menjadi format tidak terbaca",
-      "id": "f349"
+      "answer": "Undang-Undang Dasar 1945",
+      "id": "pkn3"
     },
     {
-      "question": "Apa itu 'malware'?",
+      "question": "Siapakah tokoh yang memproklamasikan kemerdekaan Indonesia?",
       "options": [
-        "Perangkat keras yang rusak",
-        "Perangkat lunak berbahaya",
-        "Virus komputer",
-        "Program antivirus"
+        "Soekarno",
+        "Hatta",
+        "Soedirman",
+        "Ki Hajar Dewantara"
       ],
-      "answer": "Perangkat lunak berbahaya",
-      "id": "0c01"
+      "answer": "Soekarno",
+      "id": "pkn4"
     },
     {
-      "question": "Perangkat apa yang digunakan untuk menghubungkan beberapa jaringan komputer?",
+      "question": "Kapan Hari Kemerdekaan Indonesia diperingati?",
       "options": [
-        "Switch",
-        "Router",
-        "Modem",
-        "Hub"
+        "17 Agustus",
+        "10 November",
+        "19 Mei",
+        "1 Juni"
       ],
-      "answer": "Router",
-      "id": "9e2a"
+      "answer": "17 Agustus",
+      "id": "pkn5"
     },
     {
-      "question": "Apa kepanjangan dari IP dalam konteks jaringan?",
+      "question": "Siapakah yang menjabat sebagai Wakil Presiden pertama Indonesia?",
       "options": [
-        "Internet Protocol",
-        "Internet Program",
-        "Internal Protocol",
-        "Internal Program"
+        "Dr. H. Mohammad Hatta",
+        "Ir. Soekarno",
+        "Dr. H. Susilo Bambang Yudhoyono",
+        "Ir. H. Joko Widodo"
       ],
-      "answer": "Internet Protocol",
-      "id": "3308"
+      "answer": "Dr. H. Mohammad Hatta",
+      "id": "pkn6"
     },
     {
-      "question": "Apa itu 'open-source software'?",
+      "question": "Siapakah yang menjabat sebagai Presiden Indonesia pada tahun 2004-2014?",
       "options": [
-        "Perangkat lunak gratis untuk diunduh",
-        "Perangkat lunak dengan kode sumber yang dapat diakses dan diubah oleh siapa saja",
-        "Perangkat lunak berbayar",
-        "Perangkat lunak yang dijual secara komersial"
+        "Dr. H. Susilo Bambang Yudhoyono",
+        "Ir. Soekarno",
+        "Jenderal Soeharto",
+        "Ir. H. Joko Widodo"
       ],
-      "answer": "Perangkat lunak dengan kode sumber yang dapat diakses dan diubah oleh siapa saja",
-      "id": "2834"
+      "answer": "Dr. H. Susilo Bambang Yudhoyono",
+      "id": "pkn7"
     },
     {
-      "question": "Apa fungsi dari RAM dalam komputer?",
+      "question": "Apa yang dimaksud dengan HAM?",
       "options": [
-        "Menyimpan data secara permanen",
-        "Menyimpan data sementara",
-        "Mengendalikan perangkat keras",
-        "Memproses grafik"
+        "Hak Asasi Manusia",
+        "Hak Anak Manusia",
+        "Hak Amanat Manusia",
+        "Hak Akal Manusia"
       ],
-      "answer": "Menyimpan data sementara",
-      "id": "a910"
+      "answer": "Hak Asasi Manusia",
+      "id": "pkn8"
     },
     {
-      "question": "Apa itu 'DNS'?",
+      "question": "Siapakah pendiri pertama Nahdlatul Ulama (NU)?",
       "options": [
-        "Domain Name System",
-        "Domain Network System",
-        "Data Network System",
-        "Data Name System"
+        "Hasyim Asy'ari",
+        "K.H. Ahmad Dahlan",
+        "H.M. Rasjidi",
+        "Muhammad Natsir"
       ],
-      "answer": "Domain Name System",
-      "id": "faa0"
+      "answer": "Hasyim Asy'ari",
+      "id": "pkn9"
     },
     {
-      "question": "Apa kepanjangan dari HTTP?",
+      "question": "Apa yang dimaksud dengan DPR?",
       "options": [
-        "HyperText Transfer Protocol",
-        "HyperText Transmission Protocol",
-        "HyperTransfer Text Protocol",
-        "HyperTransmission Text Protocol"
+        "Dewan Perwakilan Rakyat",
+        "Dewan Perwakilan Republik",
+        "Dewan Perwakilan Rakyat Indonesia",
+        "Dewan Pengurus Republik"
       ],
-      "answer": "HyperText Transfer Protocol",
-      "id": "1c69"
+      "answer": "Dewan Perwakilan Rakyat",
+      "id": "pkn10"
+    }
+  ],
+  "article": [
+    {
+      "id": "1",
+      "url": "https://dcc-dp.com/public/public/uploads/article/20240705_66883b132e02e.jpg",
+      "Title": "Ransomware: Ancaman Yang Semakin Meningkat Di Dunia Siber",
+      "content": "Di era digital, kemajuan teknologi telah membawa perubahan signifikan dalam berbagai aspek kehidupan, namun juga menimbulkan bentuk-bentuk kejahatan baru di dunia siber. Salah satu ancaman paling terkenal dalam beberapa tahun terakhir adalah ransomware. Artikel ini memberikan pemahaman tentang ransomware, dampaknya, dan perlindungan hukum bagi korban"
     },
     {
-      "question": "Apa itu 'virtual reality' (VR)?",
-      "options": [
-        "Teknologi yang menciptakan lingkungan simulasi",
-        "Teknologi yang meningkatkan kenyataan",
-        "Teknologi yang menghapus data",
-        "Teknologi yang mengirim data"
-      ],
-      "answer": "Teknologi yang menciptakan lingkungan simulasi",
-      "id": "3a62"
+      "id": "2",
+      "url": "https://dcc-dp.com/public/public/uploads/article/20240629_667fefed80488.png",
+      "Title": "Keamanan Data Pribadi di Era Digital",
+      "content": "Dalam era digital saat ini, data pribadi menjadi salah satu aset yang sangat berharga. Artikel ini membahas pentingnya menjaga keamanan data pribadi dan langkah-langkah yang dapat diambil untuk melindungi informasi pribadi dari ancaman siber."
+    },
+    {
+      "id": "3",
+      "url": "https://dcc-dp.com/public/public/uploads/article/20240623_6677f1288cbf5.jpg",
+      "Title": "Mengapa Penting untuk Memperbarui Perangkat Lunak Secara Berkala",
+      "content": "Memperbarui perangkat lunak secara berkala adalah langkah penting dalam menjaga keamanan sistem. Artikel ini menjelaskan alasan di balik pentingnya pembaruan perangkat lunak dan risiko yang mungkin dihadapi jika tidak dilakukan."
+    },
+    {
+      "id": "4",
+      "url": "https://dcc-dp.com/public/public/uploads/article/20240521_664ca46a65e20.png",
+      "Title": "Mengenal Phishing dan Cara Menghindarinya",
+      "content": "Phishing adalah salah satu teknik penipuan siber yang umum digunakan untuk mencuri informasi pribadi. Artikel ini memberikan panduan tentang cara mengenali phishing dan langkah-langkah untuk melindungi diri dari serangan tersebut."
+    },
+    {
+      "id": "5",
+      "url": "https://dcc-dp.com/public/public/uploads/article/20240323_65fe5480cb726.jpg",
+      "Title": "Peran Artificial Intelligence dalam Keamanan Siber",
+      "content": "Artificial Intelligence (AI) memainkan peran penting dalam meningkatkan keamanan siber. Artikel ini menjelaskan bagaimana AI digunakan untuk mendeteksi dan merespon ancaman siber secara efisien."
+    },
+    {
+      "id": "6",
+      "url": "https://dcc-dp.com/public/public/uploads/article/20240212_65c9ea1eeaf08.png",
+      "Title": "Tantangan Keamanan dalam Internet of Things (IoT)",
+      "content": "Internet of Things (IoT) membawa banyak manfaat, namun juga menghadirkan tantangan keamanan. Artikel ini membahas berbagai tantangan keamanan yang terkait dengan IoT dan solusi untuk mengatasinya."
+    },
+    {
+      "id": "7",
+      "url": "https://dcc-dp.com/public/public/uploads/article/20231218_6580672335d58.png",
+      "Title": "Strategi Menghadapi Serangan DDoS",
+      "content": "Distributed Denial of Service (DDoS) adalah jenis serangan siber yang dapat melumpuhkan layanan online. Artikel ini menjelaskan strategi untuk menghadapi serangan DDoS dan langkah-langkah pencegahan yang dapat diambil."
+    },
+    {
+      "id": "8",
+      "url": "https://dcc-dp.com/public/public/uploads/article/20231118_655896e43c560.jpg",
+      "Title": "Pentingnya Kesadaran Keamanan Siber di Perusahaan",
+      "content": "Kesadaran keamanan siber di lingkungan perusahaan sangat penting untuk melindungi aset digital. Artikel ini memberikan panduan tentang cara meningkatkan kesadaran keamanan siber di tempat kerja."
+    },
+    {
+      "id": "9",
+      "url": "https://dcc-dp.com/public/public/uploads/article/20231005_651ece566746d.png",
+      "Title": "Perlindungan Hukum bagi Korban Kejahatan Siber",
+      "content": "Kejahatan siber menjadi ancaman serius di dunia digital. Artikel ini membahas perlindungan hukum yang tersedia bagi korban kejahatan siber dan langkah-langkah yang dapat diambil untuk mendapatkan keadilan."
+    },
+    {
+      "id": "10",
+      "url": "https://dcc-dp.com/public/public/uploads/article/20231005_651ed07e23995.png",
+      "Title": "Tren Keamanan Siber Tahun 2024",
+      "content": "Tahun 2024 membawa berbagai tren baru dalam keamanan siber. Artikel ini mengulas tren-tren terkini dan prediksi terkait ancaman serta solusi keamanan siber di tahun mendatang."
     }
   ]
 }

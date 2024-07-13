@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState,useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,7 +7,7 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import StickyHeader from '../../component/Header';
 import ImageSwapper from '../../component/ImageSwapper';
@@ -16,20 +16,21 @@ import {
   heightPercentageToDP as h,
 } from '../../../responsive';
 import Treasure from '../../assets/icons/uang.png';
-import Secretary from '../../assets/icons/surat.png';
-import Members from '../../assets/icons/anggota.png';
+import Dcc from '../../assets/icons/logo.png';
+import OnlineRegistration from '../../assets/icons/OnlineRegistration.png';
 import Schedule from '../../assets/icons/skejul.png';
 import Absen from '../../assets/icons/absensi.png';
 import Organization from '../../assets/icons/organisasi.png';
 import Kepanitiaan from '../../assets/icons/panitia.png';
-import Another from '../../assets/icons/lain.png';
+import Quiz from '../../assets/icons/Quiz.png';
 import Content from '../../assets/images/konten.png';
-import {removeItem} from '../../../utils/asyncStorate';
+import { removeItem } from '../../../utils/asyncStorate';
+import axios from 'axios';
 
-const Artikel = () => (
+const Artikel = ({ title, description, imageUri }) => (
   <TouchableOpacity style={styles.card}>
     <View style={styles.imageContainer}>
-      <Image source={Content} style={styles.image} />
+      <Image source={{uri:imageUri}} style={styles.image} />
     </View>
   </TouchableOpacity>
 );
@@ -37,6 +38,9 @@ const Artikel = () => (
 const Home = () => {
   const navigation = useNavigation();
   const [showLottie, setShowLottie] = useState(true);
+  const [goldBoxIndex, setGoldBoxIndex] = useState(3);
+  const [dataArticle,setDataArticle] = useState([]);
+
 
   const Reset = async () => {
     await removeItem('onboarded');
@@ -44,19 +48,35 @@ const Home = () => {
   };
 
   const menuItems = [
-    {icon: Treasure, label: 'Treasure', action: Reset},
-    {icon: Secretary, label: 'Secretary'},
+    { icon: Treasure, label: 'Treasure', action: Reset },
+    { icon: Dcc, label: 'Informasi DCC', action: () => navigation.navigate('InfoDcc') },
+    
+    // {icon: Schedule, label: 'Schedule'},
+    // {icon: Absen, label: 'Absen'},
+    // {icon: Organization, label: 'Organization'},
+    // {icon: Kepanitiaan, label: 'Committee'},
+    { icon: Quiz, label: 'Quiz', action: () => navigation.navigate('Quiz') },
     {
-      icon: Members,
-      label: 'Members',
+      icon: OnlineRegistration,
+      label: 'Daftar DCC',
       action: () => navigation.navigate('BeforeForm'),
     },
-    {icon: Schedule, label: 'Schedule'},
-    {icon: Absen, label: 'Absen'},
-    {icon: Organization, label: 'Organization'},
-    {icon: Kepanitiaan, label: 'Committee'},
-    {icon: Another, label: 'Quiz', action: () => navigation.navigate('Quiz')},
   ];
+
+
+  
+  const GetDataArticle = async () => {
+    try {
+      const res = await axios.get('http://192.168.1.36:3000/article');
+      setDataArticle(res.data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    GetDataArticle();
+  }, [])
 
   return (
     <View style={styles.container}>
@@ -84,7 +104,9 @@ const Home = () => {
           {menuItems.map((item, index) => (
             <TouchableOpacity
               key={index}
-              style={styles.box}
+              style={[
+                styles.box, index === goldBoxIndex ? { backgroundColor: 'gold' } : null,
+              ]}
               onPress={item.action}>
               <Image source={item.icon} style={styles.menu} />
               <Text style={styles.text}>{item.label}</Text>
@@ -100,10 +122,9 @@ const Home = () => {
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.articleContainer}>
-          <Artikel />
-          <Artikel />
-          <Artikel />
-          <Artikel />
+            {dataArticle.map((article)=>(
+              <Artikel imageUri={article.url} key={article.id}/>
+            ))}
         </ScrollView>
 
         {showLottie && (
@@ -157,11 +178,13 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     paddingBottom: h(2),
+    // backgroundColor: 'red',
   },
   menu: {
     width: w(10),
     height: w(10),
     marginBottom: h(1),
+    // backgroundColor: 'red',
   },
   text: {
     textAlign: 'center',
@@ -176,6 +199,7 @@ const styles = StyleSheet.create({
     padding: w(3),
     elevation: 2,
     width: '22%',
+    // backgroundColor: 'red',
   },
   card: {
     marginRight: w(5),
@@ -213,7 +237,7 @@ const styles = StyleSheet.create({
     left: '50%',
     width: w(100),
     height: w(100),
-    transform: [{translateX: -w(50)}, {translateY: -w(50)}],
+    transform: [{ translateX: -w(50) }, { translateY: -w(50) }],
     zIndex: 1,
   },
 });
