@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,7 +7,7 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import StickyHeader from '../../component/Header';
 import ImageSwapper from '../../component/ImageSwapper';
@@ -24,13 +24,15 @@ import Organization from '../../assets/icons/organisasi.png';
 import Kepanitiaan from '../../assets/icons/panitia.png';
 import Quiz from '../../assets/icons/Quiz.png';
 import Content from '../../assets/images/konten.png';
-import { removeItem } from '../../../utils/asyncStorate';
+import Event from '../../assets/icons/Event.png';
+
+import {removeItem} from '../../../utils/asyncStorate';
 import axios from 'axios';
 
-const Artikel = ({ title, description, imageUri }) => (
+const Artikel = ({title, description, imageUri}) => (
   <TouchableOpacity style={styles.card}>
     <View style={styles.imageContainer}>
-      <Image source={{uri:imageUri}} style={styles.image} />
+      <Image source={{uri: imageUri}} style={styles.image} />
     </View>
   </TouchableOpacity>
 );
@@ -39,8 +41,7 @@ const Home = () => {
   const navigation = useNavigation();
   const [showLottie, setShowLottie] = useState(true);
   const [goldBoxIndex, setGoldBoxIndex] = useState(3);
-  const [dataArticle,setDataArticle] = useState([]);
-
+  const [dataArticle, setDataArticle] = useState([]);
 
   const Reset = async () => {
     await removeItem('onboarded');
@@ -48,35 +49,42 @@ const Home = () => {
   };
 
   const menuItems = [
-    { icon: Treasure, label: 'Treasure', action: Reset },
-    { icon: Dcc, label: 'Informasi DCC', action: () => navigation.navigate('InfoDcc') },
-    
+    {icon: Treasure, label: 'Treasure', action: Reset},
+    {
+      icon: Dcc,
+      label: 'Informasi DCC',
+      action: () => navigation.navigate('InfoDcc'),
+    },
+
     // {icon: Schedule, label: 'Schedule'},
     // {icon: Absen, label: 'Absen'},
     // {icon: Organization, label: 'Organization'},
     // {icon: Kepanitiaan, label: 'Committee'},
-    { icon: Quiz, label: 'Quiz', action: () => navigation.navigate('Quiz') },
+    {icon: Quiz, label: 'Quiz', action: () => navigation.navigate('Quiz')},
     {
       icon: OnlineRegistration,
       label: 'Daftar DCC',
       action: () => navigation.navigate('BeforeForm'),
     },
+    {
+      icon: Event,
+      label: 'Event DCC',
+      action: () => navigation.navigate('Event'),
+    },
   ];
 
-
-  
   const GetDataArticle = async () => {
     try {
       const res = await axios.get('http://192.168.1.36:3000/article');
-      setDataArticle(res.data)
+      setDataArticle(res.data);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     GetDataArticle();
-  }, [])
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -90,7 +98,7 @@ const Home = () => {
       <ScrollView
         style={styles.scrollContainer}
         showsVerticalScrollIndicator={false}>
-        <StickyHeader name="Muh. Najwar Ramadhan" />
+        <StickyHeader name="Najwar Pecinta Cewek!" />
 
         <View style={styles.swapperContainer}>
           <ImageSwapper />
@@ -105,7 +113,8 @@ const Home = () => {
             <TouchableOpacity
               key={index}
               style={[
-                styles.box, index === goldBoxIndex ? { backgroundColor: 'gold' } : null,
+                styles.box,
+                index === goldBoxIndex ? {backgroundColor: 'gold'} : null,
               ]}
               onPress={item.action}>
               <Image source={item.icon} style={styles.menu} />
@@ -122,9 +131,9 @@ const Home = () => {
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.articleContainer}>
-            {dataArticle.map((article)=>(
-              <Artikel imageUri={article.url} key={article.id}/>
-            ))}
+          {dataArticle.map(article => (
+            <Artikel imageUri={article.url} key={article.id} />
+          ))}
         </ScrollView>
 
         {showLottie && (
@@ -237,7 +246,7 @@ const styles = StyleSheet.create({
     left: '50%',
     width: w(100),
     height: w(100),
-    transform: [{ translateX: -w(50) }, { translateY: -w(50) }],
+    transform: [{translateX: -w(50)}, {translateY: -w(50)}],
     zIndex: 1,
   },
 });
