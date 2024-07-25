@@ -1,8 +1,18 @@
 import {View, Text, Image, TouchableOpacity, FlatList} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import {useNavigation} from '@react-navigation/native';
 
 const Content = () => {
+  const navigation = useNavigation();
+  const [event, setEvent] = useState();
+
+  useEffect(() => {
+    fetch('http://10.0.2.2:3000/Event/')
+      .then(res => res.json())
+      .then(data => setEvent(data));
+  });
+
   const free = () => {
     return (
       <View
@@ -16,6 +26,7 @@ const Content = () => {
           left: 150,
           justifyContent: 'center',
           alignItems: 'center',
+          elevation: 2,
         }}>
         <Text
           style={{
@@ -29,7 +40,7 @@ const Content = () => {
     );
   };
 
-  const imageSpeaker = (speaker, judul) => {
+  const imageSpeaker = speaker => {
     return (
       <View style={{flexDirection: 'row', marginTop: 10}}>
         <Icon
@@ -53,7 +64,7 @@ const Content = () => {
             return (
               <Image
                 key={key}
-                source={item}
+                source={{uri: item.gambarS}}
                 resizeMode="cover"
                 style={{
                   width: 18,
@@ -61,6 +72,8 @@ const Content = () => {
                   borderRadius: 8,
                   marginLeft: -3,
                   marginTop: -2,
+                  borderWidth: 0.3,
+                  borderColor: 'white',
                 }}
               />
             );
@@ -69,52 +82,6 @@ const Content = () => {
       </View>
     );
   };
-
-  const [event, setEvent] = useState([
-    {
-      judul: 'Seminar IT',
-      waktu: 'Kamis, 20 September 2024',
-      rate: '9.2',
-      gambar: require('../../assets/images/event/SeminarIT.jpg'),
-      speaker: [
-        require('../../assets/images/event/people1.jpg'),
-        require('../../assets/images/event/people2.jpg'),
-        require('../../assets/images/event/SadieSink.jpg'),
-      ],
-      waktu: '15:40 - 17:10 Wita',
-      lokasi: 'Universitas Dipa Makassar',
-      lokasiD: 'Gedung A Ruang 101',
-      about:
-        "lorem Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-    },
-    {
-      judul: 'Free Class',
-      waktu: 'Sabtu, 22 September 2024',
-      rate: '9.0',
-      gambar: require('../../assets/images/event/FreeClass.jpg'),
-      speaker: [
-        require('../../assets/images/event/people1.jpg'),
-        require('../../assets/images/event/people2.jpg'),
-        require('../../assets/images/event/SadieSink.jpg'),
-      ],
-      waktu: '15:40 - 17:30 Wita',
-      lokasi: 'Universitas Dipa Makassar',
-      lokasiD: 'Gedung A',
-      about:
-        "lorem Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-    },
-    {
-      judul: 'Pendaftaran Calon Anggota',
-      waktu: 'minggu, 23 September 2024',
-      rate: '9.8',
-      gambar: require('../../assets/images/event/Penerimaan.jpg'),
-      waktu: '15:40 - 17:10 Wita',
-      lokasi: 'Universitas Dipa Makassar',
-      lokasiD: 'Gedung A ',
-      about:
-        "lorem Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-    },
-  ]);
 
   return (
     <View>
@@ -134,9 +101,10 @@ const Content = () => {
               marginTop: 166,
               marginLeft: 22,
               marginRight: 22,
+              elevation: 2,
             }}>
             <Image
-              source={item.gambar}
+              source={{uri: item.gambar}}
               resizeMode="cover"
               style={{
                 width: 211,
@@ -145,10 +113,10 @@ const Content = () => {
                 position: 'absolute',
                 top: -120,
                 left: -3,
+                elevation: 2,
               }}
             />
             {item.judul == 'Pendaftaran Calon Anggota' ? '' : free()}
-
             <View
               style={{
                 width: 44,
@@ -157,8 +125,8 @@ const Content = () => {
                 borderTopRightRadius: 4,
                 borderBottomRightRadius: 4,
                 position: 'absolute',
-                top: -50,
-                left: -2,
+                top: -55,
+                left: -1,
                 elevation: 1,
                 alignItems: 'center',
                 flexDirection: 'row',
@@ -179,6 +147,7 @@ const Content = () => {
                 {item.rate}
               </Text>
             </View>
+
             <View
               style={{
                 flexDirection: 'row',
@@ -221,7 +190,7 @@ const Content = () => {
                 marginLeft: 16,
                 marginTop: -1,
               }}>
-              Tema : Jenjang IT di Masa Depan
+              Tema : {item.tema}
             </Text>
             <View style={{flexDirection: 'row', marginTop: 14}}>
               <Icon
@@ -242,8 +211,9 @@ const Content = () => {
             </View>
             {item.judul == 'Pendaftaran Calon Anggota'
               ? null
-              : imageSpeaker(item.speaker, item.judul)}
+              : imageSpeaker(item.speaker)}
             <TouchableOpacity
+              onPress={() => navigation.navigate('EventDetail', {item})}
               style={{
                 width: 138,
                 height: 34,
@@ -254,6 +224,7 @@ const Content = () => {
                 position: 'absolute',
                 top: 195,
                 left: 34,
+                elevation: 3,
               }}>
               <Text
                 style={{
@@ -265,9 +236,8 @@ const Content = () => {
               </Text>
             </TouchableOpacity>
           </View>
-        )}>
-        {' '}
-      </FlatList>
+        )}
+      />
     </View>
   );
 };

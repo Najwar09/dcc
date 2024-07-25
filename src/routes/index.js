@@ -20,6 +20,7 @@ import InfoDcc from '../pages/InfoDcc';
 import Home from '../pages/Home';
 import YouTubeVideos from '../pages/Youtube';
 import Event from '../pages/Event';
+import EventDetail from '../pages/Event/EventDetail';
 
 const Tab = createBottomTabNavigator();
 
@@ -111,6 +112,7 @@ export default function Router() {
         <Stack.Screen name="InfoDcc" component={InfoDcc} />
         <Stack.Screen name="YouTubeVideos" component={YouTubeVideos} />
         <Stack.Screen name="Event" component={Event} />
+        <Stack.Screen name="EventDetail" component={EventDetail} />
       </Stack.Navigator>
     </NavigationContainer>
   );

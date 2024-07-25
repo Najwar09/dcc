@@ -75,7 +75,7 @@ const Home = () => {
 
   const GetDataArticle = async () => {
     try {
-      const res = await axios.get('http://192.168.1.36:3000/article');
+      const res = await axios.get('http:/10.0.2.2:3000/article');
       setDataArticle(res.data);
     } catch (error) {
       console.log(error);
