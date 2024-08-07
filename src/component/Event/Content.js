@@ -11,7 +11,19 @@ const Content = () => {
     fetch('http://10.0.2.2:3000/Event/')
       .then(res => res.json())
       .then(data => setEvent(data));
-  });
+
+    // tarik();
+  }, []);
+
+  // const tarik = async () => {
+  //   try {
+  //     const response = await fetch('http://10.0.2.2:3000/Event/');
+  //     const data = await response.json();
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.log('Error ambil data Api', error);
+  //   }
+  // };
 
   const free = () => {
     return (
@@ -22,8 +34,8 @@ const Content = () => {
           backgroundColor: '#ECD86E',
           position: 'absolute',
           borderRadius: 20,
-          top: -115,
-          left: 150,
+          top: -8,
+          left: 170,
           justifyContent: 'center',
           alignItems: 'center',
           elevation: 2,
@@ -39,46 +51,25 @@ const Content = () => {
       </View>
     );
   };
-
-  const imageSpeaker = speaker => {
+  const lokasi = lokasi => {
     return (
-      <View style={{flexDirection: 'row', marginTop: 10}}>
+      <View style={{flexDirection: 'row', marginTop: 12}}>
         <Icon
-          name="microphone-alt"
-          size={14}
+          name="map-marker-alt"
           color={'black'}
-          style={{marginLeft: 12}}
+          size={14}
+          style={{marginLeft: 10}}
         />
+
         <Text
           style={{
-            marginLeft: 10,
+            fontSize: 10,
             fontFamily: 'Poppins-Regular',
             color: 'black',
-            fontSize: 10,
-            marginRight: 13,
+            marginLeft: 10,
           }}>
-          Speaker
+          {lokasi}
         </Text>
-        <View style={{flexDirection: 'row'}}>
-          {speaker.map((item, key) => {
-            return (
-              <Image
-                key={key}
-                source={{uri: item.gambarS}}
-                resizeMode="cover"
-                style={{
-                  width: 18,
-                  height: 19,
-                  borderRadius: 8,
-                  marginLeft: -3,
-                  marginTop: -2,
-                  borderWidth: 0.3,
-                  borderColor: 'white',
-                }}
-              />
-            );
-          })}
-        </View>
       </View>
     );
   };
@@ -93,30 +84,32 @@ const Content = () => {
         renderItem={({item}) => (
           <View
             style={{
-              height: 212,
+              height: 320,
               width: 205,
               backgroundColor: '#80AF81',
               borderBottomRightRadius: 25,
               borderBottomLeftRadius: 25,
-              marginTop: 166,
+              borderTopRightRadius: 20,
+              borderTopLeftRadius: 20,
+              marginTop: 60,
               marginLeft: 22,
               marginRight: 22,
               elevation: 2,
             }}>
-            <Image
-              source={{uri: item.gambar}}
-              resizeMode="cover"
-              style={{
-                width: 211,
-                height: 200,
-                borderRadius: 100,
-                position: 'absolute',
-                top: -120,
-                left: -3,
-                elevation: 2,
-              }}
-            />
+            <View style={{alignItems: 'center', marginTop: 6}}>
+              <Image
+                source={{uri: item.gambar}}
+                style={{
+                  width: 192,
+                  height: 170,
+
+                  borderTopLeftRadius: 16,
+                  borderTopRightRadius: 16,
+                }}
+              />
+            </View>
             {item.judul == 'Pendaftaran Calon Anggota' ? '' : free()}
+
             <View
               style={{
                 width: 44,
@@ -125,7 +118,7 @@ const Content = () => {
                 borderTopRightRadius: 4,
                 borderBottomRightRadius: 4,
                 position: 'absolute',
-                top: -55,
+                top: 65,
                 left: -1,
                 elevation: 1,
                 alignItems: 'center',
@@ -153,7 +146,7 @@ const Content = () => {
                 flexDirection: 'row',
                 justifyContent: 'center',
                 height: item.judul == 'Pendaftaran Calon Anggota' ? 50 : 30,
-                marginTop: 80,
+                marginTop: 5,
               }}>
               <Text
                 style={{
@@ -188,11 +181,10 @@ const Content = () => {
                 fontFamily: 'Poppins-SemiBold',
                 fontSize: 10,
                 marginLeft: 16,
-                marginTop: -1,
               }}>
               Tema : {item.tema}
             </Text>
-            <View style={{flexDirection: 'row', marginTop: 14}}>
+            <View style={{flexDirection: 'row', marginTop: 12}}>
               <Icon
                 name="calendar-alt"
                 color={'black'}
@@ -206,12 +198,13 @@ const Content = () => {
                   fontFamily: 'Poppins-Regular',
                   marginLeft: 10,
                 }}>
-                {item.waktu}
+                {item.jadwal}
               </Text>
             </View>
             {item.judul == 'Pendaftaran Calon Anggota'
-              ? null
-              : imageSpeaker(item.speaker)}
+              ? ''
+              : lokasi(item.lokasi)}
+
             <TouchableOpacity
               onPress={() => navigation.navigate('EventDetail', {item})}
               style={{
@@ -222,7 +215,7 @@ const Content = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 position: 'absolute',
-                top: 195,
+                top: 295,
                 left: 34,
                 elevation: 3,
               }}>

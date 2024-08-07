@@ -72,12 +72,12 @@ const Event = () => {
         <TouchableOpacity
           style={{marginLeft: 23, marginTop: 26}}
           onPress={() => navigation.goBack()}>
-          <Icon name="arrow-left" color={'black'} size={25} />
+          <Icon name="arrow-left" color={'black'} size={35} />
         </TouchableOpacity>
         <View
           style={{
-            width: 30,
-            height: 30,
+            width: 35,
+            height: 35,
             borderRadius: 20,
             borderWidth: 3,
             justifyContent: 'center',
@@ -85,7 +85,7 @@ const Event = () => {
             marginRight: 23,
             marginTop: 26,
           }}>
-          <Icon name="info" size={14} color={'black'} />
+          <Icon name="info" size={16} color={'black'} />
         </View>
         <View
           style={{

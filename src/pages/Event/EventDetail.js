@@ -129,21 +129,25 @@ const EventDetail = () => {
             backgroundColor: '#51A9F4',
             height: 2,
             position: 'absolute',
-            bottom: 379,
+            bottom: data.judul == 'Pendaftaran Calon Anggota' ? 272 : 379,
             left: 145,
             elevation: 1,
           }}
         />
 
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={{
-            width: 400,
-            marginTop: -25,
-          }}>
-          {speaker(data.speaker)}
-        </ScrollView>
+        {data.judul == 'Pendaftaran Calon Anggota' ? (
+          ''
+        ) : (
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={{
+              width: 400,
+              marginTop: -25,
+            }}>
+            {speaker(data.speaker)}
+          </ScrollView>
+        )}
 
         <View
           style={{
