@@ -5,59 +5,16 @@ import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import Content from '../../component/Event/Content';
+import {
+  widthPercentageToDP as w,
+  heightPercentageToDP as h,
+} from '../../../responsive';
 
 const Event = () => {
   const navigation = useNavigation();
 
-  const imageSwiper = () => {
-    const data = [
-      {
-        judul: 'Pelatihan Daerah',
-        waktu: 'Kamis, 22 Oktober 2023',
-        rating: '8.9',
-        image: require('../../assets/images/event/SadieSink.jpg'),
-      },
-      {
-        judul: 'Pelatihan Komputer',
-        waktu: 'Senin, 10 Agustus 2023',
-        rating: '8.4',
-        image: require('../../assets/images/event/people1.jpg'),
-      },
-      {
-        judul: 'Festival IT',
-        waktu: 'Jumat, 10 April 2024',
-        rating: '9.0',
-        image: require('../../assets/images/event/people2.jpg'),
-      },
-    ];
-
-    return data.map((item, key) => {
-      return (
-        <View
-          key={key}
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <TouchableOpacity>
-            <Image
-              source={item.image}
-              resizeMode="cover"
-              style={{
-                width: 280,
-                height: 152,
-                borderRadius: 4,
-              }}
-            />
-          </TouchableOpacity>
-        </View>
-      );
-    });
-  };
-
-  return (
-    <View style={{flex: 1}}>
-      <StatusBar barStyle={'dark-content'} backgroundColor={'#51A9F4'} />
+  const header = () => {
+    return (
       <View
         style={{
           backgroundColor: '#51A9F4',
@@ -122,6 +79,67 @@ const Event = () => {
           </Text>
         </View>
       </View>
+    );
+  };
+
+  const imageSwiper = () => {
+    const data = [
+      {
+        judul: 'Pelatihan Daerah',
+        waktu: 'Kamis, 22 Oktober 2023',
+        rating: '8.9',
+        image: require('../../assets/images/event/SadieSink.jpg'),
+      },
+      {
+        judul: 'Pelatihan Komputer',
+        waktu: 'Senin, 10 Agustus 2023',
+        rating: '8.4',
+        image: require('../../assets/images/event/Penerimaa.jpeg'),
+      },
+      {
+        judul: 'Festival IT',
+        waktu: 'Jumat, 10 April 2024',
+        rating: '9.0',
+        image: require('../../assets/images/event/people1.jpg'),
+      },
+    ];
+
+    return data.map((item, key) => {
+      return (
+        <View
+          key={key}
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden',
+            alignSelf: 'center',
+            borderRadius: w(2),
+            marginTop: 6,
+            flex: 1,
+          }}>
+          <TouchableOpacity
+            style={{
+              height: h(120),
+              width: w(72),
+            }}>
+            <Image
+              source={item.image}
+              style={{
+                width: '100%',
+                height: '100%',
+                resizeMode: 'center',
+              }}
+            />
+          </TouchableOpacity>
+        </View>
+      );
+    });
+  };
+
+  return (
+    <View style={{flex: 1}}>
+      <StatusBar barStyle={'dark-content'} backgroundColor={'#51A9F4'} />
+      {header()}
       <Content />
       <View
         style={{
@@ -133,8 +151,8 @@ const Event = () => {
           elevation: 2,
           marginTop: 16,
         }}>
-        <View>
-          <View style={{flexDirection: 'row', marginTop: -20}}>
+        <View style={{flexDirection: 'row', marginTop: -20}}>
+          <View>
             <Text
               style={{
                 marginTop: 49,
@@ -145,17 +163,27 @@ const Event = () => {
               }}>
               Event Story
             </Text>
-            <Text
+            <View
               style={{
-                marginTop: 49,
-                marginLeft: 140,
-                color: '#E54D4D',
-                fontFamily: 'Poppins-Regular',
-                fontSize: 13,
-              }}>
-              See More
-            </Text>
+                marginTop: -2,
+                backgroundColor: '#51A9F4',
+                opacity: 0.6,
+                elevation: 0.2,
+                width: w(12),
+                height: h(0.3),
+                marginLeft: w(15.5),
+              }}></View>
           </View>
+          <Text
+            style={{
+              marginTop: 49,
+              marginLeft: 140,
+              color: '#E54D4D',
+              fontFamily: 'Poppins-Regular',
+              fontSize: 13,
+            }}>
+            See More
+          </Text>
         </View>
 
         <Swiper autoplay={true} autoplayTimeout={3}>
@@ -167,8 +195,8 @@ const Event = () => {
             height: 16,
             position: 'absolutes',
             backgroundColor: '#ffffff',
-            bottom: 145,
-            left: 58,
+            bottom: 135,
+            left: 62,
             borderTopRightRadius: 4,
             borderBottomRightRadius: 4,
             elevation: 0.6,
@@ -199,8 +227,8 @@ const Event = () => {
             justifyContent: 'center',
             alignItems: 'center',
             borderRadius: 20,
-            top: 65,
-            right: 70,
+            top: 70,
+            right: 75,
           }}>
           <Image
             source={require('../../assets/images/event/like.png')}
@@ -215,8 +243,8 @@ const Event = () => {
             height: 34,
             backgroundColor: '#ffffff',
             position: 'absolute',
-            bottom: 20,
-            left: 58,
+            bottom: 16,
+            left: 57,
             borderTopRightRadius: 15,
             borderBottomRightRadius: 15,
             alignItems: 'flex-start',
