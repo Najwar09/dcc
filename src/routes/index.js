@@ -14,6 +14,7 @@ import Question from '../pages/Question';
 import OnboardingScreen from '../pages/OnboardingSreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FormRegis from '../pages/FormRegis';
+import Form2 from '../pages/FormRegis/Form2';
 import BeforeForm from '../pages/BeforeForm';
 import AfterForm from '../pages/AfterForm';
 import InfoDcc from '../pages/InfoDcc';
@@ -113,6 +114,7 @@ export default function Router() {
         <Stack.Screen name="YouTubeVideos" component={YouTubeVideos} />
         <Stack.Screen name="Event" component={Event} />
         <Stack.Screen name="EventDetail" component={EventDetail} />
+        <Stack.Screen name="Form2" component={Form2} />
       </Stack.Navigator>
     </NavigationContainer>
   );
