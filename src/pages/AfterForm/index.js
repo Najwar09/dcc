@@ -12,7 +12,7 @@ import {useRoute, useNavigation} from '@react-navigation/native';
 const AfterForm = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const code = route.params?.code;
+  const code = route.params.newParticipant2;
 
   const handleContinue = () => {
     navigation.navigate('Home');
@@ -26,10 +26,31 @@ const AfterForm = () => {
         loop={true}
         style={styles.animation}
       />
+      <Text
+        style={{
+          fontSize: w(8),
+          fontWeight: 'bold',
+          color: '#3570E4',
+        }}>
+        SELAMAT!
+      </Text>
       <Text style={styles.title}>Pendaftaran Berhasil!</Text>
       <Text style={styles.subtitle}>
         Terima kasih telah mendaftar dengan kami.
       </Text>
+
+      <View style={{alignItems: 'center', marginTop: h(4.5)}}>
+        <Text style={{color: 'black', fontSize: w(4), fontStyle: 'italic'}}>
+          Silahkan isi Quiz Dengan
+        </Text>
+        <Text style={{color: 'black', fontSize: w(4), fontStyle: 'italic'}}>
+          Kode Dibawah ini!
+        </Text>
+      </View>
+      <View style={styles.codeContainer}>
+        <Text style={styles.codeLabel}>Kode Unik Anda:</Text>
+        <Text style={styles.code}>{code.uniqueNumber}</Text>
+      </View>
       <Pressable
         style={({pressed}) => [
           {
@@ -44,10 +65,6 @@ const AfterForm = () => {
           <Text style={styles.buttonText}>Lanjutkan</Text>
         </LinearGradient>
       </Pressable>
-      <View style={styles.codeContainer}>
-        <Text style={styles.codeLabel}>Kode Unik Anda:</Text>
-        <Text style={styles.code}>{code}</Text>
-      </View>
     </View>
   );
 };
@@ -63,21 +80,24 @@ const styles = StyleSheet.create({
     padding: w(5),
   },
   animation: {
+    marginTop: h(-8),
     width: w(60),
     height: h(30),
-    marginBottom: h(3),
+    marginBottom: h(2),
   },
   title: {
     fontSize: w(8),
     fontWeight: 'bold',
     marginBottom: h(1),
     textAlign: 'center',
+    color: '#3570E4',
   },
   subtitle: {
     fontSize: w(5),
-    marginBottom: h(4),
+    marginBottom: h(-1),
     textAlign: 'center',
     paddingHorizontal: w(10),
+    color: 'black',
   },
   button: {
     elevation: 3,
@@ -97,7 +117,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   codeContainer: {
-    marginTop: h(4),
+    marginTop: h(1.2),
     alignItems: 'center',
     backgroundColor: '#FFF',
     paddingVertical: h(1),
@@ -114,7 +134,7 @@ const styles = StyleSheet.create({
   },
   code: {
     fontSize: w(6),
-    color: '#0088FF',
+    color: '#3570E4',
     fontWeight: 'bold',
   },
 });

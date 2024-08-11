@@ -5,11 +5,16 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  StyleSheet,
 } from 'react-native';
 import React from 'react';
 import {useRoute} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {useNavigation} from '@react-navigation/native';
+import {
+  widthPercentageToDP as w,
+  heightPercentageToDP as h,
+} from '../../../responsive';
 
 // Componenet
 import JadwalD from '../../component/Event/JadwalD';
@@ -25,33 +30,37 @@ const EventDetail = () => {
         <View
           key={key}
           style={{
-            marginLeft: 18,
-            marginRight: 20,
-            marginTop: 10,
+            marginLeft: w(4.5),
+            marginRight: w(6),
+            marginTop: h(0.5),
             alignItems: 'center',
-            height: 120,
+            height: h(16),
           }}>
           <Image
             source={{uri: item.gambarS}}
-            style={{width: 80, height: 80, borderRadius: 50, elevation: 3}}
+            style={{
+              width: w(20.5),
+              height: h(10.3),
+              borderRadius: w(10),
+              elevation: 3,
+            }}
           />
           <View
             style={{
-              height: 25,
+              height: h(3.5),
               backgroundColor: '#80AF81',
-              marginTop: 6,
+              marginTop: h(1),
               alignItems: 'center',
               justifyContent: 'center',
-              borderRadius: 10,
+              borderRadius: w(3),
               elevation: 1,
             }}>
             <Text
               style={{
                 color: 'black',
-                marginTop: 1,
-                marginLeft: 8,
-                marginRight: 8,
-                fontSize: 12,
+                marginLeft: w(2),
+                marginRight: w(2.5),
+                fontSize: w(3),
                 fontFamily: 'Poppins-Regular',
               }}>
               {item.tipe} : <Text>{item.speakerD}</Text>
@@ -78,40 +87,40 @@ const EventDetail = () => {
         />
         <Image
           source={{uri: data.gambar}}
+          resizeMode={'cover'}
           style={{
-            width: 395,
-            height: 365,
-            borderBottomLeftRadius: 80,
-            marginBottom: 118,
+            width: '100%',
+            height: h(47),
+            borderBottomLeftRadius: w(20),
+            marginBottom: h(14),
           }}
-          resizeMode="cover"
         />
         <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={{
-            width: 46,
-            height: 46,
+            width: w(12),
+            height: h(6),
             position: 'absolute',
-            top: 48,
-            left: 30,
+            top: h(6.5),
+            left: w(8),
             backgroundColor: '#EFEFEF',
-            borderRadius: 50,
+            borderRadius: w(6),
             justifyContent: 'center',
             alignItems: 'center',
             elevation: 2,
           }}>
-          <Icon name="arrow-left" size={26} color={'black'} />
+          <Icon name="arrow-left" size={w(7)} color={'black'} />
         </TouchableOpacity>
 
         <TouchableOpacity
           style={{
-            width: 46,
-            height: 46,
+            width: w(12),
+            height: h(6),
             position: 'absolute',
-            top: 48,
-            right: 30,
+            top: h(6.5),
+            right: w(8),
             backgroundColor: '#EFEFEF',
-            borderRadius: 50,
+            borderRadius: w(6),
             justifyContent: 'center',
             alignItems: 'center',
             elevation: 2,
@@ -119,21 +128,10 @@ const EventDetail = () => {
           <Image
             source={require('../../assets/images/event/like.png')}
             resizeMode="center"
-            style={{width: 26, height: 26, marginTop: 2}}
+            style={{width: w(7), height: h(7), marginTop: h(0.4)}}
           />
         </TouchableOpacity>
         <JadwalD data={data} />
-        <View
-          style={{
-            width: 100,
-            backgroundColor: '#51A9F4',
-            height: 2,
-            position: 'absolute',
-            bottom: data.judul == 'Pendaftaran Calon Anggota' ? 272 : 379,
-            left: 145,
-            elevation: 1,
-          }}
-        />
 
         {data.judul == 'Pendaftaran Calon Anggota' ? (
           ''
@@ -142,8 +140,8 @@ const EventDetail = () => {
             horizontal
             showsHorizontalScrollIndicator={false}
             style={{
-              width: 400,
-              marginTop: -25,
+              width: w(102),
+              marginTop: h(-3.2),
             }}>
             {speaker(data.speaker)}
           </ScrollView>
@@ -151,10 +149,10 @@ const EventDetail = () => {
 
         <View
           style={{
-            marginLeft: 30,
-            marginRight: 30,
-            marginTop: -6,
-            marginBottom: 12,
+            marginLeft: w(7.5),
+            marginRight: w(8.4),
+            marginTop: h(-2),
+            marginBottom: h(2),
           }}>
           <Text style={{fontFamily: 'Poppins-SemiBold', color: 'black'}}>
             About Event
@@ -163,10 +161,37 @@ const EventDetail = () => {
             style={{
               textAlign: 'justify',
               fontFamily: 'Poppins-Regular',
-              fontSize: 12,
+              fontSize: w(3.1),
             }}>
             {data.about}
           </Text>
+
+          {data.judul == 'Pendaftaran Calon Anggota' ? (
+            <TouchableOpacity
+              style={{
+                backgroundColor: '#3FA2F6',
+                width: w(53),
+                height: h(5.5),
+                borderRadius: w(3),
+                justifyContent: 'center',
+                alignItems: 'center',
+                elevation: 4,
+                marginLeft: w(16),
+                marginTop: h(1.5),
+                marginBottom: h(1),
+              }}
+              onPress={() => navigation.navigate('BeforeForm')}>
+              <Text
+                style={{
+                  color: 'black',
+                  fontSize: w(4),
+                  fontFamily: 'Poppins-SemiBold',
+                  marginTop: h(0.3),
+                }}>
+                Daftarkan Dirimu
+              </Text>
+            </TouchableOpacity>
+          ) : null}
         </View>
       </ScrollView>
     </View>

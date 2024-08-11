@@ -18,53 +18,53 @@ const Event = () => {
       <View
         style={{
           backgroundColor: '#51A9F4',
-          height: 111,
-          width: 395,
+          height: h(14.5),
+          width: w(100),
           flexDirection: 'row',
           justifyContent: 'space-between',
-          borderBottomRightRadius: 25,
-          borderBottomLeftRadius: 25,
+          borderBottomRightRadius: w(6),
+          borderBottomLeftRadius: w(6),
           elevation: 1,
         }}>
         <TouchableOpacity
-          style={{marginLeft: 23, marginTop: 26}}
+          style={{marginLeft: w(6), marginTop: h(3.5)}}
           onPress={() => navigation.goBack()}>
-          <Icon name="arrow-left" color={'black'} size={35} />
+          <Icon name="arrow-left" color={'black'} size={w(9)} />
         </TouchableOpacity>
         <View
           style={{
-            width: 35,
-            height: 35,
-            borderRadius: 20,
-            borderWidth: 3,
+            width: w(9),
+            height: h(4.5),
+            borderRadius: w(5),
+            borderWidth: w(0.7),
             justifyContent: 'center',
             alignItems: 'center',
-            marginRight: 23,
-            marginTop: 26,
+            marginRight: w(6),
+            marginTop: h(3.5),
           }}>
-          <Icon name="info" size={16} color={'black'} />
+          <Icon name="info" size={w(4)} color={'black'} />
         </View>
         <View
           style={{
             position: 'absolute',
             backgroundColor: '#D9D9D9',
-            borderRadius: 12,
+            borderRadius: w(6),
             elevation: 1,
-            top: 85,
-            left: 106,
-            width: 174,
-            height: 2,
+            top: h(11),
+            left: w(28),
+            width: w(44),
+            height: h(0.3),
           }}
         />
         <View
           style={{
             position: 'absolute',
-            top: 90,
-            left: 80,
+            top: h(11.6),
+            left: w(21),
             backgroundColor: '#ffffff',
-            width: 233,
-            height: 40,
-            borderRadius: 12,
+            width: w(60),
+            height: h(5),
+            borderRadius: w(4),
             justifyContent: 'center',
             alignItems: 'center',
             elevation: 3,
@@ -72,10 +72,11 @@ const Event = () => {
           <Text
             style={{
               color: 'black',
-              fontSize: 16,
+              fontSize: w(4.3),
+              marginTop: h(0.5),
               fontFamily: 'Poppins-SemiBold',
             }}>
-            UpComing Event
+            UPCOMING EVENT
           </Text>
         </View>
       </View>
@@ -114,7 +115,7 @@ const Event = () => {
             overflow: 'hidden',
             alignSelf: 'center',
             borderRadius: w(2),
-            marginTop: 6,
+            marginTop: h(0.8),
             flex: 1,
           }}>
           <TouchableOpacity
@@ -143,29 +144,29 @@ const Event = () => {
       <Content />
       <View
         style={{
-          width: 396,
-          height: 224,
+          width: w(100),
+          height: h(28.7),
           backgroundColor: '#D4EBFE',
-          borderTopRightRadius: 40,
-          borderTopLeftRadius: 40,
+          borderTopRightRadius: w(10),
+          borderTopLeftRadius: w(10),
           elevation: 2,
-          marginTop: 16,
+          marginTop: h(1),
         }}>
-        <View style={{flexDirection: 'row', marginTop: -20}}>
+        <View style={{flexDirection: 'row', marginTop: h(-2.8)}}>
           <View>
             <Text
               style={{
-                marginTop: 49,
-                marginLeft: 60,
+                marginTop: h(6),
+                marginLeft: w(15),
                 fontFamily: 'Poppins-SemiBold',
                 color: 'black',
-                fontSize: 13,
+                fontSize: w(4),
               }}>
               Event Story
             </Text>
             <View
               style={{
-                marginTop: -2,
+                marginTop: h(-0.3),
                 backgroundColor: '#51A9F4',
                 opacity: 0.6,
                 elevation: 0.2,
@@ -176,11 +177,11 @@ const Event = () => {
           </View>
           <Text
             style={{
-              marginTop: 49,
-              marginLeft: 140,
+              marginTop: h(6.6),
+              marginLeft: w(31.5),
               color: '#E54D4D',
               fontFamily: 'Poppins-Regular',
-              fontSize: 13,
+              fontSize: w(3.3),
             }}>
             See More
           </Text>
@@ -191,14 +192,14 @@ const Event = () => {
         </Swiper>
         <View
           style={{
-            width: 38,
-            height: 16,
+            width: w(10.5),
+            height: h(2.2),
             position: 'absolutes',
             backgroundColor: '#ffffff',
-            bottom: 135,
-            left: 62,
-            borderTopRightRadius: 4,
-            borderBottomRightRadius: 4,
+            bottom: h(17),
+            left: w(16),
+            borderTopRightRadius: w(1),
+            borderBottomRightRadius: w(1),
             elevation: 0.6,
             alignItems: 'center',
             flexDirection: 'row',
@@ -206,14 +207,20 @@ const Event = () => {
           <Image
             source={require('../../assets/images/event/starRate.png')}
             resizeMode="cover"
-            style={{width: 12, height: 12, marginBottom: 1, marginLeft: 4}}
+            style={{
+              width: w(3),
+              height: h(1.5),
+              marginBottom: h(0.3),
+              marginLeft: w(1),
+            }}
           />
           <Text
             style={{
               fontFamily: 'Poppins-Regular',
               color: 'black',
-              fontSize: 10,
-              marginLeft: 2,
+              fontSize: w(2.5),
+              marginLeft: w(0.7),
+              marginTop: h(0.2),
             }}>
             8.4
           </Text>
@@ -221,32 +228,32 @@ const Event = () => {
         <TouchableOpacity
           style={{
             position: 'absolute',
-            width: 26,
-            height: 26,
+            width: w(7),
+            height: h(3.5),
             backgroundColor: '#ffffff',
             justifyContent: 'center',
             alignItems: 'center',
-            borderRadius: 20,
-            top: 70,
-            right: 75,
+            borderRadius: w(4),
+            top: h(9),
+            right: w(18),
           }}>
           <Image
             source={require('../../assets/images/event/like.png')}
-            style={{width: 16, height: 16, marginTop: 1.5}}
+            style={{width: w(5), height: h(2), marginTop: h(0.3)}}
             resizeMode="center"
           />
         </TouchableOpacity>
 
         <View
           style={{
-            width: 170,
-            height: 34,
+            width: w(44),
+            height: h(4.5),
             backgroundColor: '#ffffff',
             position: 'absolute',
-            bottom: 16,
-            left: 57,
-            borderTopRightRadius: 15,
-            borderBottomRightRadius: 15,
+            bottom: h(2.2),
+            left: w(14),
+            borderTopRightRadius: w(4),
+            borderBottomRightRadius: w(4),
             alignItems: 'flex-start',
             elevation: 0.4,
           }}>
@@ -254,9 +261,9 @@ const Event = () => {
             style={{
               fontFamily: 'Poppins-SemiBold',
               color: 'black',
-              fontSize: 10,
-              marginTop: 3,
-              marginLeft: 14,
+              fontSize: w(2.7),
+              marginTop: h(0.4),
+              marginLeft: w(3.4),
             }}>
             Pelatihan Komputer
           </Text>
@@ -264,18 +271,18 @@ const Event = () => {
             <Text
               style={{
                 fontFamily: 'Poppins-Regular',
-                fontSize: 10,
+                fontSize: w(2.6),
                 color: 'black',
-                marginLeft: 14,
-                marginTop: -2,
+                marginLeft: w(3.4),
+                marginTop: h(-0.4),
               }}>
               Senin, 24 Oktober 2023
             </Text>
             <Icon
               name="calendar-alt"
               color={'#3FA2F6'}
-              size={12}
-              style={{marginLeft: 8, marginTop: -2}}
+              size={w(3.2)}
+              style={{marginLeft: w(2), marginTop: h(-0.6)}}
             />
           </View>
         </View>

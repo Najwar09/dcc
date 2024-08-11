@@ -2,6 +2,10 @@ import {View, Text, Image, TouchableOpacity, FlatList} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {useNavigation} from '@react-navigation/native';
+import {
+  widthPercentageToDP as w,
+  heightPercentageToDP as h,
+} from '../../../responsive';
 
 const Content = () => {
   const navigation = useNavigation();
@@ -29,22 +33,23 @@ const Content = () => {
     return (
       <View
         style={{
-          width: 40,
-          height: 36,
+          width: w(10),
+          height: h(4.6),
           backgroundColor: '#ECD86E',
           position: 'absolute',
-          borderRadius: 20,
-          top: -8,
-          left: 170,
+          borderRadius: w(6),
+          top: h(-1),
+          left: w(45),
           justifyContent: 'center',
           alignItems: 'center',
           elevation: 2,
         }}>
         <Text
           style={{
-            fontSize: 13,
+            fontSize: w(3.4),
             color: '#745C5C',
             fontFamily: 'Poppins-SemiBold',
+            marginTop: h(0.3),
           }}>
           Free
         </Text>
@@ -53,20 +58,20 @@ const Content = () => {
   };
   const lokasi = lokasi => {
     return (
-      <View style={{flexDirection: 'row', marginTop: 12}}>
+      <View style={{flexDirection: 'row', marginTop: h(1.4)}}>
         <Icon
           name="map-marker-alt"
           color={'black'}
-          size={14}
-          style={{marginLeft: 10}}
+          size={w(3.7)}
+          style={{marginLeft: w(2.8)}}
         />
 
         <Text
           style={{
-            fontSize: 10,
+            fontSize: w(2.6),
             fontFamily: 'Poppins-Regular',
             color: 'black',
-            marginLeft: 10,
+            marginLeft: w(2.6),
           }}>
           {lokasi}
         </Text>
@@ -80,31 +85,30 @@ const Content = () => {
         data={event}
         horizontal
         showsHorizontalScrollIndicator={false}
-        style={{height: 410}}
+        style={{height: h(53)}}
         renderItem={({item}) => (
           <View
             style={{
-              height: 320,
-              width: 205,
+              height: h(40.5),
+              width: w(52),
               backgroundColor: '#80AF81',
-              borderBottomRightRadius: 25,
-              borderBottomLeftRadius: 25,
-              borderTopRightRadius: 20,
-              borderTopLeftRadius: 20,
-              marginTop: 60,
-              marginLeft: 22,
-              marginRight: 22,
+              borderBottomRightRadius: w(6),
+              borderBottomLeftRadius: w(6),
+              borderTopRightRadius: w(5),
+              borderTopLeftRadius: w(5),
+              marginTop: h(8),
+              marginLeft: w(7),
+              marginRight: w(7),
               elevation: 2,
             }}>
             <View style={{alignItems: 'center', marginTop: 6}}>
               <Image
                 source={{uri: item.gambar}}
                 style={{
-                  width: 192,
-                  height: 170,
-
-                  borderTopLeftRadius: 16,
-                  borderTopRightRadius: 16,
+                  width: w(49),
+                  height: h(22),
+                  borderTopLeftRadius: w(4),
+                  borderTopRightRadius: w(4),
                 }}
               />
             </View>
@@ -112,29 +116,28 @@ const Content = () => {
 
             <View
               style={{
-                width: 44,
-                height: 18,
+                width: w(11.5),
+                height: h(2.4),
                 backgroundColor: '#ffffff',
-                borderTopRightRadius: 4,
-                borderBottomRightRadius: 4,
+                borderTopRightRadius: w(1),
+                borderBottomRightRadius: w(1),
                 position: 'absolute',
-                top: 65,
-                left: -1,
-                elevation: 1,
+                top: w(18),
+                left: w(-0.2),
                 alignItems: 'center',
                 flexDirection: 'row',
               }}>
               <Image
                 source={require('../../assets/images/event/starRate.png')}
                 resizeMode="cover"
-                style={{width: 12, height: 12, marginLeft: 6}}
+                style={{width: w(3), height: h(1.6), marginLeft: w(1.5)}}
               />
               <Text
                 style={{
-                  marginLeft: 3,
-                  marginTop: 1,
+                  marginLeft: w(0.8),
+                  marginTop: h(0.2),
                   color: 'black',
-                  fontSize: 11,
+                  fontSize: w(3),
                   fontFamily: 'Poppins-Regular',
                 }}>
                 {item.rate}
@@ -145,32 +148,33 @@ const Content = () => {
               style={{
                 flexDirection: 'row',
                 justifyContent: 'center',
-                height: item.judul == 'Pendaftaran Calon Anggota' ? 50 : 30,
-                marginTop: 5,
+                height:
+                  item.judul == 'Pendaftaran Calon Anggota' ? h(7.2) : h(4.2),
+                marginTop: h(0.5),
               }}>
               <Text
                 style={{
                   fontWeight: 'semibold',
                   fontFamily: 'Itim-Regular',
                   color: 'black',
-                  fontSize: 18,
+                  fontSize: w(4.6),
                   textAlign: 'center',
                 }}>
                 {item.judul}
               </Text>
               <TouchableOpacity
                 style={{
-                  width: 26,
-                  height: 26,
+                  width: w(6.5),
+                  height: h(3.3),
                   backgroundColor: '#ffffff',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  borderRadius: 20,
-                  marginLeft: 4,
+                  borderRadius: w(5),
+                  marginLeft: w(1),
                 }}>
                 <Image
                   source={require('../../assets/images/event/like.png')}
-                  style={{width: 16, height: 16, marginTop: 1.5}}
+                  style={{width: w(4), height: h(2), marginTop: h(0.3)}}
                   resizeMode="center"
                 />
               </TouchableOpacity>
@@ -179,24 +183,24 @@ const Content = () => {
               style={{
                 color: '#ffffff',
                 fontFamily: 'Poppins-SemiBold',
-                fontSize: 10,
-                marginLeft: 16,
+                fontSize: w(2.5),
+                marginLeft: w(4.5),
               }}>
               Tema : {item.tema}
             </Text>
-            <View style={{flexDirection: 'row', marginTop: 12}}>
+            <View style={{flexDirection: 'row', marginTop: h(1.4)}}>
               <Icon
                 name="calendar-alt"
                 color={'black'}
-                size={14}
-                style={{marginLeft: 10}}
+                size={w(3.5)}
+                style={{marginLeft: w(2.5)}}
               />
               <Text
                 style={{
                   color: 'black',
-                  fontSize: 10,
+                  fontSize: w(2.6),
                   fontFamily: 'Poppins-Regular',
-                  marginLeft: 10,
+                  marginLeft: w(2.8),
                 }}>
                 {item.jadwal}
               </Text>
@@ -208,21 +212,21 @@ const Content = () => {
             <TouchableOpacity
               onPress={() => navigation.navigate('EventDetail', {item})}
               style={{
-                width: 138,
-                height: 34,
+                width: w(35),
+                height: h(4.5),
                 backgroundColor: '#3FA2F6',
-                borderRadius: 6,
+                borderRadius: w(2.5),
                 justifyContent: 'center',
                 alignItems: 'center',
                 position: 'absolute',
-                top: 295,
-                left: 34,
+                top: h(38),
+                left: w(9),
                 elevation: 3,
               }}>
               <Text
                 style={{
                   fontFamily: 'Poppins-SemiBold',
-                  fontSize: 15,
+                  fontSize: w(4.3),
                   color: '#ffffff',
                 }}>
                 Detail Event
