@@ -98,178 +98,54 @@
       "uniqueNumber": 41708
     },
     {
-      "id": "b4fa",
-      "stambuk": "",
-      "nama": "",
-      "angkatan": "",
-      "tempatLahir": "",
-      "tanggalLahir": "",
-      "jenisKelamin": "",
-      "agama": "Kristen",
-      "noTelpon": "",
-      "email": "",
-      "alamat": "",
-      "asal": "",
-      "namaAyah": "",
-      "namaIbu": "",
-      "organisasi": "",
-      "alasanDaftar": "",
-      "uniqueNumber": 83374
-    },
-    {
-      "id": "b374",
-      "stambuk": "",
-      "nama": "",
-      "angkatan": "",
-      "tempatLahir": "",
-      "tanggalLahir": "",
-      "jenisKelamin": "",
+      "id": "4f2f",
+      "nama": "Abdi",
+      "nim": "202300",
+      "email": "Abdillah.kuhaku@gmail.com",
+      "noTelpon": "082291952339",
+      "angkatan": "2020",
+      "tempatLahir": "Tual",
+      "tanggalLahir": "20-November-2002",
+      "jenisKelamin": "Laki-Laki",
+      "alamat": "Poreang",
+      "asal": "Luwu Utara",
       "agama": "Islam",
-      "noTelpon": "",
-      "email": "",
-      "alamat": "",
-      "asal": "",
-      "namaAyah": "",
-      "namaIbu": "",
-      "organisasi": "",
-      "alasanDaftar": "",
-      "uniqueNumber": 68499
+      "namaAyah": "Moh.Iman",
+      "namaIbu": "Maryam",
+      "organisasi": "Banyak",
+      "alasanDaftar": "Banyak",
+      "uniqueNumber": 83097
     },
     {
-      "id": "e002",
-      "stambuk": "",
-      "nama": "",
-      "angkatan": "",
-      "tempatLahir": "",
-      "tanggalLahir": "",
-      "jenisKelamin": "",
-      "agama": "",
-      "noTelpon": "",
-      "email": "",
-      "alamat": "",
-      "asal": "",
-      "namaAyah": "",
-      "namaIbu": "",
-      "organisasi": "",
-      "alasanDaftar": "",
-      "uniqueNumber": 15802
-    },
-    {
-      "id": "73c2",
-      "stambuk": "",
-      "nama": "",
-      "angkatan": "",
-      "tempatLahir": "",
-      "tanggalLahir": "",
-      "jenisKelamin": "",
-      "agama": "",
-      "noTelpon": "",
-      "email": "",
-      "alamat": "",
-      "asal": "",
-      "namaAyah": "",
-      "namaIbu": "",
-      "organisasi": "",
-      "alasanDaftar": "",
-      "uniqueNumber": 46196
-    },
-    {
-      "id": "dd37",
-      "stambuk": "",
-      "nama": "",
-      "angkatan": "",
-      "tempatLahir": "",
-      "tanggalLahir": "",
-      "jenisKelamin": "",
-      "agama": "",
-      "noTelpon": "",
-      "email": "",
-      "alamat": "",
-      "asal": "",
-      "namaAyah": "",
-      "namaIbu": "",
-      "organisasi": "",
-      "alasanDaftar": "",
-      "uniqueNumber": 98571
-    },
-    {
-      "id": "5a38",
-      "stambuk": "",
-      "nama": "Abi",
-      "angkatan": "",
-      "tempatLahir": "",
-      "tanggalLahir": "",
-      "jenisKelamin": "",
-      "agama": "Konghuchu",
-      "noTelpon": "",
-      "email": "",
-      "alamat": "",
-      "asal": "",
-      "namaAyah": "",
-      "namaIbu": "",
-      "organisasi": "",
-      "alasanDaftar": "",
-      "uniqueNumber": 75224
-    },
-    {
-      "id": "965f",
-      "stambuk": "",
-      "nama": "",
-      "angkatan": "",
-      "tempatLahir": "",
-      "tanggalLahir": "",
-      "jenisKelamin": "",
-      "agama": "",
-      "noTelpon": "",
-      "email": "",
-      "alamat": "",
-      "asal": "",
-      "namaAyah": "",
-      "namaIbu": "",
-      "organisasi": "",
-      "alasanDaftar": "",
-      "uniqueNumber": 41863
-    },
-    {
-      "id": "f830",
-      "stambuk": "",
-      "nama": "",
-      "angkatan": "",
-      "tempatLahir": "",
-      "tanggalLahir": "",
-      "jenisKelamin": "",
-      "agama": "",
-      "noTelpon": "",
-      "email": "",
-      "alamat": "",
-      "asal": "",
-      "namaAyah": "",
-      "namaIbu": "",
-      "organisasi": "",
-      "alasanDaftar": "",
-      "uniqueNumber": 24333
+      "id": "d249",
+      "nama": "Abdillah P Al-Iman",
+      "nim": "202300",
+      "email": "abdillah,kuhaku@gmail.com",
+      "noTelpon": "082291952339",
+      "angkatan": "2020",
+      "tempatLahir": "Tual",
+      "tanggalLahir": "20-November-2002",
+      "jenisKelamin": "Laki-Laki",
+      "alamat": "Desa Poreang",
+      "asal": "Kab.Luwu Utara",
+      "agama": "Islam",
+      "namaAyah": "Moh.Iman Hermansyah",
+      "namaIbu": "Maryam Mangatta",
+      "organisasi": "Banyak wkwk",
+      "alasanDaftar": "Ingin belajar ilmu It dan menambah pengalaman dan relasi.",
+      "uniqueNumber": 10695
     }
   ],
   "agama_questions": [
     {
       "question": "Apa hukum zakat fitrah bagi orang yang mampu?",
-      "options": [
-        "Sunnah",
-        "Fardhu kifayah",
-        "Fardhu 'ain",
-        "Mustahabb"
-      ],
+      "options": ["Sunnah", "Fardhu kifayah", "Fardhu 'ain", "Mustahabb"],
       "answer": "Fardhu 'ain",
       "id": "ag1"
     },
     {
       "question": "Berapakah jumlah rukun iman?",
-      "options": [
-        "4",
-        "5",
-        "6",
-        "7"
-      ],
+      "options": ["4", "5", "6", "7"],
       "answer": "6",
       "id": "ag2"
     },
@@ -297,12 +173,7 @@
     },
     {
       "question": "Siapakah nama anak Nabi Ibrahim AS yang menjadi Nabi?",
-      "options": [
-        "Ismail",
-        "Ishaq",
-        "Ya'qub",
-        "Yusuf"
-      ],
+      "options": ["Ismail", "Ishaq", "Ya'qub", "Yusuf"],
       "answer": "Ismail",
       "id": "ag5"
     },
@@ -319,12 +190,7 @@
     },
     {
       "question": "Siapakah istri pertama Nabi Muhammad SAW?",
-      "options": [
-        "Khadijah",
-        "Aisyah",
-        "Hafsah",
-        "Zainab binti Khuzaimah"
-      ],
+      "options": ["Khadijah", "Aisyah", "Hafsah", "Zainab binti Khuzaimah"],
       "answer": "Khadijah",
       "id": "ag7"
     },
@@ -341,12 +207,7 @@
     },
     {
       "question": "Berapa jumlah rukun Islam?",
-      "options": [
-        "3",
-        "4",
-        "5",
-        "6"
-      ],
+      "options": ["3", "4", "5", "6"],
       "answer": "5",
       "id": "ag9"
     },
@@ -398,23 +259,13 @@
     },
     {
       "question": "Siapakah tokoh yang memproklamasikan kemerdekaan Indonesia?",
-      "options": [
-        "Soekarno",
-        "Hatta",
-        "Soedirman",
-        "Ki Hajar Dewantara"
-      ],
+      "options": ["Soekarno", "Hatta", "Soedirman", "Ki Hajar Dewantara"],
       "answer": "Soekarno",
       "id": "pkn4"
     },
     {
       "question": "Kapan Hari Kemerdekaan Indonesia diperingati?",
-      "options": [
-        "17 Agustus",
-        "10 November",
-        "19 Mei",
-        "1 Juni"
-      ],
+      "options": ["17 Agustus", "10 November", "19 Mei", "1 Juni"],
       "answer": "17 Agustus",
       "id": "pkn5"
     },
@@ -534,6 +385,95 @@
       "url": "https://dcc-dp.com/public/public/uploads/article/20231005_651ed07e23995.png",
       "Title": "Tren Keamanan Siber Tahun 2024",
       "content": "Tahun 2024 membawa berbagai tren baru dalam keamanan siber. Artikel ini mengulas tren-tren terkini dan prediksi terkait ancaman serta solusi keamanan siber di tahun mendatang."
+    }
+  ],
+  "Event": [
+    {
+      "judul": "Seminar IT",
+      "jadwal": "Kamis, 20 September 2024",
+      "rate": "9.2",
+      "tema": "Jenjang IT di Masa Depan",
+      "gambar": "https://i.pinimg.com/564x/cb/ad/66/cbad66542ac1b1a38fa7715200c4637e.jpg",
+      "speaker": [
+        {
+          "gambarS": "https://i.pinimg.com/564x/b8/8a/98/b88a98d20a0436494ce69e70fca245aa.jpg",
+          "tipe": "Moderator",
+          "speakerD": "Abdillah P Al-Iman"
+        },
+        {
+          "gambarS": "https://i.pinimg.com/564x/d7/4c/10/d74c1008b4642a03137ef315087a9dab.jpg",
+          "tipe": "Pemateri 1",
+          "speakerD": "Judhistira Ooka Pratama"
+        },
+        {
+          "gambarS": "https://i.pinimg.com/564x/50/79/1c/50791c1dd5c462f69accb1107425ae4c.jpg",
+          "tipe": "Pemateri 2",
+          "speakerD": "Andi Aini"
+        }
+      ],
+      "waktu": "15:40 - 17:10 Wita",
+      "lokasi": "Universitas Dipa Makassar",
+      "lokasiD": "Gedung A Ruang 101",
+      "about": "lorem Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      "id": "b0e6"
+    },
+    {
+      "judul": "Free Class",
+      "jadwal": "Sabtu, 22 September 2024",
+      "rate": "9.0",
+      "tema": "Jenjang IT di Masa Depan",
+      "gambar": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "speaker": [
+        {
+          "gambarS": "https://i.pinimg.com/564x/b8/8a/98/b88a98d20a0436494ce69e70fca245aa.jpg",
+          "tipe": "Moderator",
+          "speakerD": "Abdillah P Al-Iman"
+        },
+        {
+          "gambarS": "https://i.pinimg.com/564x/d7/4c/10/d74c1008b4642a03137ef315087a9dab.jpg",
+          "tipe": "Pemateri 1",
+          "speakerD": "Judhistira Ooka Pratama"
+        },
+        {
+          "gambarS": "https://i.pinimg.com/564x/50/79/1c/50791c1dd5c462f69accb1107425ae4c.jpg",
+          "tipe": "Pemateri 2",
+          "speakerD": "Andi Aini"
+        }
+      ],
+      "waktu": "15:40 - 17:30 Wita",
+      "lokasi": "Universitas Dipa Makassar",
+      "lokasiD": "Gedung A",
+      "about": "lorem Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      "id": "9459"
+    },
+    {
+      "judul": "Pendaftaran Calon Anggota",
+      "jadwal": "minggu, 23 September 2024",
+      "rate": "9.8",
+      "tema": "Jenjang IT di Masa Depan",
+      "gambar": "https://i.pinimg.com/736x/8f/9d/af/8f9daf05f411353291e54712cc6449a4.jpg",
+      "speaker": [
+        {
+          "gambarS": "https://i.pinimg.com/564x/b8/8a/98/b88a98d20a0436494ce69e70fca245aa.jpg",
+          "tipe": "Anggota",
+          "speakerD": "Abdillah P Al-Iman"
+        },
+        {
+          "gambarS": "https://i.pinimg.com/564x/d7/4c/10/d74c1008b4642a03137ef315087a9dab.jpg",
+          "tipe": "Anggota",
+          "speakerD": "Judhistira Ooka Pratama"
+        },
+        {
+          "gambarS": "https://i.pinimg.com/564x/50/79/1c/50791c1dd5c462f69accb1107425ae4c.jpg",
+          "tipe": "Anggota",
+          "speakerD": "Andi Aini"
+        }
+      ],
+      "waktu": "15:40 - 17:10 Wita",
+      "lokasi": "Universitas Dipa Makassar",
+      "lokasiD": "Gedung A ",
+      "about": "lorem Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum lorem Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum lorem Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      "id": "ae1e"
     }
   ]
 }

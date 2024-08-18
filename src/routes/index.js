@@ -14,11 +14,14 @@ import Question from '../pages/Question';
 import OnboardingScreen from '../pages/OnboardingSreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FormRegis from '../pages/FormRegis';
+import Form2 from '../pages/FormRegis/Form2';
 import BeforeForm from '../pages/BeforeForm';
 import AfterForm from '../pages/AfterForm';
 import InfoDcc from '../pages/InfoDcc';
 import Home from '../pages/Home';
 import YouTubeVideos from '../pages/Youtube';
+import Event from '../pages/Event';
+import EventDetail from '../pages/Event/EventDetail';
 
 const Tab = createBottomTabNavigator();
 
@@ -93,25 +96,28 @@ export default function Router() {
   }
 
   // if (showOnboarding) {
-    // ketika pertama kali menjalankan aplikasi 
-    return (
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{headerShown: false}}
-          initialRouteName="SplashScreen">
-          {/* <Stack.Screen name="SplashScreen" component={Splash} /> */}
-          {/* <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} /> */}
-          <Stack.Screen name="MainScreen" component={MainScreen} />
-          {/* <Stack.Screen name="Quiz" component={Quiz} />
-          <Stack.Screen name="Question" component={Question} />
-          <Stack.Screen name="FormRegis" component={FormRegis} />
-          <Stack.Screen name="BeforeForm" component={BeforeForm} />
-          <Stack.Screen name="AfterForm" component={AfterForm} />
-          <Stack.Screen name="InfoDcc" component={InfoDcc} />
-          <Stack.Screen name='YouTubeVideos' component={YouTubeVideos} /> */}
-        </Stack.Navigator>
-      </NavigationContainer>
-    );
-    // ketika sudah pernah membuka aplikasi sebelumnya
-  // } 
+  // ketika pertama kali menjalankan aplikasi
+  return (
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{headerShown: false}}
+        initialRouteName="SplashScreen">
+        <Stack.Screen name="SplashScreen" component={Splash} />
+        <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
+        <Stack.Screen name="MainScreen" component={MainScreen} />
+        <Stack.Screen name="Quiz" component={Quiz} />
+        <Stack.Screen name="Question" component={Question} />
+        <Stack.Screen name="FormRegis" component={FormRegis} />
+        <Stack.Screen name="BeforeForm" component={BeforeForm} />
+        <Stack.Screen name="AfterForm" component={AfterForm} />
+        <Stack.Screen name="InfoDcc" component={InfoDcc} />
+        <Stack.Screen name="YouTubeVideos" component={YouTubeVideos} />
+        <Stack.Screen name="Event" component={Event} />
+        <Stack.Screen name="EventDetail" component={EventDetail} />
+        <Stack.Screen name="Form2" component={Form2} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+  // ketika sudah pernah membuka aplikasi sebelumnya
+  // }
 }
