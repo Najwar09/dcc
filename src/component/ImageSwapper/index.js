@@ -15,18 +15,20 @@ const images = [
 
 const ImageSwipper = () => {
   return (
-    <View style={styles.container}>
-      <Swiper
-        autoplay
-        dotColor="#ccc"
-        activeDotColor="#ff6347"
-        showsPagination={true}>
-        {images.map(image => (
-          <View key={image.id} style={styles.slide}>
-            <Image source={image.uri} style={styles.image} />
-          </View>
-        ))}
-      </Swiper>
+    <View style={styles.shadowContainer}>
+      <View style={styles.container}>
+        <Swiper
+          autoplay
+          dotColor="#ccc"
+          activeDotColor="#ff6347"
+          showsPagination={true}>
+          {images.map(image => (
+            <View key={image.id} style={styles.slide}>
+              <Image source={image.uri} style={styles.image} />
+            </View>
+          ))}
+        </Swiper>
+      </View>
     </View>
   );
 };
@@ -34,13 +36,26 @@ const ImageSwipper = () => {
 export default ImageSwipper;
 
 const styles = StyleSheet.create({
-  container: {
+  shadowContainer: {
     width: w(90),
     height: h(25),
-    borderRadius: 10,
-    overflow: 'hidden',
     alignSelf: 'center',
     marginVertical: h(2),
+    borderRadius: 10,
+    // Efek bayangan
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 8,
+  },
+  container: {
+    flex: 1,
+    borderRadius: 10,
+    overflow: 'hidden',
   },
   slide: {
     flex: 1,
@@ -52,6 +67,5 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
-    borderRadius: 10,
   },
 });

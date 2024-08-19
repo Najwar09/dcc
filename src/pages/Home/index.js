@@ -34,6 +34,12 @@ const Artikel = ({title, description, imageUri}) => (
     <View style={styles.imageContainer}>
       <Image source={{uri: imageUri}} style={styles.image} />
     </View>
+    <View style={styles.articleTextContainer}>
+      <Text style={styles.articleTitle}>{title}</Text>
+      <Text style={styles.articleDescription} numberOfLines={2}>
+        {description}
+      </Text>
+    </View>
   </TouchableOpacity>
 );
 
@@ -55,11 +61,6 @@ const Home = () => {
       label: 'Informasi DCC',
       action: () => navigation.navigate('InfoDcc'),
     },
-
-    // {icon: Schedule, label: 'Schedule'},
-    // {icon: Absen, label: 'Absen'},
-    // {icon: Organization, label: 'Organization'},
-    // {icon: Kepanitiaan, label: 'Committee'},
     {icon: Quiz, label: 'Quiz', action: () => navigation.navigate('Quiz')},
     {
       icon: OnlineRegistration,
@@ -75,8 +76,10 @@ const Home = () => {
 
   const GetDataArticle = async () => {
     try {
-      const res = await axios.get('http:/10.0.2.2:3000/article');
-      setDataArticle(res.data);
+      const res = await axios.get(
+        'https://dcc-testing.campa-bima.online/public/api/artikel',
+      );
+      setDataArticle(res.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -95,17 +98,20 @@ const Home = () => {
         loop
         style={styles.backgroundLottie}
       />
+
+      <StickyHeader />
+
       <ScrollView
         style={styles.scrollContainer}
         showsVerticalScrollIndicator={false}>
-        <StickyHeader name="Najwar Pecinta Cewek!" />
-
         <View style={styles.swapperContainer}>
           <ImageSwapper />
         </View>
 
+        <View style={styles.divider} />
+
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Kategori</Text>
+          <Text style={styles.sectionTitle}>Category</Text>
         </View>
 
         <View style={styles.menuContainer}>
@@ -114,7 +120,7 @@ const Home = () => {
               key={index}
               style={[
                 styles.box,
-                index === goldBoxIndex ? {backgroundColor: 'gold'} : null,
+                index === goldBoxIndex ? {backgroundColor: '#FFD700'} : null,
               ]}
               onPress={item.action}>
               <Image source={item.icon} style={styles.menu} />
@@ -122,6 +128,8 @@ const Home = () => {
             </TouchableOpacity>
           ))}
         </View>
+
+        <View style={styles.divider} />
 
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Latest Post</Text>
@@ -132,7 +140,12 @@ const Home = () => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.articleContainer}>
           {dataArticle.map(article => (
-            <Artikel imageUri={article.url} key={article.id} />
+            <Artikel
+              imageUri={article.image}
+              key={article.id}
+              title={article.title}
+              description={article.description}
+            />
           ))}
         </ScrollView>
 
@@ -169,7 +182,13 @@ const styles = StyleSheet.create({
   },
   swapperContainer: {
     alignItems: 'center',
-    marginBottom: h(3),
+    // marginBottom: h(1),
+  },
+  divider: {
+    width: '100%',
+    height: 3,
+    backgroundColor: '#4777D759',
+    marginVertical: h(2),
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -180,24 +199,22 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontWeight: 'bold',
     fontSize: w(5),
-    color: 'black',
+    color: '#79A1ED',
   },
   menuContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     paddingBottom: h(2),
-    // backgroundColor: 'red',
   },
   menu: {
     width: w(10),
     height: w(10),
     marginBottom: h(1),
-    // backgroundColor: 'red',
   },
   text: {
     textAlign: 'center',
-    fontSize: w(3),
+    fontSize: w(3.2),
     color: 'black',
   },
   box: {
@@ -206,16 +223,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: w(2),
     padding: w(3),
-    elevation: 2,
+    elevation: 4,
     width: '22%',
-    // backgroundColor: 'red',
   },
   card: {
     marginRight: w(5),
     borderRadius: w(5),
     width: w(58),
-    height: h(16.4),
-    marginBottom: w(10),
+    height: h(20),
+    marginBottom: w(5),
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -228,8 +244,9 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: '100%',
-    height: '100%',
-    borderRadius: w(5),
+    height: '70%',
+    borderTopLeftRadius: w(5),
+    borderTopRightRadius: w(5),
     overflow: 'hidden',
   },
   image: {
@@ -237,8 +254,23 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  articleTextContainer: {
+    padding: w(2),
+  },
+  articleTitle: {
+    fontSize: w(4),
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  articleDescription: {
+    fontSize: w(3),
+    color: '#777',
+  },
   articleContainer: {
-    paddingVertical: h(2),
+    paddingVertical: w(2),
+    // marginVertical: w(6),
+    marginBottom: w(20),
+
   },
   lottie: {
     position: 'absolute',

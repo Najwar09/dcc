@@ -1,33 +1,34 @@
-import { StyleSheet, Text, View, TextInput, ScrollView } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import CardArticle from '../../component/CardArticle'
+import {StyleSheet, Text, View, TextInput, ScrollView} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import CardArticle from '../../component/CardArticle';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { widthPercentageToDP as w, heightPercentageToDP as h } from '../../../responsive';
+import {
+  widthPercentageToDP as w,
+  heightPercentageToDP as h,
+} from '../../../responsive';
 import axios from 'axios';
 
 const Article = () => {
+  const [dataArticle, setDataArticle] = useState([]);
 
-  const [dataArticle,setDataArticle] = useState([]);
-
-  
   const GetDataArticle = async () => {
     try {
-      const res = await axios.get('http://192.168.1.36:3000/article');
-      setDataArticle(res.data)
+      const res = await axios.get(
+        'https://dcc-testing.campa-bima.online/public/api/artikel',
+      );
+      setDataArticle(res.data.data); 
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     GetDataArticle();
-  }, [])
+  }, []);
 
-  
   return (
     <>
-      <View style={{ flex: 1, alignItems: 'center', }}>
-
+      <View style={{flex: 1, alignItems: 'center'}}>
         {/* filter */}
         <View style={styles.container}>
           <TextInput
@@ -41,17 +42,22 @@ const Article = () => {
 
         {/* article component */}
         <ScrollView showsVerticalScrollIndicator={false}>
-          {dataArticle.map((article) => (
-            <CardArticle title={article.Title} imageUri={article.url} key={article.id}/>
-          ))}
+          {dataArticle &&
+            dataArticle.map(article => (
+              <CardArticle
+                title={article.title}
+                imageUri={article.image}
+                key={article.id}
+              />
+            ))}
         </ScrollView>
         {/* end article component */}
       </View>
     </>
-  )
-}
+  );
+};
 
-export default Article
+export default Article;
 
 const styles = StyleSheet.create({
   container: {
@@ -69,9 +75,8 @@ const styles = StyleSheet.create({
     height: 40,
     fontSize: 16,
     color: '#000',
-
   },
   icon: {
     marginLeft: 10,
   },
-})
+});
