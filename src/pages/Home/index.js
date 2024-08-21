@@ -24,24 +24,11 @@ import Organization from '../../assets/icons/organisasi.png';
 import Kepanitiaan from '../../assets/icons/panitia.png';
 import Quiz from '../../assets/icons/Quiz.png';
 import Content from '../../assets/images/konten.png';
-import Event from '../../assets/icons/Event.png';
+import Game from '../../assets/icons/Game.png';
 
 import {removeItem} from '../../../utils/asyncStorate';
 import axios from 'axios';
 
-const Artikel = ({title, description, imageUri}) => (
-  <TouchableOpacity style={styles.card}>
-    <View style={styles.imageContainer}>
-      <Image source={{uri: imageUri}} style={styles.image} />
-    </View>
-    <View style={styles.articleTextContainer}>
-      <Text style={styles.articleTitle}>{title}</Text>
-      <Text style={styles.articleDescription} numberOfLines={2}>
-        {description}
-      </Text>
-    </View>
-  </TouchableOpacity>
-);
 
 const Home = () => {
   const navigation = useNavigation();
@@ -49,28 +36,42 @@ const Home = () => {
   const [goldBoxIndex, setGoldBoxIndex] = useState(3);
   const [dataArticle, setDataArticle] = useState([]);
 
+  const Artikel = ({title, description, imageUri, onPress}) => (
+    <TouchableOpacity style={styles.card} onPress={onPress}>
+      <View style={styles.imageContainer}>
+        <Image source={{uri: imageUri}} style={styles.image} />
+      </View>
+      <View style={styles.articleTextContainer}>
+        <Text style={styles.articleTitle}>{title}</Text>
+        <Text style={styles.articleDescription} numberOfLines={2}>
+          {description}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+
+
   const Reset = async () => {
     await removeItem('onboarded');
     navigation.push('OnboardingScreen');
   };
 
   const menuItems = [
-    {icon: Treasure, label: 'Treasure', action: Reset},
     {
-      icon: Dcc,
-      label: 'Informasi DCC',
-      action: () => navigation.navigate('InfoDcc'),
+      icon: Game,
+      label: 'Article',
+      action: () => navigation.navigate('Article'),
     },
     {icon: Quiz, label: 'Quiz', action: () => navigation.navigate('Quiz')},
+    {
+      icon: Dcc,
+      label: 'About Us',
+      action: () => navigation.navigate('InfoDcc'),
+    },
     {
       icon: OnlineRegistration,
       label: 'Daftar DCC',
       action: () => navigation.navigate('BeforeForm'),
-    },
-    {
-      icon: Event,
-      label: 'Event DCC',
-      action: () => navigation.navigate('Event'),
     },
   ];
 
@@ -145,6 +146,7 @@ const Home = () => {
               key={article.id}
               title={article.title}
               description={article.description}
+              onPress={() => navigation.navigate('ArticleDetails', {article})}
             />
           ))}
         </ScrollView>
@@ -182,7 +184,6 @@ const styles = StyleSheet.create({
   },
   swapperContainer: {
     alignItems: 'center',
-    // marginBottom: h(1),
   },
   divider: {
     width: '100%',
@@ -208,14 +209,20 @@ const styles = StyleSheet.create({
     paddingBottom: h(2),
   },
   menu: {
-    width: w(10),
-    height: w(10),
+    width: w(12),
+    height: w(12),
     marginBottom: h(1),
   },
   text: {
     textAlign: 'center',
-    fontSize: w(3.2),
-    color: 'black',
+    fontSize: w(3),
+    color: '#333',
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    textShadowColor: 'rgba(0, 0, 0, 0.25)',
+    textShadowOffset: {width: 1, height: 1},
+    textShadowRadius: 2,
   },
   box: {
     alignItems: 'center',
@@ -268,9 +275,7 @@ const styles = StyleSheet.create({
   },
   articleContainer: {
     paddingVertical: w(2),
-    // marginVertical: w(6),
     marginBottom: w(20),
-
   },
   lottie: {
     position: 'absolute',

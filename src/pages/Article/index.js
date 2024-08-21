@@ -7,16 +7,18 @@ import {
   heightPercentageToDP as h,
 } from '../../../responsive';
 import axios from 'axios';
+import {useNavigation} from '@react-navigation/native';
 
 const Article = () => {
   const [dataArticle, setDataArticle] = useState([]);
+  const navigation = useNavigation(); // Tambahkan ini
 
   const GetDataArticle = async () => {
     try {
       const res = await axios.get(
         'https://dcc-testing.campa-bima.online/public/api/artikel',
       );
-      setDataArticle(res.data.data); 
+      setDataArticle(res.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -29,7 +31,6 @@ const Article = () => {
   return (
     <>
       <View style={{flex: 1, alignItems: 'center'}}>
-        {/* filter */}
         <View style={styles.container}>
           <TextInput
             style={styles.input}
@@ -38,9 +39,7 @@ const Article = () => {
           />
           <Icon name="search" size={20} color="#666" style={styles.icon} />
         </View>
-        {/* end filter */}
 
-        {/* article component */}
         <ScrollView showsVerticalScrollIndicator={false}>
           {dataArticle &&
             dataArticle.map(article => (
@@ -48,10 +47,10 @@ const Article = () => {
                 title={article.title}
                 imageUri={article.image}
                 key={article.id}
+                onPress={() => navigation.navigate('ArticleDetails', {article})}
               />
             ))}
         </ScrollView>
-        {/* end article component */}
       </View>
     </>
   );
