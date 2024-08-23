@@ -23,6 +23,7 @@ import Home from '../pages/Home';
 import YouTubeVideos from '../pages/Youtube';
 import Event from '../pages/Event';
 import EventDetail from '../pages/Event/EventDetail';
+import ArticleDetail from '../pages/Article/DetailArticle';
 
 const Tab = createBottomTabNavigator();
 
@@ -90,7 +91,7 @@ const MainScreen = () => {
       <Tab.Screen name="Home" component={Home} />
       {/* <Tab.Screen name="Activity" component={Activity} /> */}
       <Tab.Screen name="E-Learning" component={YouTubeVideos} />
-      <Tab.Screen name="Event" component={Article} />
+      <Tab.Screen name="Event" component={Event} />
       {/* <Tab.Screen name="Profile" component={Profile} /> */}
     </Tab.Navigator>
   );
@@ -142,7 +143,8 @@ export default function Router() {
         <Stack.Screen name="AfterForm" component={AfterForm} />
         <Stack.Screen name="InfoDcc" component={InfoDcc} />
         <Stack.Screen name="YouTubeVideos" component={YouTubeVideos} />
-        <Stack.Screen name="Event" component={Event} />
+        <Stack.Screen name="Article" component={Article} />
+        <Stack.Screen name="ArticleDetails" component={ArticleDetail} />
         <Stack.Screen name="EventDetail" component={EventDetail} />
         <Stack.Screen name="Form2" component={Form2} />
       </Stack.Navigator>

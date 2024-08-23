@@ -1,16 +1,15 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
-import { widthPercentageToDP as w, heightPercentageToDP as h } from '../../../responsive';
-import article from '../../assets/images/article.png';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  widthPercentageToDP as w,
+  heightPercentageToDP as h,
+} from '../../../responsive';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const ArticleCard = ({ title, description, imageUri }) => {
+const CardArticle = ({title, imageUri, onPress}) => {
   return (
-    <View style={styles.card}>
-
-      {/* gambar */}
-      <Image source={{uri:imageUri}} style={styles.image} />
-      {/* end gambar */}
+    <TouchableOpacity style={styles.card} onPress={onPress}>
+      <Image source={{uri: imageUri}} style={styles.image} />
 
       <View style={styles.content}>
         <Text style={styles.title}>{title}</Text>
@@ -23,7 +22,7 @@ const ArticleCard = ({ title, description, imageUri }) => {
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -36,14 +35,14 @@ const styles = StyleSheet.create({
     marginVertical: h('1%'),
     elevation: 5,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
   image: {
     width: '100%',
     height: h('20%'),
-    resizeMode: 'cover', // Changed to cover for better image fit
+    resizeMode: 'cover',
   },
   content: {
     padding: w('4%'),
@@ -81,4 +80,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ArticleCard;
+export default CardArticle;

@@ -93,7 +93,9 @@ const styles = StyleSheet.create({
   },
   lottieAnimation: {
     width: w(60),
-    height: h(40),
+    height: h(20),
+    // backgroundColor: 'red',
+    left:w(-10),
   },
 });
 
