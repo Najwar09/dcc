@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Image,
   StatusBar,
-  Switch,
+  StyleSheet,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {
@@ -15,6 +15,11 @@ import {
   heightPercentageToDP as h,
 } from '../../../responsive';
 import LogoImage from '../../assets/icons/logo.png';
+import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
+import LottieView from 'lottie-react-native';
+import animasiLoading from '../../assets/animation/LoaderPendaftaranCalgot.json';
+import {Modal} from 'react-native-paper';
+import {Picker} from '@react-native-picker/picker';
 
 const FormRegis = () => {
   const navigation = useNavigation();
@@ -33,9 +38,20 @@ const FormRegis = () => {
   const [wanita, setWanita] = useState('');
 
   const [alamat, setAlamat] = useState('');
+  const [asal, setAsal] = useState('');
+  const [agama, setAgama] = useState('');
+  const [namaAyah, setNamaAyah] = useState('');
+  const [namaIbu, setNamaIbu] = useState('');
+  const [organisasi, setOrganisasi] = useState('');
+  const [alasanDaftar, setAlasanDaftar] = useState('');
+
+  const [isLoading, setLoading] = useState(false);
+  const [speed, setSpeed] = useState(0.8);
 
   // fungsi ini dijalankan ketika tombol Next ditekan
   const handleSubmission = async () => {
+    // membuat kode random
+    const uniqueNumber = Math.floor(10000 + Math.random() * 90000);
     // membuat const untuk menampung semua nilai dari useState form
     const newParticipant = {
       nama,
@@ -47,8 +63,25 @@ const FormRegis = () => {
       tanggalLahir,
       jenisKelamin,
       alamat,
+      asal,
+      agama,
+      namaAyah,
+      namaIbu,
+      organisasi,
+      alasanDaftar,
+      uniqueNumber,
     };
-    return navigation.navigate('Form2', {newParticipant});
+    // POST DATA
+    try {
+      await axios.post('http://10.0.2.2:3000/participants', newParticipant);
+      // setelah data berhasil disimpan, kemudian pindah ke afterForm dan kirim nilai uniquNumberset
+      setLoading(true);
+      setTimeout(() => {
+        navigation.replace('AfterForm', {newParticipant});
+      }, 3500);
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const validasiInput = (data, label) => {
@@ -66,7 +99,42 @@ const FormRegis = () => {
       setTempatLahir(data);
     } else if (label == 'Tanggal Lahir') {
       setTanggalLahir(data);
+    } else if (label == 'asal') {
+      setAsal(data);
+    } else if (label == 'Agama') {
+      setAgama(data);
+    } else if (label == 'Nama Ayah') {
+      setNamaAyah(data);
+    } else if (label == 'Nama Ibu') {
+      setNamaIbu(data);
+    } else if (label == 'Pengalaman Organisasi') {
+      setOrganisasi(data);
+    } else if (label == 'Alasan') {
+      setAlasanDaftar(data);
     }
+  };
+
+  // Inputan Tanggal Lahir
+  const validasiDate = () => {
+    DateTimePickerAndroid.open({
+      mode: 'date',
+      value: new Date(),
+      onChange: (event, selectedDate) => {
+        if (selectedDate) {
+          setTanggalLahir(formatDate(selectedDate));
+        }
+      },
+    });
+  };
+
+  // Format Inputan Tanggal Lahir
+  const formatDate = date => {
+    const options = {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    };
+    return date.toLocaleString(undefined, options);
   };
 
   const inputKolom = () => {
@@ -128,30 +196,120 @@ const FormRegis = () => {
             }}>
             {label}
           </Text>
-          <TextInput
-            keyboardType={type}
-            placeholder={placeholder}
-            placeholderTextColor={'#595959'}
-            style={{
-              width: w(93),
-              height: h(6),
-              backgroundColor: '#F0F4F7',
-              elevation: 2,
-              borderRadius: w(4),
-              paddingLeft: w(4),
-              fontStyle: 'italic',
-            }}
-            onChangeText={data => validasiInput(data, label)}
-          />
+          {label == 'Tanggal Lahir' ? (
+            <TextInput
+              value={tanggalLahir}
+              keyboardType={type}
+              placeholder={placeholder}
+              placeholderTextColor={'#595959'}
+              style={{
+                width: w(93),
+                height: h(6),
+                backgroundColor: '#F0F4F7',
+                elevation: 2,
+                borderRadius: w(4),
+                paddingLeft: w(4),
+                fontStyle: 'italic',
+              }}
+              onPress={() => validasiDate()}></TextInput>
+          ) : (
+            <TextInput
+              keyboardType={type}
+              placeholder={placeholder}
+              placeholderTextColor={'#595959'}
+              style={{
+                width: w(93),
+                height: h(6),
+                backgroundColor: '#F0F4F7',
+                elevation: 2,
+                borderRadius: w(4),
+                paddingLeft: w(4),
+                fontStyle: 'italic',
+              }}
+              onChangeText={data => validasiInput(data, label)}
+            />
+          )}
         </View>
       );
     });
   };
 
-  const ubahKelamin = (nilai, jenis) => {
-    jenis == 'Laki-Laki' ? setPria(nilai) : setPria(null);
-    jenis == 'Perempuan' ? setWanita(nilai) : setWanita(null);
+  const ubahKelamin = jenis => {
+    jenis == 'Pria' ? setPria(jenis) : setPria(null);
+    jenis == 'Wanita' ? setWanita(jenis) : setWanita(null);
     setJenisKelamin(jenis);
+  };
+
+  const inputKelamin = () => {
+    return (
+      <View
+        style={{
+          marginTop: h(3),
+          flex: 1,
+          marginLeft: w(4),
+          height: h(8),
+        }}>
+        <Text
+          style={{
+            fontSize: w(4),
+            color: '#000000',
+            fontWeight: 'bold',
+            marginLeft: w(4),
+            bottom: h(1),
+          }}>
+          Jenis Kelamin
+        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: h(0.6),
+          }}>
+          <TouchableOpacity
+            style={{
+              width: w(5),
+              height: h(2.5),
+              borderRadius: w(8),
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderColor: 'black',
+              borderWidth: w(0.6),
+              marginRight: w(2),
+              marginLeft: w(4),
+            }}
+            onPress={() => ubahKelamin('Pria')}>
+            {pria == 'Pria' ? (
+              <Image
+                source={require('../../assets/icons/check.png')}
+                style={{width: w(4), height: h(2)}}
+              />
+            ) : null}
+          </TouchableOpacity>
+          <Text>Pria</Text>
+          <TouchableOpacity
+            style={{
+              width: w(5),
+              height: h(2.5),
+              borderRadius: w(8),
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderColor: 'black',
+              borderWidth: w(0.6),
+              marginRight: w(2),
+              marginLeft: w(4),
+            }}
+            onPress={() => ubahKelamin('Wanita')}>
+            {wanita == 'Wanita' ? (
+              <Image
+                source={require('../../assets/icons/check.png')}
+                style={{width: w(4), height: h(2)}}
+              />
+            ) : null}
+          </TouchableOpacity>
+          <Text>Wanita</Text>
+        </View>
+      </View>
+    );
   };
   return (
     <ScrollView
@@ -183,48 +341,7 @@ const FormRegis = () => {
         </Text>
       </View>
       {inputKolom()}
-      <View
-        style={{
-          marginTop: h(3),
-          flex: 1,
-          marginLeft: w(4),
-          height: h(8),
-        }}>
-        <Text
-          style={{
-            fontSize: w(4),
-            color: '#000000',
-            fontWeight: 'bold',
-            marginLeft: w(4),
-            bottom: h(1),
-          }}>
-          Jenis Kelamin
-        </Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
-          <Switch
-            trackColor={{false: '#767577', true: '#81b0ff'}}
-            thumbColor={pria ? '#5B85D8' : '#f4f3f4'}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={nilai => ubahKelamin(nilai, 'Laki-Laki')}
-            value={pria}
-            style={{marginLeft: w(6)}}
-          />
-          <Text>Laki-Laki</Text>
-          <Switch
-            trackColor={{false: '#767577', true: '#81b0ff'}}
-            thumbColor={wanita ? '#5B85D8' : '#f4f3f4'}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={nilai => ubahKelamin(nilai, 'Perempuan')}
-            value={wanita}
-            style={{marginLeft: w(6)}}
-          />
-          <Text>Perempuan</Text>
-        </View>
-      </View>
+      {inputKelamin()}
       <View
         style={{
           marginTop: h(2),
@@ -289,4 +406,19 @@ const FormRegis = () => {
     </ScrollView>
   );
 };
+
 export default FormRegis;
+const style = StyleSheet.create({
+  pickerContainer: {
+    width: w(93),
+    height: h(6),
+    backgroundColor: '#F0F4F7',
+    elevation: 2,
+    borderRadius: w(12),
+    paddingLeft: w(1),
+    fontStyle: 'italic',
+  },
+  picker: {
+    marginTop: h(-0.4),
+  },
+});

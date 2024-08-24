@@ -15,7 +15,6 @@ import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
 } from '../../../responsive';
-import AfterForm from '../AfterForm';
 import LogoImage from '../../assets/icons/logo.png';
 import axios from 'axios';
 import LottieView from 'lottie-react-native';
