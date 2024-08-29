@@ -11,7 +11,6 @@ import {
   Alert,
 } from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import axios from 'axios';
 import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
@@ -19,7 +18,7 @@ import {
 import LogoImage from '../../assets/icons/logo.png';
 import {Picker} from '@react-native-picker/picker';
 import {launchImageLibrary} from 'react-native-image-picker';
-import {Buffer} from 'buffer'; // Import Buffer if needed for base64 encoding
+import axios from 'axios';
 
 const Form2 = () => {
   const navigation = useNavigation();
@@ -42,7 +41,7 @@ const Form2 = () => {
   const [Mother, setMother] = useState('');
   const [Organization, setOrganization] = useState('');
   const [Reason, setReason] = useState('');
-  const [photoUri, setPhotoUri] = useState('');
+  const [photoUri, setPhotoUri] = useState(null);
 
   const handleChoosePhoto = () => {
     launchImageLibrary({mediaType: 'photo'}, response => {
@@ -51,67 +50,57 @@ const Form2 = () => {
       } else if (response.errorCode) {
         Alert.alert('Error', response.errorMessage);
       } else {
-        // Convert the selected image to base64
-        const source = response.assets[0];
-        const {uri} = source;
-        // Use `fetch` to convert the image to base64
-        fetch(uri)
-          .then(res => res.blob())
-          .then(blob => {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-              const base64data = reader.result.split(',')[1]; // Get base64 part
-              setPhotoUri(base64data);
-            };
-            reader.readAsDataURL(blob);
-          });
+        const uri = response.assets[0].uri;
+        setPhotoUri(uri);
       }
     });
   };
 
+  // POST DATAS
   const PostDatas = async () => {
-    const data2 = {
-      stambuk: Nim,
-      nama: Name,
-      tempat_lahir: TempatLahir,
-      tgl_lahir: TglLahir,
-      jkl: Jkel,
-      agama: Religion,
-      no_telp: NoHp,
-      alamat: address,
-      ket: 'Belum Lulus',
-      asal: Origin,
-      nama_ayah: Father,
-      nama_ibu: Mother,
-      organisasi: Organization,
-      alasan: Reason,
-      foto: "photoUri",
-      pembayaran: 'belum',
-      status: 'pendaftar',
-      registrasi: 'belum',
-      angkatan: '27',
-      kode_unik: 'some-unique-code', 
-      skor_quiz: 0,
-      answer: 'some-answer', 
-    };
-    console.log(data2);
+    const formData = new FormData();
+    formData.append('stambuk', Nim);
+    formData.append('nama', Name);
+    formData.append('tempat_lahir', TempatLahir);
+    formData.append('tgl_lahir', TglLahir);
+    formData.append('jkl', Jkel);
+    formData.append('agama', Religion);
+    formData.append('no_telp', NoHp);
+    formData.append('alamat', address);
+    formData.append('ket', 'Belum Lulus');
+    formData.append('asal', Origin);
+    formData.append('nama_ayah', Father);
+    formData.append('nama_ibu', Mother);
+    formData.append('organisasi', Organization);
+    formData.append('alasan', Reason);
+
+    if (photoUri) {
+      formData.append('foto', {
+        uri: photoUri,
+        type: 'image/jpeg',
+        name: 'photo.jpg',
+      });
+    }
+
+    formData.append('angkatan', 27);
 
     try {
       const response = await axios.post(
         'https://dcc-testing.campa-bima.online/public/api/calgot/store',
-        data2,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
       );
-      console.log('Response:', response.data);
-      if (response.data.status) {
-        Alert.alert('Success', 'Data berhasil dikirim');
-      } else {
-        Alert.alert('Error', response.data.message || 'Gagal mengirim data');
-      }
+      Alert.alert('Success', 'Data berhasil dikirim');
+      console.log(response.data);
     } catch (error) {
-      console.error('Error sending data:', error);
-      Alert.alert(
-        'Error',
-        'Gagal mengirim data. Periksa koneksi atau format data.',
+      Alert.alert('Error', 'Gagal mengirim data');
+      console.error(
+        'Error sending data: ',
+        error.response?.data || error.message,
       );
     }
   };
@@ -126,6 +115,7 @@ const Form2 = () => {
           backgroundColor={'#ffffff'}
           showHideTransition={'slide'}
         />
+        {/* logo dcc */}
         <View style={styles.logoContainer}>
           <Image
             source={LogoImage}
@@ -134,6 +124,9 @@ const Form2 = () => {
           />
           <Text style={styles.title}>Form Pendaftaran</Text>
         </View>
+        {/* end logo dcc */}
+
+        {/* form */}
         <View style={styles.formGroup}>
           <Text style={styles.label}>Asal</Text>
           <TextInput
@@ -211,12 +204,11 @@ const Form2 = () => {
             <Text style={styles.imagePickerText}>Pilih Foto</Text>
           </TouchableOpacity>
           {photoUri ? (
-            <Image
-              source={{uri: `data:image/jpeg;base64,${photoUri}`}}
-              style={styles.imagePreview}
-            />
+            <Image source={{uri: photoUri}} style={styles.imagePreview} />
           ) : null}
         </View>
+        {/* end form */}
+
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={PostDatas}>
             <Text style={styles.buttonText}>SELESAI</Text>
@@ -246,64 +238,70 @@ const styles = StyleSheet.create({
   title: {
     textTransform: 'uppercase',
     color: 'black',
-    fontSize: w(4.5),
     fontWeight: 'bold',
+    fontSize: w(6),
   },
   formGroup: {
-    marginHorizontal: w(5),
-    marginBottom: h(2),
+    marginTop: h(3),
+    marginHorizontal: w(4),
   },
   label: {
     fontSize: w(4),
-    color: 'black',
+    color: '#000000',
+    fontWeight: 'bold',
     marginBottom: h(1),
   },
   input: {
-    height: h(6),
-    borderColor: '#e0e0e0',
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: w(2),
-    fontSize: w(3.5),
-    color: 'black',
-  },
-  pickerContainer: {
-    borderColor: '#e0e0e0',
-    borderWidth: 1,
-    borderRadius: 5,
-  },
-  picker: {
-    height: h(6),
-    width: '100%',
+    width: w(93),
+    backgroundColor: '#F0F4F7',
+    elevation: 2,
+    borderRadius: w(4),
+    paddingLeft: w(4),
+    fontStyle: 'italic',
+    color: '#000000',
+    height: h(7),
   },
   textArea: {
-    height: h(10),
-    borderColor: '#e0e0e0',
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: w(2),
-    fontSize: w(3.5),
-    color: 'black',
+    width: w(93),
+    backgroundColor: '#F0F4F7',
+    elevation: 2,
+    borderRadius: w(4),
+    paddingLeft: w(4),
+    fontStyle: 'italic',
+    color: '#000000',
     textAlignVertical: 'top',
+    height: h(18),
+  },
+  pickerContainer: {
+    width: w(93),
+    backgroundColor: '#F0F4F7',
+    elevation: 2,
+    borderRadius: w(4),
+    marginTop: h(1),
+  },
+  picker: {
+    width: '100%',
+    height: h(6),
   },
   imagePicker: {
-    height: h(6),
-    borderColor: '#e0e0e0',
-    borderWidth: 1,
-    borderRadius: 5,
+    width: w(93),
+    height: h(7),
+    backgroundColor: '#F0F4F7',
+    elevation: 2,
+    borderRadius: w(4),
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f0f0f0',
+    marginTop: h(1),
   },
   imagePickerText: {
-    fontSize: w(3.5),
     color: '#007bff',
+    fontSize: w(4),
   },
   imagePreview: {
-    width: w(30),
-    height: h(20),
-    marginTop: h(1),
-    borderRadius: 5,
+    width: w(93),
+    height: h(25),
+    borderRadius: w(4),
+    marginTop: h(2),
   },
   buttonContainer: {
     alignItems: 'center',
@@ -311,14 +309,16 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#007bff',
-    paddingVertical: h(1.5),
-    paddingHorizontal: w(5),
-    borderRadius: 5,
+    width: w(93),
+    height: h(7),
+    borderRadius: w(4),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   buttonText: {
     color: '#ffffff',
-    fontSize: w(4),
     fontWeight: 'bold',
+    fontSize: w(5),
   },
 });
 
