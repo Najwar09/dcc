@@ -29,7 +29,6 @@ import Game from '../../assets/icons/Game.png';
 import {removeItem} from '../../../utils/asyncStorate';
 import axios from 'axios';
 
-
 const Home = () => {
   const navigation = useNavigation();
   const [showLottie, setShowLottie] = useState(true);
@@ -49,7 +48,6 @@ const Home = () => {
       </View>
     </TouchableOpacity>
   );
-
 
   const Reset = async () => {
     await removeItem('onboarded');
@@ -71,7 +69,7 @@ const Home = () => {
     {
       icon: OnlineRegistration,
       label: 'Daftar DCC',
-      action: () => navigation.navigate('BeforeForm'),
+      action: () => navigation.navigate('cekStambuk'),
     },
   ];
 

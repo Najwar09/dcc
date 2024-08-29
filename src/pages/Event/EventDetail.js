@@ -24,52 +24,52 @@ const EventDetail = () => {
   const data = route.params.item;
   const navigation = useNavigation();
 
-  const speaker = data => {
-    return data.map((item, key) => {
-      return (
-        <View
-          key={key}
-          style={{
-            marginLeft: w(4.5),
-            marginRight: w(6),
-            marginTop: h(0.5),
-            alignItems: 'center',
-            height: h(16),
-          }}>
-          <Image
-            source={{uri: item.gambarS}}
-            style={{
-              width: w(20.5),
-              height: h(10.3),
-              borderRadius: w(10),
-              elevation: 3,
-            }}
-          />
-          <View
-            style={{
-              height: h(3.5),
-              backgroundColor: '#80AF81',
-              marginTop: h(1),
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: w(3),
-              elevation: 1,
-            }}>
-            <Text
-              style={{
-                color: 'black',
-                marginLeft: w(2),
-                marginRight: w(2.5),
-                fontSize: w(3),
-                fontFamily: 'Poppins-Regular',
-              }}>
-              {item.tipe} : <Text>{item.speakerD}</Text>
-            </Text>
-          </View>
-        </View>
-      );
-    });
-  };
+  // const speaker = data => {
+  //   return data.map((item, key) => {
+  //     return (
+  //       <View
+  //         key={key}
+  //         style={{
+  //           marginLeft: w(4.5),
+  //           marginRight: w(6),
+  //           marginTop: h(0.5),
+  //           alignItems: 'center',
+  //           height: h(16),
+  //         }}>
+  //         <Image
+  //           source={{uri: item.gambarS}}
+  //           style={{
+  //             width: w(20.5),
+  //             height: h(10.3),
+  //             borderRadius: w(10),
+  //             elevation: 3,
+  //           }}
+  //         />
+  //         <View
+  //           style={{
+  //             height: h(3.5),
+  //             backgroundColor: '#80AF81',
+  //             marginTop: h(1),
+  //             alignItems: 'center',
+  //             justifyContent: 'center',
+  //             borderRadius: w(3),
+  //             elevation: 1,
+  //           }}>
+  //           <Text
+  //             style={{
+  //               color: 'black',
+  //               marginLeft: w(2),
+  //               marginRight: w(2.5),
+  //               fontSize: w(3),
+  //               fontFamily: 'Poppins-Regular',
+  //             }}>
+  //             {item.tipe} : <Text>{item.speakerD}</Text>
+  //           </Text>
+  //         </View>
+  //       </View>
+  //     );
+  //   });
+  // };
 
   return (
     <View
@@ -86,10 +86,10 @@ const EventDetail = () => {
           barStyle={'light-content'}
         />
         <Image
-          source={{uri: data.gambar}}
+          source={{uri: data.image}}
           resizeMode={'cover'}
           style={{
-            width: '100%',
+            width: w(100),
             height: h(47),
             borderBottomLeftRadius: w(20),
             marginBottom: h(14),
@@ -133,7 +133,7 @@ const EventDetail = () => {
         </TouchableOpacity>
         <JadwalD data={data} />
 
-        {data.judul == 'Pendaftaran Calon Anggota' ? (
+        {/* {data.judul == 'Pendaftaran Calon Anggota' ? (
           ''
         ) : (
           <ScrollView
@@ -145,28 +145,33 @@ const EventDetail = () => {
             }}>
             {speaker(data.speaker)}
           </ScrollView>
-        )}
+        )} */}
 
         <View
           style={{
             marginLeft: w(7.5),
             marginRight: w(8.4),
-            marginTop: h(-2),
+            marginTop: h(-0.5),
             marginBottom: h(2),
           }}>
-          <Text style={{fontFamily: 'Poppins-SemiBold', color: 'black'}}>
+          <Text
+            style={{
+              fontFamily: 'Poppins-SemiBold',
+              color: 'black',
+              fontSize: w(4.5),
+            }}>
             About Event
           </Text>
           <Text
             style={{
               textAlign: 'justify',
               fontFamily: 'Poppins-Regular',
-              fontSize: w(3.1),
+              fontSize: w(3.5),
             }}>
-            {data.about}
+            {data.content}
           </Text>
 
-          {data.judul == 'Pendaftaran Calon Anggota' ? (
+          {data.title == 'Pendaftaran Calon Anggota' ? (
             <TouchableOpacity
               style={{
                 backgroundColor: '#3FA2F6',

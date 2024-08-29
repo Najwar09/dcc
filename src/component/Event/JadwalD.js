@@ -12,13 +12,13 @@ const JadwalD = ({data}) => {
       style={{
         backgroundColor: '#ffffff',
         width: w(53),
-        height: data.judul == 'Pendaftaran Calon Anggota' ? h(22) : h(19.5),
+        height: data.title == 'Pendaftaran Calon Anggota' ? h(22) : h(19.5),
         borderTopRightRadius: w(8),
         borderTopLeftRadius: w(8),
         borderBottomLeftRadius: w(2.9),
         borderBottomRightRadius: w(2.9),
         position: 'absolute',
-        top: data.judul == 'Pendaftaran Calon Anggota' ? h(34) : h(36),
+        top: data.title == 'Pendaftaran Calon Anggota' ? h(34) : h(36),
         left: w(25),
         elevation: 3,
       }}>
@@ -28,18 +28,20 @@ const JadwalD = ({data}) => {
         }}>
         <Text
           style={{
-            fontSize: w(3.6),
-            marginTop: h(1.2),
+            fontSize: w(4.8),
+            marginTop: h(2),
             width: w(50),
             color: 'black',
             fontFamily: 'Poppins-SemiBold',
             textAlign: 'center',
           }}>
-          {data.judul}
+          {data.title}
         </Text>
-        <Text style={{fontSize: w(2.8), color: 'black', marginTop: h(-0.1)}}>
-          {data.tema}
-        </Text>
+        {data.tema ? (
+          <Text style={{fontSize: w(3.8), color: 'black', marginTop: h(-0.1)}}>
+            {data.tema}
+          </Text>
+        ) : null}
       </View>
       <View
         style={{
@@ -47,15 +49,15 @@ const JadwalD = ({data}) => {
           marginLeft: w(3.6),
           flexDirection: 'row',
         }}>
-        <Icon name="calendar-alt" size={w(3.6)} color={'#51A9F4'} />
+        <Icon name="calendar-alt" size={w(5)} color={'#51A9F4'} />
         <Text
           style={{
-            fontSize: w(2.6),
+            fontSize: w(3.6),
             fontFamily: 'Poppins-Regular',
             marginLeft: w(4),
             color: 'black',
           }}>
-          {data.jadwal}
+          {data.start_date}
         </Text>
       </View>
       <View
@@ -64,15 +66,15 @@ const JadwalD = ({data}) => {
           marginLeft: w(3.3),
           flexDirection: 'row',
         }}>
-        <Icon name="stopwatch" size={w(3.6)} color={'#51A9F4'} />
+        <Icon name="stopwatch" size={w(5)} color={'#51A9F4'} />
         <Text
           style={{
-            fontSize: w(2.6),
+            fontSize: w(3.6),
             fontFamily: 'Poppins-Regular',
             marginLeft: w(4.4),
             color: 'black',
           }}>
-          {data.waktu}
+          13:00
         </Text>
       </View>
 
@@ -82,18 +84,18 @@ const JadwalD = ({data}) => {
           marginLeft: w(3.6),
           flexDirection: 'row',
         }}>
-        <Icon name="map-marker-alt" size={w(3.6)} color={'#51A9F4'} />
+        <Icon name="map-marker-alt" size={w(5)} color={'#51A9F4'} />
         <Text
           style={{
-            fontSize: w(2.6),
+            fontSize: w(3.6),
             fontFamily: 'Poppins-Regular',
             marginLeft: w(4.5),
             color: 'black',
           }}>
-          {data.lokasi}
+          {data.location}
         </Text>
       </View>
-      <View
+      {/* <View
         style={{
           marginTop: h(0.4),
           marginLeft: w(3.8),
@@ -110,13 +112,13 @@ const JadwalD = ({data}) => {
           }}>
           {data.lokasiD}
         </Text>
-      </View>
+      </View> */}
       <View
         style={{
           width: w(26),
           backgroundColor: '#51A9F4',
           height: h(0.3),
-          bottom: data.judul == 'Pendaftaran Calon Anggota' ? h(-2.2) : h(-2.2),
+          bottom: data.title == 'Pendaftaran Calon Anggota' ? h(-2.2) : h(-2.8),
           marginLeft: w(13),
           elevation: 1,
         }}

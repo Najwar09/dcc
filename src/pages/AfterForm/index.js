@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, StyleSheet, Pressable, Alert} from 'react-native';
 import LottieView from 'lottie-react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {
@@ -8,11 +8,33 @@ import {
 } from '../../../responsive';
 import successAnimation from '../../assets/animation/done.json';
 import {useRoute, useNavigation} from '@react-navigation/native';
+import axios from 'axios';
 
 const AfterForm = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const code = route.params.newParticipant2;
+  const code = route.params.formData;
+  const [kode, setKode] = useState('');
+
+  const ambilData = async () => {
+    try {
+      const response = await axios.get(
+        'https://dcc-testing.campa-bima.online/public/api/calgot',
+      );
+      const data = await response.data.data;
+      const kodeUnikPeserta = data.find(
+        item => item.kode_unik == code.kode_unik,
+      );
+      if (kodeUnikPeserta) {
+        setKode(kodeUnikPeserta);
+        console.log(kode);
+      }
+    } catch (error) {
+      Alert.alert('INFO', error);
+    }
+  };
+
+  ambilData();
 
   const handleContinue = () => {
     navigation.navigate('Home');
@@ -39,18 +61,18 @@ const AfterForm = () => {
         Terima kasih telah mendaftar dengan kami.
       </Text>
 
-      <View style={{alignItems: 'center', marginTop: h(4.5)}}>
+      {/* <View style={{alignItems: 'center', marginTop: h(4.5)}}>
         <Text style={{color: 'black', fontSize: w(4), fontStyle: 'italic'}}>
           Silahkan isi Quiz Dengan
         </Text>
         <Text style={{color: 'black', fontSize: w(4), fontStyle: 'italic'}}>
           Kode Dibawah ini!
         </Text>
-      </View>
-      <View style={styles.codeContainer}>
+      </View> */}
+      {/* <View style={styles.codeContainer}>
         <Text style={styles.codeLabel}>Kode Unik Anda:</Text>
-        <Text style={styles.code}>{code.uniqueNumber}</Text>
-      </View>
+        <Text style={styles.code}>{kode}</Text>
+      </View> */}
       <Pressable
         style={({pressed}) => [
           {

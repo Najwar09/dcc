@@ -2,26 +2,18 @@ import {View, Text, Image, TouchableOpacity, FlatList} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
 import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
 } from '../../../responsive';
 
-const Content = () => {
+const Content = ({event}) => {
   const navigation = useNavigation();
-  const [event, setEvent] = useState();
-
-  useEffect(() => {
-    fetch('http://10.0.2.2:3000/Event/')
-      .then(res => res.json())
-      .then(data => setEvent(data));
-
-    // tarik();
-  }, []);
 
   // const tarik = async () => {
   //   try {
-  //     const response = await fetch('http://10.0.2.2:3000/Event/');
+  //     const response = await fetch('https://dcc-testing.campa-bima.online/public/api/agenda');
   //     const data = await response.json();
   //     console.log(data);
   //   } catch (error) {
@@ -56,24 +48,24 @@ const Content = () => {
       </View>
     );
   };
-  const lokasi = lokasi => {
+  const lokasi = location => {
     return (
       <View style={{flexDirection: 'row', marginTop: h(1.4)}}>
         <Icon
           name="map-marker-alt"
           color={'black'}
-          size={w(3.7)}
+          size={w(4.6)}
           style={{marginLeft: w(2.8)}}
         />
 
         <Text
           style={{
-            fontSize: w(2.6),
-            fontFamily: 'Poppins-Regular',
+            fontSize: w(3.2),
             color: 'black',
+            fontFamily: 'Poppins-Regular',
             marginLeft: w(2.6),
           }}>
-          {lokasi}
+          {location}
         </Text>
       </View>
     );
@@ -103,7 +95,7 @@ const Content = () => {
             }}>
             <View style={{alignItems: 'center', marginTop: 6}}>
               <Image
-                source={{uri: item.gambar}}
+                source={{uri: item.image}}
                 style={{
                   width: w(49),
                   height: h(22),
@@ -112,44 +104,14 @@ const Content = () => {
                 }}
               />
             </View>
-            {item.judul == 'Pendaftaran Calon Anggota' ? '' : free()}
-
-            <View
-              style={{
-                width: w(11.5),
-                height: h(2.4),
-                backgroundColor: '#ffffff',
-                borderTopRightRadius: w(1),
-                borderBottomRightRadius: w(1),
-                position: 'absolute',
-                top: w(18),
-                left: w(-0.2),
-                alignItems: 'center',
-                flexDirection: 'row',
-              }}>
-              <Image
-                source={require('../../assets/images/event/starRate.png')}
-                resizeMode="cover"
-                style={{width: w(3), height: h(1.6), marginLeft: w(1.5)}}
-              />
-              <Text
-                style={{
-                  marginLeft: w(0.8),
-                  marginTop: h(0.2),
-                  color: 'black',
-                  fontSize: w(3),
-                  fontFamily: 'Poppins-Regular',
-                }}>
-                {item.rate}
-              </Text>
-            </View>
+            {item.title == 'Pendaftaran Calon Anggota' ? '' : free()}
 
             <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'center',
                 height:
-                  item.judul == 'Pendaftaran Calon Anggota' ? h(7.2) : h(4.2),
+                  item.title == 'Pendaftaran Calon Anggota' ? h(7.2) : h(4.2),
                 marginTop: h(0.5),
               }}>
               <Text
@@ -157,57 +119,43 @@ const Content = () => {
                   fontWeight: 'semibold',
                   fontFamily: 'Itim-Regular',
                   color: 'black',
-                  fontSize: w(4.6),
+                  fontSize: w(5),
                   textAlign: 'center',
                 }}>
-                {item.judul}
+                {item.title}
               </Text>
-              <TouchableOpacity
-                style={{
-                  width: w(6.5),
-                  height: h(3.3),
-                  backgroundColor: '#ffffff',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRadius: w(5),
-                  marginLeft: w(1),
-                }}>
-                <Image
-                  source={require('../../assets/images/event/like.png')}
-                  style={{width: w(4), height: h(2), marginTop: h(0.3)}}
-                  resizeMode="center"
-                />
-              </TouchableOpacity>
             </View>
-            <Text
-              style={{
-                color: '#ffffff',
-                fontFamily: 'Poppins-SemiBold',
-                fontSize: w(2.5),
-                marginLeft: w(4.5),
-              }}>
-              Tema : {item.tema}
-            </Text>
+            {item.tema ? (
+              <Text
+                style={{
+                  color: '#ffffff',
+                  fontFamily: 'Poppins-SemiBold',
+                  fontSize: w(2.5),
+                  marginLeft: w(4.5),
+                }}>
+                Tema : {item.tema}
+              </Text>
+            ) : null}
             <View style={{flexDirection: 'row', marginTop: h(1.4)}}>
               <Icon
                 name="calendar-alt"
                 color={'black'}
-                size={w(3.5)}
+                size={w(4.6)}
                 style={{marginLeft: w(2.5)}}
               />
               <Text
                 style={{
                   color: 'black',
-                  fontSize: w(2.6),
+                  fontSize: w(3.4),
                   fontFamily: 'Poppins-Regular',
                   marginLeft: w(2.8),
                 }}>
-                {item.jadwal}
+                {item.start_date}
               </Text>
             </View>
-            {item.judul == 'Pendaftaran Calon Anggota'
+            {item.title == 'Pendaftaran Calon Anggota'
               ? ''
-              : lokasi(item.lokasi)}
+              : lokasi(item.location)}
 
             <TouchableOpacity
               onPress={() => navigation.navigate('EventDetail', {item})}
