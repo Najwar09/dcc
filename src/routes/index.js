@@ -24,6 +24,7 @@ import YouTubeVideos from '../pages/Youtube';
 import Event from '../pages/Event';
 import EventDetail from '../pages/Event/EventDetail';
 import ArticleDetail from '../pages/Article/DetailArticle';
+import CekNim from '../pages/ceknim';
 
 const Tab = createBottomTabNavigator();
 
@@ -146,6 +147,7 @@ export default function Router() {
         <Stack.Screen name="Article" component={Article} />
         <Stack.Screen name="ArticleDetails" component={ArticleDetail} />
         <Stack.Screen name="EventDetail" component={EventDetail} />
+        <Stack.Screen name="CekNim" component={CekNim} />
         <Stack.Screen name="Form2" component={Form2} />
       </Stack.Navigator>
     </NavigationContainer>

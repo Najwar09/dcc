@@ -71,7 +71,7 @@ const Home = () => {
     {
       icon: OnlineRegistration,
       label: 'Daftar DCC',
-      action: () => navigation.navigate('BeforeForm'),
+      action: () => navigation.navigate('CekNim'),
     },
   ];
 

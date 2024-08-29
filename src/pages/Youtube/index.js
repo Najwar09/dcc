@@ -14,18 +14,18 @@ import {
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {WebView} from 'react-native-webview';
+import Orientation from 'react-native-orientation-locker'; // Import Orientation
 import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
 } from '../../../responsive';
 
-// API Key dan Channel ID untuk YouTube
 const YOUTUBE_API_KEY = 'AIzaSyAPTWnZDRB2lT4ZF4lUhWY5stZ4s5eLnJc';
 const CHANNEL_ID = 'UCLPgZFt84PFzFLTEFwpNyog';
 
 const YouTubeVideos = () => {
   const [videos, setVideos] = useState([]);
-  const [allVideos, setAllVideos] = useState([]); // State untuk menyimpan semua video
+  const [allVideos, setAllVideos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [playlists, setPlaylists] = useState([]);
   const [selectedVideoId, setSelectedVideoId] = useState(null);
@@ -49,7 +49,6 @@ const YouTubeVideos = () => {
       );
       setPlaylists(res.data.items);
 
-      // Ambil video dari semua playlist
       if (res.data.items.length > 0) {
         fetchAllVideos(res.data.items);
       }
@@ -77,8 +76,8 @@ const YouTubeVideos = () => {
         );
         allVideos = [...allVideos, ...res.data.items];
       }
-      setAllVideos(allVideos); // Simpan semua video
-      setVideos(allVideos); // Tampilkan semua video secara default
+      setAllVideos(allVideos);
+      setVideos(allVideos);
       setIsLoading(false);
     } catch (error) {
       console.error('Error fetching all videos:', error);
@@ -156,6 +155,14 @@ const YouTubeVideos = () => {
     </TouchableOpacity>
   );
 
+  useEffect(() => {
+    if (selectedVideoId) {
+      Orientation.lockToLandscape(); // Kunci orientasi ke landscape
+    } else {
+      Orientation.lockToPortrait(); // Kembalikan ke potrait
+    }
+  }, [selectedVideoId]);
+
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
@@ -199,6 +206,8 @@ const YouTubeVideos = () => {
     </View>
   );
 };
+
+
 
 export default YouTubeVideos;
 

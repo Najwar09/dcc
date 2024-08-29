@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -7,280 +8,318 @@ import {
   StatusBar,
   Image,
   StyleSheet,
+  Alert,
 } from 'react-native';
-import React, {useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
-import {useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import axios from 'axios';
 import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
 } from '../../../responsive';
-import AfterForm from '../AfterForm';
 import LogoImage from '../../assets/icons/logo.png';
-import axios from 'axios';
-import LottieView from 'lottie-react-native';
-import animasiLoading from '../../assets/animation/LoaderPendaftaranCalgot.json';
-import {Modal} from 'react-native-paper';
 import {Picker} from '@react-native-picker/picker';
+import {launchImageLibrary} from 'react-native-image-picker';
+import {Buffer} from 'buffer'; // Import Buffer if needed for base64 encoding
 
 const Form2 = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const data = route.params.newParticipant;
 
-  const [asal, setAsal] = useState('');
-  const [agama, setAgama] = useState('');
-  const [namaAyah, setNamaAyah] = useState('');
-  const [namaIbu, setNamaIbu] = useState('');
-  const [organisasi, setOrganisasi] = useState('');
-  const [alasanDaftar, setAlasanDaftar] = useState('');
+  // data form pertama
+  const Name = route.params?.Name2;
+  const Nim = route.params?.Nim2;
+  const Email = route.params?.Email2;
+  const NoHp = route.params?.NoHp2;
+  const TempatLahir = route.params?.TempatLahir2;
+  const TglLahir = route.params?.TglLahir2;
+  const Jkel = route.params?.Jkel2;
+  const address = route.params?.address2;
 
-  const [isLoading, setLoading] = useState(false);
-  const [speed, setSpeed] = useState(0.8);
+  // data form kedua
+  const [Origin, setOrigin] = useState('');
+  const [Religion, setReligion] = useState('');
+  const [Father, setFather] = useState('');
+  const [Mother, setMother] = useState('');
+  const [Organization, setOrganization] = useState('');
+  const [Reason, setReason] = useState('');
+  const [photoUri, setPhotoUri] = useState('');
 
-  const handleRegis = async ({
-    nama,
-    nim,
-    email,
-    noTelpon,
-    angkatan,
-    tempatLahir,
-    tanggalLahir,
-    jenisKelamin,
-    alamat,
-  }) => {
-    // membuat kode random
-    const uniqueNumber = Math.floor(10000 + Math.random() * 90000);
-    const newParticipant2 = {
-      nama,
-      nim,
-      email,
-      noTelpon,
-      angkatan,
-      tempatLahir,
-      tanggalLahir,
-      jenisKelamin,
-      alamat,
-      asal,
-      agama,
-      namaAyah,
-      namaIbu,
-      organisasi,
-      alasanDaftar,
-      uniqueNumber,
-    };
-    // POST DATA
-    try {
-      await axios.post('http://10.0.2.2:3000/participants', newParticipant2);
-      // setelah data berhasil disimpan, kemudian pindah ke afterForm dan kirim nilai uniquNumberset
-      setLoading(true);
-      setTimeout(() => {
-        navigation.replace('AfterForm', {newParticipant2});
-      }, 3500);
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-
-  const validasiInput = (data, label) => {
-    if (label == 'Asal') {
-      setAsal(data);
-    } else if (label == 'Agama') {
-      setAgama(data);
-    } else if (label == 'Nama Ayah') {
-      setNamaAyah(data);
-    } else if (label == 'Nama Ibu') {
-      setNamaIbu(data);
-    } else if (label == 'Pengalaman Organisasi') {
-      setOrganisasi(data);
-    } else if (label == 'Alasan') {
-      setAlasanDaftar(data);
-    }
-  };
-
-  const inputKolom = () => {
-    const data = [
-      {
-        placeholder: 'Masukkan Asal Anda',
-        label: 'Asal',
-      },
-      {
-        placeholder: 'Masukkan Agama Anda',
-        label: 'Agama',
-      },
-      {
-        placeholder: 'Masukkan Nama Ayah Anda',
-        label: 'Nama Ayah',
-      },
-      {
-        placeholder: 'Masukkan Nama Ibu Anda',
-        label: 'Nama Ibu',
-      },
-      {
-        placeholder: 'Masukkan Pengalaman Organisasi Anda',
-        label: 'Pengalaman Organisasi',
-      },
-      {
-        placeholder: 'Alasan Anda Bergabung Dengan DCC',
-        label: 'Alasan',
-      },
-    ];
-
-    return data.map(({placeholder, label}, key) => {
-      return (
-        <View
-          key={key}
-          style={{
-            marginTop: label == 'Asal' ? h(5) : h(3),
-            flex: 1,
-            marginLeft: w(4),
-            height: h(10),
-          }}>
-          <Text
-            style={{
-              fontSize: w(4),
-              color: '#000000',
-              fontWeight: 'bold',
-              marginLeft: w(4),
-              bottom: h(1),
-            }}>
-            {label}
-          </Text>
-          {label == 'Agama' ? (
-            <View style={style.pickerContainer}>
-              <Picker
-                style={style.picker}
-                selectedValue={agama}
-                onValueChange={label => setAgama(label)}>
-                <Picker.Item label="Pilih Agama Anda" value="" />
-                <Picker.Item label="Islam" value="Islam" />
-                <Picker.Item label="Kristen" value="Kristen" />
-                <Picker.Item label="Katholik" value="Katholik" />
-                <Picker.Item label="Hindu" value="Hindu" />
-                <Picker.Item label="Buddha" value="Buddha" />
-                <Picker.Item label="Konghucu" value="Konghucu" />
-              </Picker>
-            </View>
-          ) : (
-            <TextInput
-              keyboardType={'default'}
-              placeholder={placeholder}
-              placeholderTextColor={'#595959'}
-              style={{
-                width: w(93),
-                height: h(6),
-                backgroundColor: '#F0F4F7',
-                elevation: 2,
-                borderRadius: w(4),
-                paddingLeft: w(4),
-                fontStyle: 'italic',
-              }}
-              onChangeText={data => validasiInput(data, label)}
-            />
-          )}
-        </View>
-      );
+  const handleChoosePhoto = () => {
+    launchImageLibrary({mediaType: 'photo'}, response => {
+      if (response.didCancel) {
+        Alert.alert('No photo selected');
+      } else if (response.errorCode) {
+        Alert.alert('Error', response.errorMessage);
+      } else {
+        // Convert the selected image to base64
+        const source = response.assets[0];
+        const {uri} = source;
+        // Use `fetch` to convert the image to base64
+        fetch(uri)
+          .then(res => res.blob())
+          .then(blob => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              const base64data = reader.result.split(',')[1]; // Get base64 part
+              setPhotoUri(base64data);
+            };
+            reader.readAsDataURL(blob);
+          });
+      }
     });
   };
 
+  const PostDatas = async () => {
+    const data2 = {
+      stambuk: Nim,
+      nama: Name,
+      tempat_lahir: TempatLahir,
+      tgl_lahir: TglLahir,
+      jkl: Jkel,
+      agama: Religion,
+      no_telp: NoHp,
+      alamat: address,
+      ket: 'Belum Lulus',
+      asal: Origin,
+      nama_ayah: Father,
+      nama_ibu: Mother,
+      organisasi: Organization,
+      alasan: Reason,
+      foto: "photoUri",
+      pembayaran: 'belum',
+      status: 'pendaftar',
+      registrasi: 'belum',
+      angkatan: '27',
+      kode_unik: 'some-unique-code', 
+      skor_quiz: 0,
+      answer: 'some-answer', 
+    };
+    console.log(data2);
+
+    try {
+      const response = await axios.post(
+        'https://dcc-testing.campa-bima.online/public/api/calgot/store',
+        data2,
+      );
+      console.log('Response:', response.data);
+      if (response.data.status) {
+        Alert.alert('Success', 'Data berhasil dikirim');
+      } else {
+        Alert.alert('Error', response.data.message || 'Gagal mengirim data');
+      }
+    } catch (error) {
+      console.error('Error sending data:', error);
+      Alert.alert(
+        'Error',
+        'Gagal mengirim data. Periksa koneksi atau format data.',
+      );
+    }
+  };
+
   return (
-    <View style={{flex: 1}}>
+    <View style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{backgroundColor: '#ffffff'}}>
+        style={styles.scrollView}>
         <StatusBar
           barStyle={'dark-content'}
           backgroundColor={'#ffffff'}
           showHideTransition={'slide'}
         />
-
-        <View
-          style={{
-            alignItems: 'center',
-          }}>
+        <View style={styles.logoContainer}>
           <Image
             source={LogoImage}
-            style={{width: w(35), height: h(35), marginTop: h(-6)}}
+            style={styles.logoImage}
             resizeMode="center"
           />
-          <Text
-            style={{
-              textTransform: 'uppercase',
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: w(6),
-              marginTop: h(-10),
-            }}>
-            Form Pendaftaran
-          </Text>
+          <Text style={styles.title}>Form Pendaftaran</Text>
         </View>
-        {inputKolom()}
-
-        <View style={{alignItems: 'center'}}>
+        <View style={styles.formGroup}>
+          <Text style={styles.label}>Asal</Text>
+          <TextInput
+            placeholder="Masukkan Asal Anda"
+            placeholderTextColor={'#595959'}
+            value={Origin}
+            onChangeText={setOrigin}
+            style={styles.input}
+          />
+        </View>
+        <View style={styles.formGroup}>
+          <Text style={styles.label}>Agama</Text>
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={Religion}
+              onValueChange={setReligion}
+              style={styles.picker}>
+              <Picker.Item label="---Pilih Agama---" value="" />
+              <Picker.Item label="Islam" value="I" />
+              <Picker.Item label="Kristen Protestan" value="KP" />
+              <Picker.Item label="Katolik" value="KK" />
+              <Picker.Item label="Hindu" value="H" />
+              <Picker.Item label="Buddha" value="B" />
+              <Picker.Item label="Konghucu" value="KH" />
+            </Picker>
+          </View>
+        </View>
+        <View style={styles.formGroup}>
+          <Text style={styles.label}>Nama Ayah</Text>
+          <TextInput
+            placeholder="Masukkan Nama Ayah Anda"
+            placeholderTextColor={'#595959'}
+            value={Father}
+            onChangeText={setFather}
+            style={styles.input}
+          />
+        </View>
+        <View style={styles.formGroup}>
+          <Text style={styles.label}>Nama Ibu</Text>
+          <TextInput
+            placeholder="Masukkan Nama Ibu Anda"
+            placeholderTextColor={'#595959'}
+            value={Mother}
+            onChangeText={setMother}
+            style={styles.input}
+          />
+        </View>
+        <View style={styles.formGroup}>
+          <Text style={styles.label}>Pengalaman Organisasi</Text>
+          <TextInput
+            placeholder="Masukkan Pengalaman Organisasi Anda"
+            placeholderTextColor={'#595959'}
+            value={Organization}
+            onChangeText={setOrganization}
+            style={styles.textArea}
+            multiline
+          />
+        </View>
+        <View style={styles.formGroup}>
+          <Text style={styles.label}>Alasan</Text>
+          <TextInput
+            placeholder="Alasan Anda Bergabung Dengan DCC"
+            placeholderTextColor={'#595959'}
+            value={Reason}
+            onChangeText={setReason}
+            style={styles.textArea}
+            multiline
+          />
+        </View>
+        <View style={styles.formGroup}>
+          <Text style={styles.label}>Masukkan Foto</Text>
           <TouchableOpacity
-            style={{
-              height: h(6),
-              width: w(42),
-              borderRadius: w(8),
-              backgroundColor: '#3570E4',
-              marginBottom: h(3),
-              marginTop: h(4),
-              justifyContent: 'center',
-              elevation: 3,
-            }}
-            onPress={() => handleRegis(data)}>
-            <Text
-              style={{
-                textAlign: 'center',
-                color: '#ffffff',
-                fontSize: w(5),
-                marginTop: h(-0.3),
-                fontWeight: '600',
-                textTransform: 'uppercase',
-              }}>
-              SELESAI
-            </Text>
+            style={styles.imagePicker}
+            onPress={handleChoosePhoto}>
+            <Text style={styles.imagePickerText}>Pilih Foto</Text>
           </TouchableOpacity>
-          {/* U */}
+          {photoUri ? (
+            <Image
+              source={{uri: `data:image/jpeg;base64,${photoUri}`}}
+              style={styles.imagePreview}
+            />
+          ) : null}
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={PostDatas}>
+            <Text style={styles.buttonText}>SELESAI</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
-      {isLoading ? (
-        <Modal
-          transparent={true}
-          visible={isLoading}
-          onRequestClose={() => setLoading(false)}
-          style={{justifyContent: 'center', alignItems: 'center'}}>
-          <LottieView
-            source={animasiLoading}
-            autoPlay
-            loop={true}
-            speed={speed}
-            resizeMode="center"
-            style={{
-              width: w(60),
-              height: h(30),
-              marginBottom: h(3),
-            }}
-          />
-        </Modal>
-      ) : null}
     </View>
   );
 };
 
-export default Form2;
-
-const style = StyleSheet.create({
-  pickerContainer: {
-    width: w(93),
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  scrollView: {
+    backgroundColor: '#ffffff',
+  },
+  logoContainer: {
+    alignItems: 'center',
+    marginVertical: h(2),
+  },
+  logoImage: {
+    width: w(35),
+    height: h(35),
+    marginBottom: h(2),
+  },
+  title: {
+    textTransform: 'uppercase',
+    color: 'black',
+    fontSize: w(4.5),
+    fontWeight: 'bold',
+  },
+  formGroup: {
+    marginHorizontal: w(5),
+    marginBottom: h(2),
+  },
+  label: {
+    fontSize: w(4),
+    color: 'black',
+    marginBottom: h(1),
+  },
+  input: {
     height: h(6),
-    backgroundColor: '#F0F4F7',
-    elevation: 2,
-    borderRadius: w(12),
-    paddingLeft: w(1),
-    fontStyle: 'italic',
+    borderColor: '#e0e0e0',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: w(2),
+    fontSize: w(3.5),
+    color: 'black',
+  },
+  pickerContainer: {
+    borderColor: '#e0e0e0',
+    borderWidth: 1,
+    borderRadius: 5,
   },
   picker: {
-    marginTop: h(-0.4),
+    height: h(6),
+    width: '100%',
+  },
+  textArea: {
+    height: h(10),
+    borderColor: '#e0e0e0',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: w(2),
+    fontSize: w(3.5),
+    color: 'black',
+    textAlignVertical: 'top',
+  },
+  imagePicker: {
+    height: h(6),
+    borderColor: '#e0e0e0',
+    borderWidth: 1,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+  },
+  imagePickerText: {
+    fontSize: w(3.5),
+    color: '#007bff',
+  },
+  imagePreview: {
+    width: w(30),
+    height: h(20),
+    marginTop: h(1),
+    borderRadius: 5,
+  },
+  buttonContainer: {
+    alignItems: 'center',
+    marginVertical: h(2),
+  },
+  button: {
+    backgroundColor: '#007bff',
+    paddingVertical: h(1.5),
+    paddingHorizontal: w(5),
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: '#ffffff',
+    fontSize: w(4),
+    fontWeight: 'bold',
   },
 });
+
+export default Form2;
