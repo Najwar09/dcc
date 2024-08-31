@@ -6,8 +6,12 @@ import {
   heightPercentageToDP as h,
 } from '../../../responsive';
 import logo from '../../assets/icons/logo.png';
+import {useRoute} from '@react-navigation/native';
 
 const BeforeForm = ({navigation}) => {
+  const route = useRoute();
+  const dataStb = route.params.data;
+
   return (
     <View style={{flex: 1, backgroundColor: '#F5F7F8'}}>
       <StatusBar barStyle={'dark-content'} backgroundColor={'#F5F7F8'} />
@@ -82,7 +86,7 @@ const BeforeForm = ({navigation}) => {
             backgroundColor: '#ffffff',
             elevation: 3,
           }}
-          onPress={() => navigation.navigate('FormRegis')}>
+          onPress={() => navigation.navigate('FormRegis', {dataStb})}>
           <Text style={{fontSize: w(5), color: '#3570E4', fontWeight: 'bold'}}>
             Mulai Pendaftaran
           </Text>

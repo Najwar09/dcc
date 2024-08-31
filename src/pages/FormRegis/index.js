@@ -8,9 +8,9 @@ import {
   Image,
   StatusBar,
   StyleSheet,
-  Button,
+  Alert,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
@@ -26,6 +26,9 @@ import axios from 'axios';
 
 const FormRegis = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const cekStambuk = route.params?.dataStb;
+  // console.log(cekStambuk);
 
   const [currentForm, setCurrentForm] = useState(1);
 
@@ -58,45 +61,75 @@ const FormRegis = () => {
     setCurrentForm(2);
   };
 
+  const validasiStambuk = () => {
+    // Validasi agar Stambuk yg di Input tidak sama dengan stambuk yg ad di API
+    const cekStambuk2 = cekStambuk.find(item => item.stambuk == nim);
+
+    if (cekStambuk2) {
+      Alert.alert('Failed', 'Stambuk yang anda Input sudah terdaftar', [
+        {
+          text: 'OKE',
+          onPress: () => setCurrentForm(1),
+        },
+      ]);
+    } else {
+      handleSubmission2();
+    }
+  };
+
   // fungsi ini dijalankan ketika tombol DAFTAR ditekan
   const handleSubmission2 = async () => {
-    // membuat kode random
-    const kode_unik = Math.floor(10000 + Math.random() * 90000);
+    // // membuat kode random
+    // const kode_unik = Math.floor(10000 + Math.random() * 90000);
+
     // membuat const untuk menampung semua nilai dari useState form
-    const newParticipant = {
-      nama,
-      stambuk: nim,
-      email,
-      no_telp: noTelpon,
-      angkatan,
-      tempat_lahir: tempatLahir,
-      tgl_lahir: tanggalLahir,
-      jkl: jenisKelamin,
-      alamat,
-      asal,
-      agama,
-      nama_ayah: namaAyah,
-      nama_ibu: namaIbu,
-      organisasi,
-      alasan: alasanDaftar,
-      foto,
-      kode_unik,
-    };
+    const formData = new FormData();
+    formData.append('stambuk', nim);
+    formData.append('nama', nama);
+    formData.append('tempat_lahir', tempatLahir);
+    formData.append('tgl_lahir', tanggalLahir);
+    formData.append('jkl', jenisKelamin);
+    formData.append('agama', agama);
+    formData.append('no_telp', noTelpon);
+    formData.append('alamat', alamat);
+    formData.append('ket', 'Belum Lulus');
+    formData.append('asal', asal);
+    formData.append('nama_ayah', namaAyah);
+    formData.append('nama_ibu', namaIbu);
+    formData.append('organisasi', organisasi);
+    formData.append('alasan', alasanDaftar);
+    formData.append('angkatan', angkatan);
+
+    if (foto) {
+      formData.append('foto', {
+        uri: foto,
+        type: 'image/jpeg',
+        name: 'photo.jpg',
+      });
+    }
+
     // POST DATA
     try {
-      await axios.post(
-        'https://dcc-testing.campa-bima.online/public/api/documentation#/Calgot/44a193a9f586b13837e9da930bef1769',
-        newParticipant,
+      const res = await axios.post(
+        'https://dcc-testing.campa-bima.online/public/api/calgot/store',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
       );
-      // setelah data berhasil disimpan, kemudian pindah ke afterForm dan kirim nilai uniquNumberset
+      // console.log(res);
+
       setLoading(true);
+
       setTimeout(() => {
-        navigation.replace('AfterForm', {newParticipant});
+        Alert.alert('Success', 'Anda berhasil Mendaftar');
+        navigation.replace('AfterForm', {formData});
       }, 3500);
     } catch (error) {
       console.log(error);
-      console.log(newParticipant);
-      alert(error.message);
+      Alert.alert('Error', 'Anda Gagal Mendaftar');
     }
   };
 
@@ -153,10 +186,6 @@ const FormRegis = () => {
       {
         placeholder: 'Masukkan Nama Ibu Anda',
         label: 'Nama Ibu',
-      },
-      {
-        placeholder: 'Masukkan Pengalaman Organisasi Anda',
-        label: 'Pengalaman Organisasi',
       },
     ];
     return data.map(({placeholder, label}, key) =>
@@ -241,12 +270,11 @@ const FormRegis = () => {
 
   // Format Inputan Tanggal Lahir
   const formatDate = date => {
-    const options = {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    };
-    return date.toLocaleString(undefined, options);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // bulan dimulai dari 0
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
   };
 
   // RadioBoxKelamin
@@ -268,8 +296,8 @@ const FormRegis = () => {
           }}>
           <TouchableOpacity
             style={style.radioBoxKelamin}
-            onPress={() => ubahKelamin('Pria')}>
-            {pria == 'Pria' ? (
+            onPress={() => ubahKelamin('L')}>
+            {pria == 'L' ? (
               <Image
                 source={require('../../assets/icons/check.png')}
                 style={{width: w(4), height: h(2)}}
@@ -279,8 +307,8 @@ const FormRegis = () => {
           <Text>Pria</Text>
           <TouchableOpacity
             style={style.radioBoxKelamin}
-            onPress={() => ubahKelamin('Wanita')}>
-            {wanita == 'Wanita' ? (
+            onPress={() => ubahKelamin('P')}>
+            {wanita == 'P' ? (
               <Image
                 source={require('../../assets/icons/check.png')}
                 style={{width: w(4), height: h(2)}}
@@ -294,8 +322,8 @@ const FormRegis = () => {
   };
 
   const ubahKelamin = jenis => {
-    jenis == 'Pria' ? setPria(jenis) : setPria(null);
-    jenis == 'Wanita' ? setWanita(jenis) : setWanita(null);
+    jenis == 'L' ? setPria(jenis) : setPria(null);
+    jenis == 'P' ? setWanita(jenis) : setWanita(null);
     setJenisKelamin(jenis);
   };
 
@@ -419,16 +447,44 @@ const FormRegis = () => {
                   value=""
                   enabled={false}
                 />
-                <Picker.Item label="Islam" value="Islam" />
-                <Picker.Item label="Kristen" value="Kristen" />
-                <Picker.Item label="Katholik" value="Katholik" />
-                <Picker.Item label="Hindu" value="Hindu" />
-                <Picker.Item label="Buddha" value="Buddha" />
-                <Picker.Item label="Konghucu" value="Konghucu" />
+                <Picker.Item label="Islam" value="I" />
+                <Picker.Item label="Kristen" value="KK" />
+                <Picker.Item label="Katholik" value="KP" />
+                <Picker.Item label="Hindu" value="H" />
+                <Picker.Item label="Buddha" value="B" />
+                <Picker.Item label="Konghucu" value="KH" />
+                <Picker.Item label="Lainnya" value="U" />
               </Picker>
             </View>
           </View>
           {viewInputForm2()}
+          <View
+            style={{
+              marginTop: h(3),
+              flex: 1,
+              marginLeft: w(4),
+              height: h(8),
+              marginBottom: h(5),
+            }}>
+            <Text style={style.labelInput}>Pengalaman Organisasi</Text>
+            <TextInput
+              placeholder="Ceritakan jika ada"
+              style={{
+                width: w(93),
+                height: h(10),
+                backgroundColor: '#F0F4F7',
+                elevation: 2,
+                borderRadius: w(4),
+                paddingLeft: w(4),
+                fontStyle: 'italic',
+              }}
+              multiline={true}
+              numberOfLines={2}
+              onChangeText={value =>
+                validasiInput(value, 'Pengalaman Organisasi')
+              }
+            />
+          </View>
           <View
             style={{
               marginTop: h(3),
@@ -457,11 +513,11 @@ const FormRegis = () => {
 
           <View
             style={{
-              marginTop: h(2),
+              marginTop: h(5),
               flex: 1,
               marginLeft: w(4),
               height: h(8),
-              marginBottom: h(1),
+              marginBottom: h(4),
               justifyContent: 'center',
               paddingLeft: w(2),
             }}>
@@ -469,8 +525,8 @@ const FormRegis = () => {
               <Image
                 source={{uri: foto}}
                 style={{
-                  height: h(20),
-                  width: w(20),
+                  height: h(12),
+                  width: w(30),
                 }}
               />
             ) : (
@@ -504,7 +560,7 @@ const FormRegis = () => {
           <View style={{alignItems: 'center'}}>
             <TouchableOpacity
               style={style.button}
-              onPress={() => handleSubmission2()}>
+              onPress={() => validasiStambuk()}>
               <Text style={style.buttonText}>Daftar</Text>
             </TouchableOpacity>
           </View>
