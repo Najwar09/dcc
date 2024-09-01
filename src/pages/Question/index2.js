@@ -3,11 +3,11 @@ import {StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native';
 import LottieView from 'lottie-react-native';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
+import LinearGradient from 'react-native-linear-gradient';
 import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
 } from '../../../responsive';
-import LinearGradient from 'react-native-linear-gradient';
 
 const Question2 = () => {
   const [questions, setQuestions] = useState([]);
@@ -28,7 +28,6 @@ const Question2 = () => {
         options: Object.values(JSON.parse(item.choice)),
         answer: item.is_right_choice,
       }));
-
       setQuestions(shuffleArray(parsedQuestions));
     } catch (error) {
       console.error(error);
@@ -68,7 +67,7 @@ const Question2 = () => {
   if (!questions.length) {
     return (
       <View style={styles.container}>
-        <Text>Loading...</Text>
+        <Text style={styles.loadingText}>Loading...</Text>
       </View>
     );
   }
@@ -160,80 +159,86 @@ const shuffleArray = array => {
   return shuffledArray;
 };
 
-export default Question2;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    padding: w(4),
     backgroundColor: '#f5f5f5',
   },
   backgroundAnimation: {
     position: 'absolute',
-    width: w(114),
-    height: h(110),
+    width: w(100),
+    height: h(100),
+    top: 0,
+    left: 0,
   },
   content: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    width: w(90),
   },
   question: {
-    fontSize: 22,
+    fontSize: w(5),
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: h(2),
     textAlign: 'center',
     color: '#333',
   },
   option: {
     width: '100%',
-    marginVertical: 8,
-    borderRadius: 10,
+    marginVertical: h(1),
+    borderRadius: w(2),
     overflow: 'hidden',
   },
   optionBackground: {
-    padding: 15,
+    padding: h(2),
     alignItems: 'center',
   },
   optionText: {
-    fontSize: 18,
+    fontSize: w(4),
     color: '#FFF',
   },
   selectedOption: {
     borderColor: 'gold',
-    borderWidth: 5,
+    borderWidth: w(0.5),
   },
   nextButton: {
-    marginTop: 20,
-    borderRadius: 10,
+    marginTop: h(2),
+    borderRadius: w(2),
     overflow: 'hidden',
   },
   nextButtonBackground: {
-    paddingVertical: 15,
-    paddingHorizontal: 40,
+    paddingVertical: h(2),
+    paddingHorizontal: w(5),
     alignItems: 'center',
-    borderRadius: 10,
+    borderRadius: w(2),
   },
   nextButtonText: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: w(4),
   },
   timerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: h(2),
     backgroundColor: 'rgba(0,0,0,0.5)',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
+    paddingVertical: h(1),
+    paddingHorizontal: w(3),
+    borderRadius: w(2),
   },
   timerText: {
-    fontSize: 24,
+    fontSize: w(4),
     fontWeight: 'bold',
     color: '#FFF',
   },
+  loadingText: {
+    fontSize: w(5),
+    color: '#333',
+  },
 });
+
+export default Question2;

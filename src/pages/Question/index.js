@@ -12,24 +12,21 @@ const Question = () => {
   const route = useRoute();
   const navigation = useNavigation();
 
-  const [questions, setQuestions] = useState([]); // semua soal
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // index soal saat ini
-  const [selectedAnswer, setSelectedAnswer] = useState(null); // index dari jawaban
-  const [score, setScore] = useState(0); // score soal
-  const [timeRemaining, setTimeRemaining] = useState(30); // waktu tersisa
+  const [questions, setQuestions] = useState([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [score, setScore] = useState(0);
+  const [timeRemaining, setTimeRemaining] = useState(30);
 
-  // Mendapatkan Data Soal dari route params
   useEffect(() => {
     const soal = route.params?.soal;
     if (soal) {
-      // Parsing pilihan jawaban (choices) menjadi array
       const parsedQuestions = soal.map(item => ({
         question: item.questions,
         options: Object.values(JSON.parse(item.choice)),
         answer: item.is_right_choice,
       }));
 
-      // Acak urutan soal
       setQuestions(shuffleArray(parsedQuestions));
     }
   }, [route.params?.soal]);
@@ -66,7 +63,6 @@ const Question = () => {
 
   const handleNextQuestion = () => {
     if (selectedAnswer !== null) {
-      // Jika jawaban yang dipilih sesuai dengan kunci jawaban
       const correctAnswer = questions[currentQuestionIndex].answer;
       const selectedOption = Object.keys(
         JSON.parse(route.params.soal[currentQuestionIndex].choice),
@@ -144,82 +140,6 @@ const Question = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#f5f5f5',
-  },
-  backgroundAnimation: {
-    position: 'absolute',
-    width: w(114),
-    height: h(110),
-  },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  question: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-    color: '#333',
-  },
-  option: {
-    width: '100%',
-    marginVertical: 8,
-    borderRadius: 10,
-    overflow: 'hidden',
-  },
-  optionBackground: {
-    padding: 15,
-    alignItems: 'center',
-  },
-  optionText: {
-    fontSize: 18,
-    color: '#FFF',
-  },
-  selectedOption: {
-    borderColor: 'gold',
-    borderWidth: 5,
-  },
-  nextButton: {
-    marginTop: 20,
-    borderRadius: 10,
-    overflow: 'hidden',
-  },
-  nextButtonBackground: {
-    paddingVertical: 15,
-    paddingHorizontal: 40,
-    alignItems: 'center',
-    borderRadius: 10,
-  },
-  nextButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
-  timerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-  },
-  timerText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#FFF',
-  },
-});
-
 const shuffleArray = array => {
   const shuffledArray = [...array];
   for (let i = shuffledArray.length - 1; i > 0; i--) {
@@ -228,5 +148,84 @@ const shuffleArray = array => {
   }
   return shuffledArray;
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: w(4),
+    backgroundColor: '#f5f5f5',
+  },
+  backgroundAnimation: {
+    position: 'absolute',
+    width: w(100),
+    height: h(100),
+    top: 0,
+    left: 0,
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: w(90),
+    paddingVertical: h(2),
+  },
+  question: {
+    fontSize: w(6),
+    fontWeight: 'bold',
+    marginBottom: h(3),
+    textAlign: 'center',
+    color: '#333',
+  },
+  option: {
+    width: '100%',
+    marginVertical: h(1),
+    borderRadius: w(2),
+    overflow: 'hidden',
+  },
+  optionBackground: {
+    padding: h(2),
+    alignItems: 'center',
+  },
+  optionText: {
+    fontSize: w(5),
+    color: '#FFF',
+  },
+  selectedOption: {
+    borderColor: 'gold',
+    borderWidth: w(0.5),
+  },
+  nextButton: {
+    marginTop: h(2),
+    borderRadius: w(2),
+    overflow: 'hidden',
+  },
+  nextButtonBackground: {
+    paddingVertical: h(2),
+    paddingHorizontal: w(5),
+    alignItems: 'center',
+    borderRadius: w(2),
+  },
+  nextButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: w(5),
+  },
+  timerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: h(2),
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    paddingVertical: h(1),
+    paddingHorizontal: w(3),
+    borderRadius: w(2),
+  },
+  timerText: {
+    fontSize: w(5),
+    fontWeight: 'bold',
+    color: '#FFF',
+  },
+});
 
 export default Question;
