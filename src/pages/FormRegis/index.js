@@ -93,6 +93,7 @@ const FormRegis = () => {
         <Image source={LogoImage} style={styles.logo} resizeMode="center" />
         <Text style={styles.title}>Form Pendaftaran</Text>
       </View>
+      {/* end logo */}
 
       {/* Form */}
       <View style={styles.inputContainer}>
@@ -236,7 +237,6 @@ const FormRegis = () => {
 };
 
 const styles = StyleSheet.create({
-  // Style definitions (same as in your provided code)
   container: {
     backgroundColor: '#ffffff',
   },

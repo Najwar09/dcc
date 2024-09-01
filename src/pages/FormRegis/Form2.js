@@ -95,7 +95,9 @@ const Form2 = () => {
         },
       );
       Alert.alert('Success', 'Data berhasil dikirim');
+      navigation.navigate('AfterForm',{id : response.data.data.id});
       console.log(response.data);
+      // console.log(response.data.data.id);
     } catch (error) {
       Alert.alert('Error', 'Gagal mengirim data');
       console.error(
@@ -115,16 +117,13 @@ const Form2 = () => {
           backgroundColor={'#ffffff'}
           showHideTransition={'slide'}
         />
-        {/* logo dcc */}
-        <View style={styles.logoContainer}>
-          <Image
-            source={LogoImage}
-            style={styles.logoImage}
-            resizeMode="center"
-          />
+
+        {/* Logo */}
+        <View style={styles.header}>
+          <Image source={LogoImage} style={styles.logo} resizeMode="center" />
           <Text style={styles.title}>Form Pendaftaran</Text>
         </View>
-        {/* end logo dcc */}
+        {/* end logo */}
 
         {/* form */}
         <View style={styles.formGroup}>
@@ -226,20 +225,12 @@ const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: '#ffffff',
   },
-  logoContainer: {
-    alignItems: 'center',
-    marginVertical: h(2),
-  },
-  logoImage: {
-    width: w(35),
-    height: h(35),
-    marginBottom: h(2),
-  },
   title: {
     textTransform: 'uppercase',
     color: 'black',
     fontWeight: 'bold',
     fontSize: w(6),
+    marginTop: h(-10),
   },
   formGroup: {
     marginTop: h(3),
@@ -319,6 +310,14 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontWeight: 'bold',
     fontSize: w(5),
+  },
+  header: {
+    alignItems: 'center',
+  },
+  logo: {
+    width: w(35),
+    height: h(35),
+    marginTop: h(-6),
   },
 });
 

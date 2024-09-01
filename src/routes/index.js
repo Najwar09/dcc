@@ -134,8 +134,8 @@ export default function Router() {
       <Stack.Navigator
         screenOptions={{headerShown: false}}
         initialRouteName="SplashScreen">
-        {/* <Stack.Screen name="SplashScreen" component={Splash} /> */}
-        {/* <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} /> */}
+        <Stack.Screen name="SplashScreen" component={Splash} />
+        <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
         <Stack.Screen name="MainScreen" component={MainScreen} />
         <Stack.Screen name="Quiz" component={Quiz} />
         <Stack.Screen name="Question" component={Question} />

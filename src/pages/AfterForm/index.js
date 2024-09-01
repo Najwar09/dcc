@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 import LottieView from 'lottie-react-native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -8,15 +8,35 @@ import {
 } from '../../../responsive';
 import successAnimation from '../../assets/animation/done.json';
 import {useRoute, useNavigation} from '@react-navigation/native';
+import axios from 'axios';
 
 const AfterForm = () => {
+
+  const [Calgot,setCalgot] = useState({});
+
   const navigation = useNavigation();
   const route = useRoute();
-  const code = route.params.newParticipant2;
+  const id = route.params?.id;
+
 
   const handleContinue = () => {
     navigation.navigate('Home');
   };
+
+  const GetDataCalgot = async () => {
+    try {
+      const res = await axios.get(
+        `https://dcc-testing.campa-bima.online/public/api/calgot/${id}`,
+      );
+      setCalgot(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    GetDataCalgot();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -49,7 +69,7 @@ const AfterForm = () => {
       </View>
       <View style={styles.codeContainer}>
         <Text style={styles.codeLabel}>Kode Unik Anda:</Text>
-        <Text style={styles.code}>{code.uniqueNumber}</Text>
+        <Text style={styles.code}>{Calgot.kode_unik}</Text>
       </View>
       <Pressable
         style={({pressed}) => [

@@ -22,25 +22,26 @@ const CekStambuk = ({navigation}) => {
   // Fungsi untuk mengecek stambuk di API
   const handleCheckStambuk = async () => {
     if (!stambuk) {
-      Alert.alert('Peringatan', 'Masukkan Stambuk Dulu Toloooo');
+      Alert.alert('Peringatan', 'Harap Masukkan Nim terlebih dahulu');
       return;
     }
 
     try {
       const response = await axios.get(
-        'https://dcc-testing.campa-bima.online/public/api/calgot', // Ganti dengan endpoint yang sesuai jika diperlukan
+        'https://dcc-testing.campa-bima.online/public/api/calgot',
       );
       const data = response.data.data;
+      
 
       // Mencari stambuk yang diinput dalam data yang diterima dari API
       const stambukTerdaftar = data.find(item => item.stambuk === stambuk);
 
       if (stambukTerdaftar) {
         // Jika stambuk ditemukan, arahkan ke MainScreen
-        navigation.navigate('MainScreen');
+        navigation.navigate('AfterForm',{id : stambukTerdaftar.id});
       } else {
         // Jika stambuk tidak ditemukan, tampilkan alert dan arahkan ke BeforeForm
-        Alert.alert('Ongoll', 'Daftar Dulu Toloo', [
+        Alert.alert('Peringatan', 'Stambuk Anda Belum Terdaftar Silahkan Daftar Dulu', [
           {text: 'OK', onPress: () => navigation.navigate('BeforeForm')},
         ]);
       }
@@ -107,11 +108,11 @@ const CekStambuk = ({navigation}) => {
         <View style={styles.addressContainer}>
           <TextInput
             keyboardType="default"
-            placeholder="Masukkan Stambuk Anda"
+            placeholder="Masukkan Stambuk"
             placeholderTextColor={'#595959'}
             style={styles.addressInput}
-            onChangeText={text => setStambuk(text)} // Simpan teks input
-            value={stambuk} // Tambahkan ini untuk memastikan TextInput mengontrol state
+            onChangeText={text => setStambuk(text)}
+            value={stambuk} 
           />
         </View>
         <TouchableOpacity
@@ -126,7 +127,7 @@ const CekStambuk = ({navigation}) => {
             elevation: 3,
             marginBottom: h(30),
           }}
-          onPress={handleCheckStambuk} // Panggil fungsi pengecekan stambuk
+          onPress={handleCheckStambuk}
         >
           <Text style={{fontSize: w(5), color: '#3570E4', fontWeight: 'bold'}}>
             Cek Stambuk
