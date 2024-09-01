@@ -1,5 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  Clipboard,
+  Alert,
+} from 'react-native';
 import LottieView from 'lottie-react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {
@@ -11,16 +18,19 @@ import {useRoute, useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 
 const AfterForm = () => {
-
-  const [Calgot,setCalgot] = useState({});
+  const [Calgot, setCalgot] = useState({});
 
   const navigation = useNavigation();
   const route = useRoute();
   const id = route.params?.id;
 
-
   const handleContinue = () => {
     navigation.navigate('Home');
+  };
+
+  const handleCopyCode = () => {
+    Clipboard.setString(Calgot.kode_unik);
+    Alert.alert('Copied!', 'Kode unik telah disalin ke clipboard.');
   };
 
   const GetDataCalgot = async () => {
@@ -69,7 +79,9 @@ const AfterForm = () => {
       </View>
       <View style={styles.codeContainer}>
         <Text style={styles.codeLabel}>Kode Unik Anda:</Text>
-        <Text style={styles.code}>{Calgot.kode_unik}</Text>
+        <Pressable onPress={handleCopyCode}>
+          <Text style={styles.code}>{Calgot.kode_unik}</Text>
+        </Pressable>
       </View>
       <Pressable
         style={({pressed}) => [

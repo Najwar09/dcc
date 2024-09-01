@@ -1,38 +1,43 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native';
 import LottieView from 'lottie-react-native';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
 import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
 } from '../../../responsive';
 import LinearGradient from 'react-native-linear-gradient';
 
-const Question = () => {
-  const route = useRoute();
+const Question2 = () => {
+  const [questions, setQuestions] = useState([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [score, setScore] = useState(0);
+  const [timeRemaining, setTimeRemaining] = useState(30);
   const navigation = useNavigation();
 
-  const [questions, setQuestions] = useState([]); // semua soal
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // index soal saat ini
-  const [selectedAnswer, setSelectedAnswer] = useState(null); // index dari jawaban
-  const [score, setScore] = useState(0); // score soal
-  const [timeRemaining, setTimeRemaining] = useState(30); // waktu tersisa
-
-  // Mendapatkan Data Soal dari route params
-  useEffect(() => {
-    const soal = route.params?.soal;
-    if (soal) {
-      // Parsing pilihan jawaban (choices) menjadi array
+  const GetData = async () => {
+    try {
+      const res = await axios.get(
+        'https://dcc-testing.campa-bima.online/public/api/quiz_without_code',
+      );
+      const soal = res.data.data;
       const parsedQuestions = soal.map(item => ({
         question: item.questions,
         options: Object.values(JSON.parse(item.choice)),
         answer: item.is_right_choice,
       }));
 
-      // Acak urutan soal
       setQuestions(shuffleArray(parsedQuestions));
+    } catch (error) {
+      console.error(error);
     }
-  }, [route.params?.soal]);
+  };
+
+  useEffect(() => {
+    GetData();
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -60,30 +65,34 @@ const Question = () => {
     return () => clearInterval(timer);
   }, [navigation, score]);
 
-  const handleAnswerSelect = index => {
-    setSelectedAnswer(index);
+  if (!questions.length) {
+    return (
+      <View style={styles.container}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
+  const handleAnswerSelection = answer => {
+    setSelectedAnswer(answer);
   };
 
   const handleNextQuestion = () => {
     if (selectedAnswer !== null) {
-      // Jika jawaban yang dipilih sesuai dengan kunci jawaban
-      const correctAnswer = questions[currentQuestionIndex].answer;
-      const selectedOption = Object.keys(
-        JSON.parse(route.params.soal[currentQuestionIndex].choice),
-      )[selectedAnswer];
-
-      if (selectedOption === correctAnswer) {
-        setScore(score + 1);
+      if (selectedAnswer === questions[currentQuestionIndex].answer) {
+        setScore(prevScore => prevScore + 1);
       }
 
-      setSelectedAnswer(null);
-
       if (currentQuestionIndex < questions.length - 1) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
+        setCurrentQuestionIndex(prevIndex => prevIndex + 1);
+        setSelectedAnswer(null);
       } else {
         Alert.alert(
           'Quiz Completed!',
-          `You have finished the quiz with a score of ${score}.`,
+          `Your score is ${
+            score +
+            (selectedAnswer === questions[currentQuestionIndex].answer ? 1 : 0)
+          }.`,
           [
             {
               text: 'OK',
@@ -111,25 +120,23 @@ const Question = () => {
       </View>
       <View style={styles.content}>
         <Text style={styles.question}>
-          {questions.length > 0 && questions[currentQuestionIndex].question}
+          {questions[currentQuestionIndex].question}
         </Text>
-
-        {questions.length > 0 &&
-          questions[currentQuestionIndex].options.map((option, index) => (
-            <TouchableOpacity
-              key={index}
-              style={[
-                styles.option,
-                selectedAnswer === index ? styles.selectedOption : null,
-              ]}
-              onPress={() => handleAnswerSelect(index)}>
-              <LinearGradient
-                colors={['#4c669f', '#3b5998', '#192f6a']}
-                style={styles.optionBackground}>
-                <Text style={styles.optionText}>{option}</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-          ))}
+        {questions[currentQuestionIndex].options.map((option, index) => (
+          <TouchableOpacity
+            key={index}
+            style={[
+              styles.option,
+              selectedAnswer === option ? styles.selectedOption : null,
+            ]}
+            onPress={() => handleAnswerSelection(option)}>
+            <LinearGradient
+              colors={['#4c669f', '#3b5998', '#192f6a']}
+              style={styles.optionBackground}>
+              <Text style={styles.optionText}>{option}</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        ))}
         <TouchableOpacity
           style={styles.nextButton}
           onPress={handleNextQuestion}>
@@ -143,6 +150,17 @@ const Question = () => {
     </View>
   );
 };
+
+const shuffleArray = array => {
+  const shuffledArray = [...array];
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+  return shuffledArray;
+};
+
+export default Question2;
 
 const styles = StyleSheet.create({
   container: {
@@ -219,14 +237,3 @@ const styles = StyleSheet.create({
     color: '#FFF',
   },
 });
-
-const shuffleArray = array => {
-  const shuffledArray = [...array];
-  for (let i = shuffledArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
-  }
-  return shuffledArray;
-};
-
-export default Question;

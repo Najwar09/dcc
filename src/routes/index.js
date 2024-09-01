@@ -25,6 +25,7 @@ import Event from '../pages/Event';
 import EventDetail from '../pages/Event/EventDetail';
 import ArticleDetail from '../pages/Article/DetailArticle';
 import CekNim from '../pages/ceknim';
+import Question2 from '../pages/Question/index2';
 
 const Tab = createBottomTabNavigator();
 
@@ -139,6 +140,7 @@ export default function Router() {
         <Stack.Screen name="MainScreen" component={MainScreen} />
         <Stack.Screen name="Quiz" component={Quiz} />
         <Stack.Screen name="Question" component={Question} />
+        <Stack.Screen name="Question2" component={Question2} />
         <Stack.Screen name="FormRegis" component={FormRegis} />
         <Stack.Screen name="BeforeForm" component={BeforeForm} />
         <Stack.Screen name="AfterForm" component={AfterForm} />
