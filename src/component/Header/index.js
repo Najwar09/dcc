@@ -35,6 +35,7 @@ const StickyHeader = () => {
 
   return (
     <View style={styles.header}>
+
       <View style={styles.textContainer}>
         <Text style={styles.greeting}>Hello!</Text>
         <Text style={styles.name}>{getFormattedDate()}</Text>
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.3,
     shadowRadius: 4,
-    elevation: 5, 
+    elevation: 5,
   },
   textContainer: {
     flexDirection: 'column',
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
     width: w(60),
     height: h(20),
     // backgroundColor: 'red',
-    left:w(-10),
+    left: w(-10),
   },
 });
 

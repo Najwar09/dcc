@@ -8,6 +8,7 @@ import {
   heightPercentageToDP as h,
 } from '../../../responsive';
 import {setItem} from '../../../utils/asyncStorate';
+import { color } from 'react-native-elements/dist/helpers';
 
 const OnboardingSreen = () => {
   const navigation = useNavigation();
@@ -50,6 +51,8 @@ const OnboardingSreen = () => {
             title: 'Mobile Dcc',
             subtitle:
               'Memberikan Informasi Seputar Study Club Dipanegara Computer Club (DCC)',
+            titleStyles: {color: 'white'},
+            subTitleStyles: {color: 'white'},
           },
           {
             backgroundColor: '#FDFFD2',
@@ -66,6 +69,8 @@ const OnboardingSreen = () => {
             title: 'KUIS',
             subtitle:
               'Latih Pengetahuan Kalian Seputar Dunia Teknologi dengan Bermain Kuis dan Raih Skor Tertinggi!',
+            titleStyles: {color: 'black'},
+            subTitleStyles: {color: 'black'},
           },
           {
             backgroundColor: '#4187f0',
@@ -82,6 +87,8 @@ const OnboardingSreen = () => {
             title: 'E-Learning',
             subtitle:
               'Belajar Secara Online Dimana Pun dan Kapan Pun Secara Gratis!',
+            titleStyles: {color: 'white'},
+            subTitleStyles: {color: 'white'},
           },
           {
             backgroundColor: '#6A9C89',
@@ -98,6 +105,8 @@ const OnboardingSreen = () => {
             title: 'Open Rekrutment',
             subtitle:
               'Mari Bergabung Dengan Kami, #Kita Bertemu Untuk Sesuatu Yang Mulia',
+            titleStyles: {color: 'white'},
+            subTitleStyles: {color: 'white'},
           },
         ]}
       />

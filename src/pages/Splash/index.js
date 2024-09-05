@@ -4,6 +4,10 @@ import LinearGradient from 'react-native-linear-gradient';
 import LottieView from 'lottie-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import logoAnimation from '../../assets/animation/bacotoro10.json';
+import {
+  widthPercentageToDP as w,
+  heightPercentageToDP as h,
+} from '../../../responsive';
 
 const Splash = ({navigation}) => {
   useEffect(() => {
@@ -11,7 +15,6 @@ const Splash = ({navigation}) => {
       checkNavigation();
     }, 1000);
 
- 
     return () => clearTimeout(timer);
   }, []);
 
@@ -56,7 +59,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    width: 850,
-    height: 850,
+    width: w(150), 
+    height: h(150), 
   },
 });

@@ -24,7 +24,7 @@ import Organization from '../../assets/icons/organisasi.png';
 import Kepanitiaan from '../../assets/icons/panitia.png';
 import Quiz from '../../assets/icons/Quiz.png';
 import Content from '../../assets/images/konten.png';
-import Game from '../../assets/icons/Game.png';
+import Game from '../../assets/icons/newspaper.png';
 
 import {removeItem} from '../../../utils/asyncStorate';
 import axios from 'axios';
@@ -36,6 +36,7 @@ const Home = () => {
   const [goldBoxIndex, setGoldBoxIndex] = useState(3);
   const [dataArticle, setDataArticle] = useState([]);
 
+  // card article
   const Artikel = ({title, description, imageUri, onPress}) => (
     <TouchableOpacity style={styles.card} onPress={onPress}>
       <View style={styles.imageContainer}>
@@ -91,77 +92,83 @@ const Home = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <LottieView
-        resizeMode="center"
-        source={require('../../assets/animation/tet.json')}
-        autoPlay
-        loop
-        style={styles.backgroundLottie}
-      />
-
+    <>
+      {/* card header */}
       <StickyHeader />
+      {/* end card header */}
 
-      <ScrollView
-        style={styles.scrollContainer}
-        showsVerticalScrollIndicator={false}>
-        <View style={styles.swapperContainer}>
-          <ImageSwapper />
-        </View>
-
-        <View style={styles.divider} />
-
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Category</Text>
-        </View>
-
-        <View style={styles.menuContainer}>
-          {menuItems.map((item, index) => (
-            <TouchableOpacity
-              key={index}
-              style={[
-                styles.box,
-                index === goldBoxIndex ? {backgroundColor: '#FFD700'} : null,
-              ]}
-              onPress={item.action}>
-              <Image source={item.icon} style={styles.menu} />
-              <Text style={styles.text}>{item.label}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-
-        <View style={styles.divider} />
-
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Latest Post</Text>
-        </View>
+      <View style={styles.container}>
+        {/* <LottieView
+          resizeMode="center"
+          source={require('../../assets/animation/tet.json')}
+          autoPlay
+          loop
+          style={styles.backgroundLottie}
+        /> */}
 
         <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.articleContainer}>
-          {dataArticle.map(article => (
-            <Artikel
-              imageUri={article.image}
-              key={article.id}
-              title={article.title}
-              description={article.description}
-              onPress={() => navigation.navigate('ArticleDetails', {article})}
-            />
-          ))}
-        </ScrollView>
+          style={styles.scrollContainer}
+          showsVerticalScrollIndicator={false}>
+          {/* image swapper */}
+          <View style={styles.swapperContainer}>
+            <ImageSwapper />
+          </View>
+          {/* end image swapper */}
 
-        {showLottie && (
-          <LottieView
-            source={require('../../assets/animation/confetti.json')}
-            autoPlay
-            loop={false}
-            style={styles.lottie}
-            onAnimationFinish={() => setShowLottie(false)}
-          />
-        )}
-      </ScrollView>
-    </View>
+          <View style={styles.divider} />
+
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Category</Text>
+          </View>
+
+          <View style={styles.menuContainer}>
+            {menuItems.map((item, index) => (
+              <TouchableOpacity
+                key={index}
+                style={[
+                  styles.box,
+                  index === goldBoxIndex ? {backgroundColor: '#FFD700'} : null,
+                ]}
+                onPress={item.action}>
+                <Image source={item.icon} style={styles.menu} />
+                <Text style={styles.text}>{item.label}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+
+          <View style={styles.divider} />
+
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Latest Post</Text>
+          </View>
+
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.articleContainer}>
+            {dataArticle.map(article => (
+              <Artikel
+                imageUri={article.image}
+                key={article.id}
+                title={article.title}
+                description={article.description}
+                onPress={() => navigation.navigate('ArticleDetails', {article})}
+              />
+            ))}
+          </ScrollView>
+
+          {showLottie && (
+            <LottieView
+              source={require('../../assets/animation/confetti.json')}
+              autoPlay
+              loop={false}
+              style={styles.lottie}
+              onAnimationFinish={() => setShowLottie(false)}
+            />
+          )}
+        </ScrollView>
+      </View>
+    </>
   );
 };
 
@@ -170,24 +177,19 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F8F8',
+    // backgroundColor: '#F8F8',
   },
   scrollContainer: {
     flex: 1,
     padding: w(5),
-  },
-  backgroundLottie: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    zIndex: -1,
+    // backgroundColor: 'red',
   },
   swapperContainer: {
     alignItems: 'center',
   },
   divider: {
-    width: '100%',
-    height: 3,
+    width: w(200),
+    height: w(0.5),
     backgroundColor: '#4777D759',
     marginVertical: h(2),
   },
@@ -230,8 +232,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: w(2),
     padding: w(3),
-    elevation: 4,
-    width: '22%',
+    elevation: 5,
+    width: w(20),
   },
   card: {
     marginRight: w(5),
@@ -250,16 +252,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
   },
   imageContainer: {
-    width: '100%',
-    height: '70%',
+    // width: '200%',
+    // height: '70%',
     borderTopLeftRadius: w(5),
     borderTopRightRadius: w(5),
     overflow: 'hidden',
   },
   image: {
     resizeMode: 'cover',
-    width: '100%',
-    height: '100%',
+    width: w(58),
+    height: w(25),
   },
   articleTextContainer: {
     padding: w(2),
@@ -279,11 +281,12 @@ const styles = StyleSheet.create({
   },
   lottie: {
     position: 'absolute',
-    top: '50%',
-    left: '50%',
+    top: w(50),
+    left: w(40),
     width: w(100),
     height: w(100),
     transform: [{translateX: -w(50)}, {translateY: -w(50)}],
     zIndex: 1,
+    // backgroundColor: 'red',
   },
 });

@@ -6,7 +6,15 @@ import {
 } from '../../../responsive';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const CardArticle = ({title, imageUri, onPress}) => {
+const formatDate = createdAt => {
+  const options = {month: 'long', day: 'numeric', year: 'numeric'};
+  const date = new Date(createdAt);
+  return date.toLocaleDateString('en-US', options);
+};
+
+const CardArticle = ({title, imageUri, onPress,name,time}) => {
+
+  const formattedDate = formatDate(time);
   return (
     <TouchableOpacity style={styles.card} onPress={onPress}>
       <Image source={{uri: imageUri}} style={styles.image} />
@@ -15,10 +23,10 @@ const CardArticle = ({title, imageUri, onPress}) => {
         <Text style={styles.title}>{title}</Text>
 
         <View style={styles.tagAndDateContainer}>
-          <Text style={styles.tag}>HTML</Text>
+          <Text style={styles.tag}>{name}</Text>
           <View style={styles.dateContainer}>
             <Icon name="calendar-outline" color="#0088FF" size={w(4)} />
-            <Text style={styles.dateText}>Desember 11, 2024</Text>
+            <Text style={styles.dateText}>{formattedDate}</Text>
           </View>
         </View>
       </View>
@@ -40,7 +48,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
   },
   image: {
-    width: '100%',
+    width: w(90),
     height: h('20%'),
     resizeMode: 'cover',
   },
@@ -51,6 +59,7 @@ const styles = StyleSheet.create({
     fontSize: w('5%'),
     fontWeight: 'bold',
     marginBottom: h('1%'),
+    color: '#333',
   },
   tagAndDateContainer: {
     flexDirection: 'row',
@@ -61,13 +70,14 @@ const styles = StyleSheet.create({
   tag: {
     borderWidth: 1,
     paddingHorizontal: w(3),
-    paddingVertical: h(0.5),
+    // paddingVertical: h(0),
     borderRadius: 10,
     textAlign: 'center',
     height: w(6),
     backgroundColor: '#f0f0f0',
     borderColor: '#dcdcdc',
     fontSize: w('3.5%'),
+    color: '#333',
   },
   dateContainer: {
     flexDirection: 'row',

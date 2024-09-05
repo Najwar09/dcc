@@ -46,6 +46,8 @@ const Article = () => {
               <CardArticle
                 title={article.title}
                 imageUri={article.image}
+                name={article.category.name}
+                time={article.created_at}
                 key={article.id}
                 onPress={() => navigation.navigate('ArticleDetails', {article})}
               />

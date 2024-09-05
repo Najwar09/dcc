@@ -24,7 +24,7 @@ const ArticleDetail = ({route}) => {
   const {width} = useWindowDimensions();
 
   const contentHtml = `
-    <div style="text-align: justify;">
+    <div style="text-align: justify;color : black ">
       ${article.content}
     </div>
   `;
@@ -36,9 +36,7 @@ const ArticleDetail = ({route}) => {
       <Image source={{uri: article.image}} style={styles.image} />
       <View style={styles.box}>
         <Text style={styles.title}>{article.title}</Text>
-        <View>
-          <Text>{formattedDate}</Text>
-        </View>
+        <Text style={styles.date}>{formattedDate}</Text>
         <View style={styles.isiContent}>
           <RenderHtml contentWidth={width} source={{html: contentHtml}} />
         </View>
@@ -50,22 +48,22 @@ const ArticleDetail = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: w('4%'),
+    padding: w(4),
   },
   image: {
-    width: '100%',
-    height: h('30%'),
+    width: w(92),
+    height: h(30),
     resizeMode: 'cover',
-    borderRadius: 10,
-    marginBottom: h('2%'),
+    borderRadius: w(2),
+    marginBottom: h(2),
   },
   box: {
     backgroundColor: '#fff',
-    padding: w('4%'),
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
+    padding: w(4),
+    borderTopLeftRadius: w(4),
+    borderTopRightRadius: w(4),
+    borderBottomLeftRadius: w(2),
+    borderBottomRightRadius: w(2),
     elevation: 3,
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
@@ -75,16 +73,18 @@ const styles = StyleSheet.create({
     marginTop: w(-10),
   },
   title: {
-    fontSize: w('6%'),
+    fontSize: w(6),
     fontWeight: 'bold',
-    marginBottom: h('1%'),
+    marginBottom: h(1),
+    color: 'black',
+  },
+  date: {
+    fontSize: w(4),
+    color: 'black',
+    marginBottom: h(1),
   },
   isiContent: {
     textAlign: 'justify',
-  },
-  description: {
-    fontSize: w('4%'),
-    lineHeight: w('5%'),
   },
 });
 
