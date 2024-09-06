@@ -112,25 +112,6 @@ const EventDetail = () => {
           <Icon name="arrow-left" size={w(7)} color={'black'} />
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={{
-            width: w(12),
-            height: h(6),
-            position: 'absolute',
-            top: h(6.5),
-            right: w(8),
-            backgroundColor: '#EFEFEF',
-            borderRadius: w(6),
-            justifyContent: 'center',
-            alignItems: 'center',
-            elevation: 2,
-          }}>
-          <Image
-            source={require('../../assets/images/event/like.png')}
-            resizeMode="center"
-            style={{width: w(7), height: h(7), marginTop: h(0.4)}}
-          />
-        </TouchableOpacity>
         <JadwalD data={data} />
 
         {/* {data.judul == 'Pendaftaran Calon Anggota' ? (
@@ -167,6 +148,7 @@ const EventDetail = () => {
               textAlign: 'justify',
               fontFamily: 'Poppins-Regular',
               fontSize: w(3.5),
+              color: 'black',
             }}>
             {data.content}
           </Text>

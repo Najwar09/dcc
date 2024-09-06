@@ -11,43 +11,33 @@ import {
 const Content = ({event}) => {
   const navigation = useNavigation();
 
-  // const tarik = async () => {
-  //   try {
-  //     const response = await fetch('https://dcc-testing.campa-bima.online/public/api/agenda');
-  //     const data = await response.json();
-  //     console.log(data);
-  //   } catch (error) {
-  //     console.log('Error ambil data Api', error);
-  //   }
+  // const free = () => {
+  //   return (
+  //     <View
+  //       style={{
+  //         width: w(10),
+  //         height: h(4.6),
+  //         backgroundColor: '#ECD86E',
+  //         position: 'absolute',
+  //         borderRadius: w(6),
+  //         top: h(-1),
+  //         left: w(45),
+  //         justifyContent: 'center',
+  //         alignItems: 'center',
+  //         elevation: 2,
+  //       }}>
+  //       <Text
+  //         style={{
+  //           fontSize: w(3.4),
+  //           color: 'black',
+  //           fontFamily: 'Poppins-SemiBold',
+  //           marginTop: h(0.3),
+  //         }}>
+  //         Free
+  //       </Text>
+  //     </View>
+  //   );
   // };
-
-  const free = () => {
-    return (
-      <View
-        style={{
-          width: w(10),
-          height: h(4.6),
-          backgroundColor: '#ECD86E',
-          position: 'absolute',
-          borderRadius: w(6),
-          top: h(-1),
-          left: w(45),
-          justifyContent: 'center',
-          alignItems: 'center',
-          elevation: 2,
-        }}>
-        <Text
-          style={{
-            fontSize: w(3.4),
-            color: '#745C5C',
-            fontFamily: 'Poppins-SemiBold',
-            marginTop: h(0.3),
-          }}>
-          Free
-        </Text>
-      </View>
-    );
-  };
   const lokasi = location => {
     return (
       <View style={{flexDirection: 'row', marginTop: h(1.4)}}>
@@ -83,7 +73,7 @@ const Content = ({event}) => {
             style={{
               height: h(40.5),
               width: w(52),
-              backgroundColor: '#80AF81',
+              backgroundColor: '#D4EBFE',
               borderBottomRightRadius: w(6),
               borderBottomLeftRadius: w(6),
               borderTopRightRadius: w(5),
@@ -91,7 +81,7 @@ const Content = ({event}) => {
               marginTop: h(8),
               marginLeft: w(7),
               marginRight: w(7),
-              elevation: 2,
+              elevation: 5,
             }}>
             <View style={{alignItems: 'center', marginTop: 6}}>
               <Image
@@ -104,7 +94,7 @@ const Content = ({event}) => {
                 }}
               />
             </View>
-            {item.title == 'Pendaftaran Calon Anggota' ? '' : free()}
+            {/* {item.title == 'Pendaftaran Calon Anggota' ? '' : free()} */}
 
             <View
               style={{
@@ -162,7 +152,7 @@ const Content = ({event}) => {
               style={{
                 width: w(35),
                 height: h(4.5),
-                backgroundColor: '#3FA2F6',
+                backgroundColor: '#ECD86E',
                 borderRadius: w(2.5),
                 justifyContent: 'center',
                 alignItems: 'center',

@@ -118,7 +118,7 @@ const JadwalD = ({data}) => {
           width: w(26),
           backgroundColor: '#51A9F4',
           height: h(0.3),
-          bottom: data.title == 'Pendaftaran Calon Anggota' ? h(-2.2) : h(-2.8),
+          bottom: data.title == 'Pendaftaran Calon Anggota' ? h(-2.2) : h(-2.4),
           marginLeft: w(13),
           elevation: 1,
         }}

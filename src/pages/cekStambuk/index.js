@@ -22,7 +22,7 @@ const CekStambuk = ({navigation}) => {
   // Fungsi untuk mengecek stambuk di API
   const handleCheckStambuk = async () => {
     if (!stambuk) {
-      Alert.alert('Peringatan', 'Masukkan Stambuk Dulu Toloooo');
+      Alert.alert('Peringatan', 'Masukkan Stambuk Anda Dulu');
       return;
     }
 
@@ -38,7 +38,10 @@ const CekStambuk = ({navigation}) => {
       if (stambukTerdaftar) {
         // Jika stambuk ditemukan, arahkan ke MainScreen
         Alert.alert('INFO', 'Stambuk Anda sudah terdaftar sebelumnya', [
-          {text: 'OK', onPress: () => navigation.navigate('MainScreen')},
+          {
+            text: 'OK',
+            onPress: () => navigation.replace('AfterForm', {stambukTerdaftar}),
+          },
         ]);
       } else {
         // Jika stambuk tidak ditemukan, tampilkan alert dan arahkan ke BeforeForm
@@ -115,6 +118,7 @@ const CekStambuk = ({navigation}) => {
             placeholder="Masukkan Stambuk Anda"
             placeholderTextColor={'#595959'}
             style={styles.addressInput}
+            maxLength={6}
             onChangeText={text => setStambuk(text)} // Simpan teks input
             value={stambuk} // Tambahkan ini untuk memastikan TextInput mengontrol state
           />

@@ -1,5 +1,13 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet, Pressable, Alert} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  Alert,
+  Linking,
+  TouchableOpacity,
+} from 'react-native';
 import LottieView from 'lottie-react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {
@@ -7,39 +15,51 @@ import {
   heightPercentageToDP as h,
 } from '../../../responsive';
 import successAnimation from '../../assets/animation/done.json';
-import {useRoute, useNavigation} from '@react-navigation/native';
-import axios from 'axios';
+import {useNavigation} from '@react-navigation/native';
 
 const AfterForm = () => {
   const navigation = useNavigation();
-  const route = useRoute();
-  const code = route.params.formData;
-  const [kode, setKode] = useState('');
+  // const route = useRoute();
+  // const dataDaftar = route.params.formData;
+  // console.log(dataDaftar.stambuk);
 
-  const ambilData = async () => {
-    try {
-      const response = await axios.get(
-        'https://dcc-testing.campa-bima.online/public/api/calgot',
-      );
-      const data = await response.data.data;
-      const kodeUnikPeserta = data.find(
-        item => item.kode_unik == code.kode_unik,
-      );
-      if (kodeUnikPeserta) {
-        setKode(kodeUnikPeserta);
-        console.log(kode);
-      }
-    } catch (error) {
-      Alert.alert('INFO', error);
-    }
-  };
+  // useEffect(() => {
+  //   const ambilData = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         'https://dcc-testing.campa-bima.online/public/api/calgot',
+  //       );
 
-  ambilData();
+  //       const data = await response.data.data;
+  //       const kodeUnikPeserta = data.find(
+  //         item => item.stambuk == dataDaftar.stambuk,
+  //       );
+  //       if (kodeUnikPeserta) {
+  //         setKode(kodeUnikPeserta);
+  //         console.log(kode);
+  //       }
+  //     } catch (error) {
+  //       Alert.alert('INFO', error);
+  //     }
+  //   };
 
+  //   // Jika cek stambuknya sudah terdaftar
+  //   if (!dataDaftar) {
+  //     const stbTerdaftar = route.params.stambukTerdaftar;
+  //     console.log(stbTerdaftar.kode_unik);
+  //     setKode(stbTerdaftar.kode_unik);
+  //   } else {
+  //     ambilData();
+  //   }
+  // }, []);
   const handleContinue = () => {
     navigation.navigate('Home');
   };
 
+  const handleGrup = async () => {
+    const url = 'https://www.example.com';
+    await Linking.openURL(url);
+  };
   return (
     <View style={styles.container}>
       <LottieView
@@ -58,21 +78,20 @@ const AfterForm = () => {
       </Text>
       <Text style={styles.title}>Pendaftaran Berhasil!</Text>
       <Text style={styles.subtitle}>
-        Terima kasih telah mendaftar dengan kami.
+        SILAHKAN GABUNG DI GRUP WA UNTUK INFO SELANJUTNYA
       </Text>
+      <TouchableOpacity style={{marginTop: h(2)}} onPress={handleGrup}>
+        <Text
+          style={{
+            fontSize: w(4),
+            color: '#3570E4',
+            fontWeight: 'bold',
+            fontStyle: 'italic',
+          }}>
+          -Klik Grup WA-
+        </Text>
+      </TouchableOpacity>
 
-      {/* <View style={{alignItems: 'center', marginTop: h(4.5)}}>
-        <Text style={{color: 'black', fontSize: w(4), fontStyle: 'italic'}}>
-          Silahkan isi Quiz Dengan
-        </Text>
-        <Text style={{color: 'black', fontSize: w(4), fontStyle: 'italic'}}>
-          Kode Dibawah ini!
-        </Text>
-      </View> */}
-      {/* <View style={styles.codeContainer}>
-        <Text style={styles.codeLabel}>Kode Unik Anda:</Text>
-        <Text style={styles.code}>{kode}</Text>
-      </View> */}
       <Pressable
         style={({pressed}) => [
           {
@@ -115,7 +134,7 @@ const styles = StyleSheet.create({
     color: '#3570E4',
   },
   subtitle: {
-    fontSize: w(5),
+    fontSize: w(4),
     marginBottom: h(-1),
     textAlign: 'center',
     paddingHorizontal: w(10),

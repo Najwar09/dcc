@@ -9,6 +9,8 @@ import {
   StatusBar,
   StyleSheet,
   Alert,
+  Linking,
+  Pressable,
 } from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {
@@ -28,7 +30,6 @@ const FormRegis = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const cekStambuk = route.params?.dataStb;
-  // console.log(cekStambuk);
 
   const [currentForm, setCurrentForm] = useState(1);
 
@@ -52,13 +53,26 @@ const FormRegis = () => {
   const [organisasi, setOrganisasi] = useState('');
   const [alasanDaftar, setAlasanDaftar] = useState('');
   const [foto, setFoto] = useState(null);
+  const [nameFoto, setNameFoto] = useState('');
 
   const [isLoading, setLoading] = useState(false);
   const [speed, setSpeed] = useState(0.8);
 
   // Arahkan ke FORM 2
   const handleSubmission = () => {
-    setCurrentForm(2);
+    if (
+      !nama ||
+      !nim ||
+      !noTelpon ||
+      !tempatLahir ||
+      !tanggalLahir ||
+      !jenisKelamin ||
+      !alamat
+    ) {
+      Alert.alert('Failed', 'Isi semua Kolom Inputan anda');
+    } else {
+      validasiStambuk();
+    }
   };
 
   const validasiStambuk = () => {
@@ -66,14 +80,19 @@ const FormRegis = () => {
     const cekStambuk2 = cekStambuk.find(item => item.stambuk == nim);
 
     if (cekStambuk2) {
-      Alert.alert('Failed', 'Stambuk yang anda Input sudah terdaftar', [
-        {
-          text: 'OKE',
-          onPress: () => setCurrentForm(1),
-        },
-      ]);
+      setLoading(true);
+
+      setTimeout(() => {
+        setLoading(false);
+        Alert.alert('Failed', 'Stambuk yang anda Input sudah terdaftar', [
+          {
+            text: 'OKE',
+            onPress: () => setCurrentForm(1),
+          },
+        ]);
+      }, 3000);
     } else {
-      handleSubmission2();
+      setCurrentForm(2);
     }
   };
 
@@ -82,54 +101,70 @@ const FormRegis = () => {
     // // membuat kode random
     // const kode_unik = Math.floor(10000 + Math.random() * 90000);
 
-    // membuat const untuk menampung semua nilai dari useState form
-    const formData = new FormData();
-    formData.append('stambuk', nim);
-    formData.append('nama', nama);
-    formData.append('tempat_lahir', tempatLahir);
-    formData.append('tgl_lahir', tanggalLahir);
-    formData.append('jkl', jenisKelamin);
-    formData.append('agama', agama);
-    formData.append('no_telp', noTelpon);
-    formData.append('alamat', alamat);
-    formData.append('ket', 'Belum Lulus');
-    formData.append('asal', asal);
-    formData.append('nama_ayah', namaAyah);
-    formData.append('nama_ibu', namaIbu);
-    formData.append('organisasi', organisasi);
-    formData.append('alasan', alasanDaftar);
-    formData.append('angkatan', angkatan);
+    // Validasi utk mnghindari kolom inputan yg tdk di isi
+    if (
+      !asal ||
+      !agama ||
+      !namaAyah ||
+      !namaIbu ||
+      !organisasi ||
+      !alasanDaftar ||
+      !foto
+    ) {
+      Alert.alert('FAILED', 'Anda harus mengisi semua kolom inputan !');
+    } else {
+      const formData = new FormData();
+      formData.append('stambuk', nim);
+      formData.append('nama', nama);
+      formData.append('tempat_lahir', tempatLahir);
+      formData.append('tgl_lahir', tanggalLahir);
+      formData.append('jkl', jenisKelamin);
+      formData.append('agama', agama);
+      formData.append('no_telp', noTelpon);
+      formData.append('alamat', alamat);
+      formData.append('ket', '');
+      formData.append('asal', asal);
+      formData.append('nama_ayah', namaAyah);
+      formData.append('nama_ibu', namaIbu);
+      formData.append('organisasi', organisasi);
+      formData.append('alasan', alasanDaftar);
 
-    if (foto) {
       formData.append('foto', {
         uri: foto,
-        type: 'image/jpeg',
-        name: 'photo.jpg',
+        type: 'image/jpg',
+        name: nameFoto,
       });
-    }
 
-    // POST DATA
-    try {
-      const res = await axios.post(
-        'https://dcc-testing.campa-bima.online/public/api/calgot/store',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
+      formData.append('angkatan', '27');
+
+      try {
+        const response = await axios.post(
+          'https://dcc-testing.campa-bima.online/public/api/calgot/store',
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
           },
-        },
-      );
-      // console.log(res);
+        );
+        console.log(response.data);
+        setLoading(true);
 
-      setLoading(true);
+        setTimeout(() => {
+          setLoading(false);
+          navigation.navigate('AfterForm', {formData});
+        }, 3500);
 
-      setTimeout(() => {
-        Alert.alert('Success', 'Anda berhasil Mendaftar');
-        navigation.replace('AfterForm', {formData});
-      }, 3500);
-    } catch (error) {
-      console.log(error);
-      Alert.alert('Error', 'Anda Gagal Mendaftar');
+        // console.log(response.data.data.id);
+      } catch (error) {
+        Alert.alert('Error', 'Gagal mengirim data');
+        console.error(
+          'Error sending data: ',
+          error.response?.data || error.message,
+        );
+      }
+
+      console.log(formData);
     }
   };
 
@@ -145,19 +180,14 @@ const FormRegis = () => {
         label: 'Nim',
         type: 'number-pad',
       },
-      {
-        placeholder: 'Masukkan Email Anda',
-        label: 'Email',
-        type: 'email-address',
-      },
+      // {
+      //   placeholder: 'Masukkan Email Anda',
+      //   label: 'Email',
+      //   type: 'email-address',
+      // },
       {
         placeholder: 'Masukkan No.hp Anda',
         label: 'Nomor Hp',
-        type: 'number-pad',
-      },
-      {
-        placeholder: 'Masukkan Angkatan Anda',
-        label: 'Angkatan',
         type: 'number-pad',
       },
       {
@@ -209,14 +239,15 @@ const FormRegis = () => {
             value={tanggalLahir}
             keyboardType={type}
             placeholder={placeholder}
-            placeholderTextColor={'#595959'}
+            placeholderTextColor={'black'}
             style={style.TextInput}
             onPress={() => validasiDate()}></TextInput>
         ) : (
           <TextInput
             keyboardType={type}
             placeholder={placeholder}
-            placeholderTextColor={'#595959'}
+            placeholderTextColor={'black'}
+            maxLength={label == 'Nim' ? 6 : null}
             style={style.TextInput}
             onChangeText={data => validasiInput(data, label)}
           />
@@ -234,8 +265,6 @@ const FormRegis = () => {
       setEmail(data);
     } else if (label == 'Nomor Hp') {
       setNoTelpon(data);
-    } else if (label == 'Angkatan') {
-      setAngkatan(data);
     } else if (label == 'Tempat Lahir') {
       setTempatLahir(data);
     } else if (label == 'Tanggal Lahir') {
@@ -304,7 +333,7 @@ const FormRegis = () => {
               />
             ) : null}
           </TouchableOpacity>
-          <Text>Pria</Text>
+          <Text style={{color: 'black'}}>Pria</Text>
           <TouchableOpacity
             style={style.radioBoxKelamin}
             onPress={() => ubahKelamin('P')}>
@@ -315,7 +344,7 @@ const FormRegis = () => {
               />
             ) : null}
           </TouchableOpacity>
-          <Text>Wanita</Text>
+          <Text style={{color: 'black'}}>Wanita</Text>
         </View>
       </View>
     );
@@ -340,13 +369,28 @@ const FormRegis = () => {
   // };
 
   const openImageLibrary = () => {
-    launchImageLibrary({}, response => {
+    launchImageLibrary({mediaType: 'photo'}, response => {
       if (response.didCancel) {
-        console.log('User cancelled image picker');
+        Alert.alert('No photo selected');
       } else if (response.errorCode) {
-        console.log('ImagePicker Error: ', response.errorMessage);
+        Alert.alert('Error', response.errorMessage);
       } else {
-        setFoto(response.assets[0].uri);
+        // Memastikan image adalah objek, bukan array
+        if (response.assets && response.assets.length > 0) {
+          const uri = response.assets[0].uri;
+          const urin =
+            // Platform.OS === "android"
+            //   ? selectedImage.uri
+            //   : selectedImage.uri.replace("file://", "");\\const uri =
+            Platform.OS === 'android' ? uri : uri.replace('file:///', '');
+          const filename = uri.split('/').pop();
+          const match = /\.(\w+)$/.exec(filename);
+          const ext = match?.[1];
+          const type = match ? `image/${match[1]}` : `image`;
+          // console.log('cek :',type)
+          setNameFoto(filename);
+          setFoto(urin);
+        }
       }
     });
   };
@@ -396,7 +440,7 @@ const FormRegis = () => {
             <TextInput
               keyboardType={'default'}
               placeholder={'Masukkan Alamat Anda'}
-              placeholderTextColor={'#595959'}
+              placeholderTextColor={'black'}
               style={style.TextInput}
               onChangeText={data => setAlamat(data)}
             />
@@ -425,7 +469,7 @@ const FormRegis = () => {
               value={asal}
               keyboardType={'default'}
               placeholder={'Masukkan Asal Anda'}
-              placeholderTextColor={'#595959'}
+              placeholderTextColor={'black'}
               style={style.TextInput}
               onChangeText={value => validasiInput(value, 'Asal')}></TextInput>
           </View>
@@ -446,14 +490,35 @@ const FormRegis = () => {
                   label="Pilih Agama Anda"
                   value=""
                   enabled={false}
+                  style={{color: 'black'}}
                 />
-                <Picker.Item label="Islam" value="I" />
-                <Picker.Item label="Kristen" value="KK" />
-                <Picker.Item label="Katholik" value="KP" />
-                <Picker.Item label="Hindu" value="H" />
-                <Picker.Item label="Buddha" value="B" />
-                <Picker.Item label="Konghucu" value="KH" />
-                <Picker.Item label="Lainnya" value="U" />
+                <Picker.Item label="Islam" value="I" style={{color: 'black'}} />
+                <Picker.Item
+                  label="Kristen"
+                  value="KK"
+                  style={{color: 'black'}}
+                />
+                <Picker.Item
+                  label="Katholik"
+                  value="KP"
+                  style={{color: 'black'}}
+                />
+                <Picker.Item label="Hindu" value="H" style={{color: 'black'}} />
+                <Picker.Item
+                  label="Buddha"
+                  value="B"
+                  style={{color: 'black'}}
+                />
+                <Picker.Item
+                  label="Konghucu"
+                  value="KH"
+                  style={{color: 'black'}}
+                />
+                <Picker.Item
+                  label="Lainnya"
+                  value="U"
+                  style={{color: 'black'}}
+                />
               </Picker>
             </View>
           </View>
@@ -477,9 +542,11 @@ const FormRegis = () => {
                 borderRadius: w(4),
                 paddingLeft: w(4),
                 fontStyle: 'italic',
+                color: 'black',
               }}
               multiline={true}
               numberOfLines={2}
+              placeholderTextColor={'black'}
               onChangeText={value =>
                 validasiInput(value, 'Pengalaman Organisasi')
               }
@@ -496,6 +563,7 @@ const FormRegis = () => {
             <Text style={style.labelInput}>Alasan</Text>
             <TextInput
               placeholder="Masukkan Alasan Anda Bergabung"
+              placeholderTextColor={'black'}
               style={{
                 width: w(93),
                 height: h(10),
@@ -504,6 +572,7 @@ const FormRegis = () => {
                 borderRadius: w(4),
                 paddingLeft: w(4),
                 fontStyle: 'italic',
+                color: 'black',
               }}
               multiline={true}
               numberOfLines={2}
@@ -517,20 +586,21 @@ const FormRegis = () => {
               flex: 1,
               marginLeft: w(4),
               height: h(8),
-              marginBottom: h(4),
+              marginBottom: h(5),
               justifyContent: 'center',
               paddingLeft: w(2),
             }}>
             {foto ? (
               <Image
                 source={{uri: foto}}
+                resizeMode="cover"
                 style={{
                   height: h(12),
                   width: w(30),
                 }}
               />
             ) : (
-              <Text>Tidak Foto yang di Pilih</Text>
+              <Text style={{color: 'black'}}>Tidak Foto yang di Pilih</Text>
             )}
             <TouchableOpacity
               style={{
@@ -560,7 +630,7 @@ const FormRegis = () => {
           <View style={{alignItems: 'center'}}>
             <TouchableOpacity
               style={style.button}
-              onPress={() => validasiStambuk()}>
+              onPress={() => handleSubmission2()}>
               <Text style={style.buttonText}>Daftar</Text>
             </TouchableOpacity>
           </View>
@@ -606,7 +676,7 @@ const style = StyleSheet.create({
   },
   labelInput: {
     fontSize: w(4),
-    color: '#000000',
+    color: 'black',
     fontWeight: 'bold',
     marginLeft: w(4),
     bottom: h(1),
@@ -619,14 +689,15 @@ const style = StyleSheet.create({
     borderRadius: w(4),
     paddingLeft: w(4),
     fontStyle: 'italic',
+    color: 'black',
   },
   button: {
     height: h(6),
     width: w(42),
     borderRadius: w(8),
     backgroundColor: '#3570E4',
-    marginBottom: h(3),
-    marginTop: h(3),
+    marginBottom: h(4),
+    marginTop: h(0.5),
     justifyContent: 'center',
     elevation: 3,
   },

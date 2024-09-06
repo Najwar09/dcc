@@ -35,7 +35,7 @@ const Event = () => {
     return (
       <View
         style={{
-          backgroundColor: '#51A9F4',
+          backgroundColor: '#79A1ED',
           height: h(14.5),
           width: w(100),
           flexDirection: 'row',
@@ -177,17 +177,17 @@ const Event = () => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={{flex: 1}}>
-        <StatusBar barStyle={'dark-content'} backgroundColor={'#51A9F4'} />
+        <StatusBar barStyle={'dark-content'} backgroundColor={'#79A1ED'} />
         {header()}
         <Content event={event} />
         <View
           style={{
             width: w(100),
             height: h(28.7),
-            backgroundColor: '#D4EBFE',
+            backgroundColor: '#79A1ED',
             borderTopRightRadius: w(10),
             borderTopLeftRadius: w(10),
-            elevation: 2,
+            elevation: 1,
             marginTop: h(1),
             marginBottom: h(8),
           }}>
