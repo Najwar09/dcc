@@ -44,12 +44,12 @@ const Event = () => {
           borderBottomLeftRadius: w(6),
           elevation: 1,
         }}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{marginLeft: w(6), marginTop: h(3.5)}}
           onPress={() => navigation.goBack()}>
           <Icon name="arrow-left" color={'black'} size={w(9)} />
-        </TouchableOpacity>
-        <View
+        </TouchableOpacity> */}
+        {/* <View
           style={{
             width: w(9),
             height: h(4.5),
@@ -61,7 +61,7 @@ const Event = () => {
             marginTop: h(3.5),
           }}>
           <Icon name="info" size={w(4)} color={'black'} />
-        </View>
+        </View> */}
         <View
           style={{
             position: 'absolute',
@@ -102,76 +102,7 @@ const Event = () => {
   };
 
   const imageSwiper = event => {
-    return event.map((item, key) => (
-      <View
-        key={key}
-        style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          overflow: 'hidden',
-          alignSelf: 'center',
-          borderRadius: w(2),
-          marginTop: h(0.8),
-          flex: 1,
-        }}>
-        <TouchableOpacity
-          style={{
-            height: h(120),
-            width: w(72),
-          }}>
-          <Image
-            source={{uri: item.image}}
-            style={{
-              width: '100%',
-              height: '100%',
-              resizeMode: 'center',
-            }}
-          />
-        </TouchableOpacity>
-
-        <View
-          style={{
-            width: w(44),
-            height: h(5.5),
-            backgroundColor: '#ffffff',
-            position: 'absolute',
-            bottom: h(15.5),
-            left: w(-1),
-            borderBottomRightRadius: w(8),
-            alignItems: 'flex-start',
-            elevation: 0.6,
-          }}>
-          <Text
-            style={{
-              fontFamily: 'Poppins-SemiBold',
-              color: 'black',
-              fontSize: w(3.7),
-              marginTop: h(0.4),
-              marginLeft: w(3.4),
-            }}>
-            {item.title}
-          </Text>
-          <View style={{flexDirection: 'row'}}>
-            <Text
-              style={{
-                fontFamily: 'Poppins-Regular',
-                fontSize: w(2.8),
-                color: 'black',
-                marginLeft: w(3.4),
-                marginTop: h(-0.4),
-              }}>
-              {item.start_date}
-            </Text>
-            <Icon
-              name="calendar-alt"
-              color={'#3FA2F6'}
-              size={w(3.6)}
-              style={{marginLeft: w(2), marginTop: h(-0.5)}}
-            />
-          </View>
-        </View>
-      </View>
-    ));
+    return;
   };
 
   return (
@@ -206,28 +137,87 @@ const Event = () => {
               <View
                 style={{
                   marginTop: h(-0.3),
-                  backgroundColor: '#51A9F4',
-                  opacity: 0.6,
+                  backgroundColor: 'white',
                   elevation: 0.2,
-                  width: w(12),
+                  width: w(22),
                   height: h(0.3),
                   marginLeft: w(15.5),
                 }}></View>
             </View>
-            <Text
-              style={{
-                marginTop: h(6.6),
-                marginLeft: w(25.5),
-                color: '#E54D4D',
-                fontFamily: 'Poppins-Regular',
-                fontSize: w(3.3),
-              }}>
-              See More
-            </Text>
           </View>
 
-          <Swiper autoplay={true} autoplayTimeout={3}>
-            {imageSwiper(event)}
+          <Swiper autoplay={true} showsPagination={false}>
+            {event.map(item => (
+              <View
+                key={item.id}
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  overflow: 'hidden',
+                  alignSelf: 'center',
+                  borderRadius: w(2),
+                  marginTop: h(0.8),
+                  flex: 1,
+                }}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('EventDetail', {item})}
+                  style={{
+                    height: h(120),
+                    width: w(72),
+                  }}>
+                  <Image
+                    source={{uri: item.image}}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      resizeMode: 'center',
+                    }}
+                  />
+                </TouchableOpacity>
+
+                <View
+                  style={{
+                    width: w(44),
+                    height: h(5.5),
+                    backgroundColor: '#ffffff',
+                    position: 'absolute',
+                    bottom: h(15.5),
+                    left: w(-1),
+                    borderBottomRightRadius: w(8),
+                    alignItems: 'flex-start',
+                    elevation: 0.6,
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: 'Poppins-SemiBold',
+                      color: 'black',
+                      fontSize: w(3.7),
+                      marginTop: h(0.4),
+                      marginLeft: w(3.4),
+                    }}>
+                    {item.title}
+                  </Text>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text
+                      style={{
+                        fontFamily: 'Poppins-Regular',
+                        fontSize: w(2.8),
+                        color: 'black',
+                        marginLeft: w(3.4),
+                        marginTop: h(-0.4),
+                      }}>
+                      {item.start_date}
+                    </Text>
+                    <Icon
+                      name="calendar-alt"
+                      color={'#3FA2F6'}
+                      size={w(3.6)}
+                      style={{marginLeft: w(2), marginTop: h(-0.5)}}
+                    />
+                  </View>
+                </View>
+              </View>
+            ))}
           </Swiper>
         </View>
       </View>

@@ -7,10 +7,11 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {useRoute} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {useNavigation} from '@react-navigation/native';
+import RenderHTML from 'react-native-render-html';
 import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
@@ -23,6 +24,14 @@ const EventDetail = () => {
   const route = useRoute();
   const data = route.params.item;
   const navigation = useNavigation();
+
+  // Fungsi untuk menghapus semua tag HTML dan mengambil teksnya
+  const getPlainText = html => {
+    // Menggunakan regex untuk menghapus tag HTML
+    return html.replace(/<\/?[^>]+(>|$)/g, '');
+  };
+
+  const cleanHtml = getPlainText(data.content);
 
   // const speaker = data => {
   //   return data.map((item, key) => {
@@ -95,7 +104,7 @@ const EventDetail = () => {
             marginBottom: h(14),
           }}
         />
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={{
             width: w(12),
@@ -110,24 +119,9 @@ const EventDetail = () => {
             elevation: 2,
           }}>
           <Icon name="arrow-left" size={w(7)} color={'black'} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <JadwalD data={data} />
-
-        {/* {data.judul == 'Pendaftaran Calon Anggota' ? (
-          ''
-        ) : (
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={{
-              width: w(102),
-              marginTop: h(-3.2),
-            }}>
-            {speaker(data.speaker)}
-          </ScrollView>
-        )} */}
-
         <View
           style={{
             marginLeft: w(7.5),
@@ -150,7 +144,7 @@ const EventDetail = () => {
               fontSize: w(3.5),
               color: 'black',
             }}>
-            {data.content}
+            {cleanHtml}
           </Text>
 
           {data.title == 'Pendaftaran Calon Anggota' ? (
