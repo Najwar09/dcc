@@ -1,17 +1,16 @@
 import {
   View,
   Text,
-  StatusBar,
   TouchableOpacity,
   Image,
   ScrollView,
+  StyleSheet,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import Swiper from 'react-native-swiper';
 
-import Content from '../../component/Event/Content';
 import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
@@ -27,202 +26,218 @@ const Event = () => {
       .then(data => {
         setEvent(data.data);
       });
-
     // tarik();
   }, []);
 
-  const header = () => {
+  const gambar = [
+    {id: 1, uri: require('./../../assets/images/event/1.jpg')},
+    {id: 2, uri: require('./../../assets/images/event/2.jpg')},
+    {id: 3, uri: require('./../../assets/images/event/3.jpg')},
+    {id: 4, uri: require('./../../assets/images/event/4.jpg')},
+    {id: 5, uri: require('./../../assets/images/event/5.jpg')},
+    {id: 6, uri: require('./../../assets/images/event/6.jpg')},
+    {id: 7, uri: require('./../../assets/images/event/7.jpg')},
+    {id: 8, uri: require('./../../assets/images/event/8.jpg')},
+    {id: 9, uri: require('./../../assets/images/event/9.jpg')},
+  ];
+
+  const imageSwiper = () => {
     return (
       <View
         style={{
-          backgroundColor: '#79A1ED',
-          height: h(14.5),
+          overflow: 'hidden',
+          height: h(40),
           width: w(100),
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          borderBottomRightRadius: w(6),
-          borderBottomLeftRadius: w(6),
-          elevation: 1,
+          marginTop: h(-9),
+          alignItems: 'center',
         }}>
-        {/* <TouchableOpacity
-          style={{marginLeft: w(6), marginTop: h(3.5)}}
-          onPress={() => navigation.goBack()}>
-          <Icon name="arrow-left" color={'black'} size={w(9)} />
-        </TouchableOpacity> */}
-        {/* <View
-          style={{
-            width: w(9),
-            height: h(4.5),
-            borderRadius: w(5),
-            borderWidth: w(0.7),
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginRight: w(6),
-            marginTop: h(3.5),
-          }}>
-          <Icon name="info" size={w(4)} color={'black'} />
-        </View> */}
-        <View
-          style={{
-            position: 'absolute',
-            backgroundColor: '#D9D9D9',
-            borderRadius: w(6),
-            elevation: 1,
-            top: h(11),
-            left: w(28),
-            width: w(44),
-            height: h(0.3),
-          }}
-        />
-        <View
-          style={{
-            position: 'absolute',
-            top: h(11.6),
-            left: w(21),
-            backgroundColor: '#ffffff',
-            width: w(60),
-            height: h(5),
-            borderRadius: w(4),
-            justifyContent: 'center',
-            alignItems: 'center',
-            elevation: 3,
-          }}>
-          <Text
-            style={{
-              color: 'black',
-              fontSize: w(4.3),
-              marginTop: h(0.5),
-              fontFamily: 'Poppins-SemiBold',
-            }}>
-            UPCOMING EVENT
-          </Text>
-        </View>
+        <Swiper
+          autoplay
+          dotColor="#ccc"
+          activeDotColor="#ff6347"
+          showsPagination={true}>
+          {gambar.map(item => (
+            <View key={item.id}>
+              <Image
+                source={item.uri}
+                resizeMode="center"
+                style={{width: w('100%'), height: h('100%'), marginTop: h(-25)}}
+              />
+            </View>
+          ))}
+        </Swiper>
       </View>
     );
   };
 
-  const imageSwiper = event => {
-    return;
-  };
+  function formatDate(dateString) {
+    // Pecah string tanggal berdasarkan tanda "-"
+    const parts = dateString.split('-'); // ["YYYY", "MM", "DD"]
+
+    // Konversi Format bulan angka ke nama bulan
+    const date = new Date(parts[0], parts[1], parts[2]); // 2009-11-10
+    const month = date.toLocaleString('default', {month: 'long'});
+    // Susun ulang ke format DD-MM-YYYY
+    return `${parts[2]}-${month}-${parts[0]}`;
+  }
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={{flex: 1}}>
-        <StatusBar barStyle={'dark-content'} backgroundColor={'#79A1ED'} />
-        {header()}
-        <Content event={event} />
+    <View style={{flex: 1}}>
+      {imageSwiper()}
+      <View
+        style={{
+          backgroundColor: '#f8f8f8',
+          width: w('100%'),
+          height: h('100%'),
+          borderTopRightRadius: w(5),
+          borderTopLeftRadius: w(5),
+          elevation: 6,
+          marginTop: h(-2),
+          alignItems: 'center',
+        }}>
         <View
           style={{
-            width: w(100),
-            height: h(28.7),
             backgroundColor: '#79A1ED',
-            borderTopRightRadius: w(10),
-            borderTopLeftRadius: w(10),
-            elevation: 1,
-            marginTop: h(1),
-            marginBottom: h(8),
+            width: w(15),
+            height: h(0.4),
+            borderRadius: w(10),
+            marginTop: h(0.8),
+            elevation: 2,
+          }}
+        />
+        <Text
+          style={{
+            color: 'black',
+            marginTop: h(3),
+            fontFamily: 'Poppins-Bold',
+            fontSize: w(5),
+            marginRight: w(50),
           }}>
-          <View style={{flexDirection: 'row', marginTop: h(-2.8)}}>
-            <View>
-              <Text
-                style={{
-                  marginTop: h(6),
-                  marginLeft: w(15),
-                  fontFamily: 'Poppins-SemiBold',
-                  color: 'black',
-                  fontSize: w(4),
-                }}>
-                Previous Event
-              </Text>
-              <View
-                style={{
-                  marginTop: h(-0.3),
-                  backgroundColor: 'white',
-                  elevation: 0.2,
-                  width: w(22),
-                  height: h(0.3),
-                  marginLeft: w(15.5),
-                }}></View>
-            </View>
-          </View>
+          LATEST EVENT
+        </Text>
 
-          <Swiper autoplay={true} showsPagination={false}>
-            {event.map(item => (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{marginBottom: h(40)}}>
+          {event.map((item, key) => {
+            return (
               <View
-                key={item.id}
+                key={key}
                 style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  overflow: 'hidden',
-                  alignSelf: 'center',
-                  borderRadius: w(2),
-                  marginTop: h(0.8),
-                  flex: 1,
+                  backgroundColor: 'white',
+                  height: h(22),
+                  width: w(90),
+                  borderRadius: w(4),
+                  marginBottom: h(2),
+                  elevation: 3,
+                  paddingLeft: w(2),
+                  paddingTop: h(0.5),
+                  borderTopWidth: 0.2,
                 }}>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('EventDetail', {item})}
-                  style={{
-                    height: h(120),
-                    width: w(72),
-                  }}>
+                <View style={{flexDirection: 'row'}}>
                   <Image
                     source={{uri: item.image}}
                     style={{
-                      width: '100%',
-                      height: '100%',
-                      resizeMode: 'center',
+                      width: w(40),
+                      height: h(20),
+                      marginTop: h(0.5),
+                      borderRadius: w(4),
                     }}
+                    resizeMode="cover"
                   />
-                </TouchableOpacity>
-
-                <View
-                  style={{
-                    width: w(44),
-                    height: h(5.5),
-                    backgroundColor: '#ffffff',
-                    position: 'absolute',
-                    bottom: h(15.5),
-                    left: w(-1),
-                    borderBottomRightRadius: w(8),
-                    alignItems: 'flex-start',
-                    elevation: 0.6,
-                  }}>
-                  <Text
+                  <View
                     style={{
-                      fontFamily: 'Poppins-SemiBold',
-                      color: 'black',
-                      fontSize: w(3.7),
-                      marginTop: h(0.4),
-                      marginLeft: w(3.4),
+                      marginLeft: w(1),
+                      marginTop: h(1),
+                      width: w(50),
+                      alignItems: 'center',
                     }}>
-                    {item.title}
-                  </Text>
-                  <View style={{flexDirection: 'row'}}>
                     <Text
                       style={{
-                        fontFamily: 'Poppins-Regular',
-                        fontSize: w(2.8),
                         color: 'black',
-                        marginLeft: w(3.4),
-                        marginTop: h(-0.4),
+                        fontFamily: 'Poppins-SemiBold',
+                        fontSize: w(5),
+                        marginRight: w(4),
                       }}>
-                      {item.start_date}
+                      {item.title}
                     </Text>
-                    <Icon
-                      name="calendar-alt"
-                      color={'#3FA2F6'}
-                      size={w(3.6)}
-                      style={{marginLeft: w(2), marginTop: h(-0.5)}}
-                    />
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        marginLeft: w(-19.5),
+                        marginTop: h(1.5),
+                      }}>
+                      <Icon
+                        name="calendar-alt"
+                        color={'#79A1ED'}
+                        size={w(4)}
+                        style={{marginTop: h(0.3)}}
+                      />
+                      <Text style={style.textEvent}>
+                        {formatDate(item.start_date)}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        marginLeft: w(-15),
+                        marginTop: h(2),
+                      }}>
+                      <Icon
+                        name="map-marker-alt"
+                        color={'#79A1ED'}
+                        size={w(5)}
+                        style={{marginTop: h(0.1), marginLeft: w(0.7)}}
+                      />
+                      <Text style={style.textEvent2}>{item.location}</Text>
+                    </View>
+                    <TouchableOpacity
+                      style={{
+                        width: w(42),
+                        height: h(4),
+                        backgroundColor: '#79A1ED',
+                        marginTop: h(2.3),
+                        marginRight: w(4),
+                        borderRadius: w(4),
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        paddingTop: h(0.5),
+                        elevation: 1.4,
+                      }}
+                      onPress={() =>
+                        navigation.navigate('EventDetail', {item})
+                      }>
+                      <Text
+                        style={{
+                          color: 'white',
+                          fontFamily: 'Poppins-SemiBold',
+                        }}>
+                        Detail Event
+                      </Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
               </View>
-            ))}
-          </Swiper>
-        </View>
+            );
+          })}
+        </ScrollView>
       </View>
-    </ScrollView>
+    </View>
   );
 };
-
 export default Event;
+
+const style = StyleSheet.create({
+  textEvent: {
+    fontFamily: 'Inter-Reguler',
+    color: 'black',
+    fontSize: w(4),
+    marginLeft: w(2),
+  },
+  textEvent2: {
+    fontFamily: 'Inter-Reguler',
+    color: 'black',
+    fontSize: w(4),
+    marginLeft: w(2.3),
+  },
+});
