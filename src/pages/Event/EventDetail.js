@@ -33,53 +33,6 @@ const EventDetail = () => {
 
   const cleanHtml = getPlainText(data.content);
 
-  // const speaker = data => {
-  //   return data.map((item, key) => {
-  //     return (
-  //       <View
-  //         key={key}
-  //         style={{
-  //           marginLeft: w(4.5),
-  //           marginRight: w(6),
-  //           marginTop: h(0.5),
-  //           alignItems: 'center',
-  //           height: h(16),
-  //         }}>
-  //         <Image
-  //           source={{uri: item.gambarS}}
-  //           style={{
-  //             width: w(20.5),
-  //             height: h(10.3),
-  //             borderRadius: w(10),
-  //             elevation: 3,
-  //           }}
-  //         />
-  //         <View
-  //           style={{
-  //             height: h(3.5),
-  //             backgroundColor: '#80AF81',
-  //             marginTop: h(1),
-  //             alignItems: 'center',
-  //             justifyContent: 'center',
-  //             borderRadius: w(3),
-  //             elevation: 1,
-  //           }}>
-  //           <Text
-  //             style={{
-  //               color: 'black',
-  //               marginLeft: w(2),
-  //               marginRight: w(2.5),
-  //               fontSize: w(3),
-  //               fontFamily: 'Poppins-Regular',
-  //             }}>
-  //             {item.tipe} : <Text>{item.speakerD}</Text>
-  //           </Text>
-  //         </View>
-  //       </View>
-  //     );
-  //   });
-  // };
-
   return (
     <View
       style={{

@@ -1,3 +1,4 @@
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -5,12 +6,11 @@ import {
   Image,
   ScrollView,
   StyleSheet,
+  ActivityIndicator,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Swiper from 'react-native-swiper';
-
 import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
@@ -19,14 +19,18 @@ import {
 const Event = () => {
   const navigation = useNavigation();
   const [event, setEvent] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [loadingImages, setLoadingImages] = useState(
+    Array.from({length: 5}, () => true), // Array loading untuk masing-masing gambar
+  );
 
   useEffect(() => {
     fetch('https://dcc-testing.campa-bima.online/public/api/agenda')
       .then(res => res.json())
       .then(data => {
         setEvent(data.data);
+        setLoading(false);
       });
-    // tarik();
   }, []);
 
   const gambar = [
@@ -35,11 +39,25 @@ const Event = () => {
     {id: 3, uri: require('./../../assets/images/event/3.jpg')},
     {id: 4, uri: require('./../../assets/images/event/4.jpg')},
     {id: 5, uri: require('./../../assets/images/event/5.jpg')},
-    {id: 6, uri: require('./../../assets/images/event/6.jpg')},
-    {id: 7, uri: require('./../../assets/images/event/7.jpg')},
-    {id: 8, uri: require('./../../assets/images/event/8.jpg')},
-    {id: 9, uri: require('./../../assets/images/event/9.jpg')},
   ];
+
+  // Fungsi untuk menangani awal loading gambar
+  const handleLoadStart = index => {
+    setLoadingImages(prev => {
+      const newLoading = [...prev];
+      newLoading[index] = true;
+      return newLoading;
+    });
+  };
+
+  // Fungsi untuk menangani akhir loading gambar
+  const handleLoadEnd = index => {
+    setLoadingImages(prev => {
+      const newLoading = [...prev];
+      newLoading[index] = false;
+      return newLoading;
+    });
+  };
 
   const imageSwiper = () => {
     return (
@@ -55,12 +73,22 @@ const Event = () => {
           autoplay
           dotColor="#ccc"
           activeDotColor="#ff6347"
+          autoplayTimeout={5}
           showsPagination={true}>
-          {gambar.map(item => (
+          {gambar.map((item, index) => (
             <View key={item.id}>
+              {loadingImages[index] && (
+                <ActivityIndicator
+                  size={'large'}
+                  color="#ff6347"
+                  style={styles.activityIndicator}
+                />
+              )}
               <Image
                 source={item.uri}
                 resizeMode="center"
+                onLoadStart={() => handleLoadStart(index)}
+                onLoad={() => handleLoadEnd(index)}
                 style={{width: w('100%'), height: h('100%'), marginTop: h(-25)}}
               />
             </View>
@@ -71,13 +99,9 @@ const Event = () => {
   };
 
   function formatDate(dateString) {
-    // Pecah string tanggal berdasarkan tanda "-"
-    const parts = dateString.split('-'); // ["YYYY", "MM", "DD"]
-
-    // Konversi Format bulan angka ke nama bulan
-    const date = new Date(parts[0], parts[1], parts[2]); // 2009-11-10
+    const parts = dateString.split('-');
+    const date = new Date(parts[0], parts[1] - 1, parts[2]); // Penyesuaian bulan
     const month = date.toLocaleString('default', {month: 'long'});
-    // Susun ulang ke format DD-MM-YYYY
     return `${parts[2]}-${month}-${parts[0]}`;
   }
 
@@ -118,7 +142,7 @@ const Event = () => {
 
         <ScrollView
           showsVerticalScrollIndicator={false}
-          style={{marginBottom: h(40)}}>
+          style={{marginBottom: h(38.3)}}>
           {event.map((item, key) => {
             return (
               <View
@@ -147,10 +171,10 @@ const Event = () => {
                   />
                   <View
                     style={{
-                      marginLeft: w(1),
+                      marginLeft: w(3),
                       marginTop: h(1),
                       width: w(50),
-                      alignItems: 'center',
+                      alignItems: 'flex-start',
                     }}>
                     <Text
                       style={{
@@ -164,7 +188,6 @@ const Event = () => {
                     <View
                       style={{
                         flexDirection: 'row',
-                        marginLeft: w(-19.5),
                         marginTop: h(1.5),
                       }}>
                       <Icon
@@ -173,23 +196,22 @@ const Event = () => {
                         size={w(4)}
                         style={{marginTop: h(0.3)}}
                       />
-                      <Text style={style.textEvent}>
+                      <Text style={styles.textEvent}>
                         {formatDate(item.start_date)}
                       </Text>
                     </View>
                     <View
                       style={{
                         flexDirection: 'row',
-                        marginLeft: w(-15),
                         marginTop: h(2),
                       }}>
                       <Icon
                         name="map-marker-alt"
                         color={'#79A1ED'}
-                        size={w(5)}
-                        style={{marginTop: h(0.1), marginLeft: w(0.7)}}
+                        size={w(4.5)}
+                        style={{marginTop: h(0.1)}}
                       />
-                      <Text style={style.textEvent2}>{item.location}</Text>
+                      <Text style={styles.textEvent2}>{item.location}</Text>
                     </View>
                     <TouchableOpacity
                       style={{
@@ -227,7 +249,19 @@ const Event = () => {
 };
 export default Event;
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
+  slide: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  activityIndicator: {
+    position: 'absolute',
+    top: '30%',
+    left: '50%',
+    transform: [{translateX: -25}, {translateY: -25}],
+    zIndex: 1,
+  },
   textEvent: {
     fontFamily: 'Inter-Reguler',
     color: 'black',
@@ -238,6 +272,6 @@ const style = StyleSheet.create({
     fontFamily: 'Inter-Reguler',
     color: 'black',
     fontSize: w(4),
-    marginLeft: w(2.3),
+    marginLeft: w(2.5),
   },
 });

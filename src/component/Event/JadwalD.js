@@ -7,6 +7,17 @@ import {
 } from '../../../responsive';
 
 const JadwalD = ({data}) => {
+  function formatDate(dateString) {
+    // Pecah string tanggal berdasarkan tanda "-"
+    const parts = dateString.split('-'); // ["YYYY", "MM", "DD"]
+
+    // Konversi Format bulan angka ke nama bulan
+    const date = new Date(parts[0], parts[1], parts[2]); // 2009-11-10
+    const month = date.toLocaleString('default', {month: 'long'});
+    // Susun ulang ke format DD-MM-YYYY
+    return `${parts[2]}-${month}-${parts[0]}`;
+  }
+
   return (
     <View
       style={{
@@ -57,7 +68,7 @@ const JadwalD = ({data}) => {
             marginLeft: w(4),
             color: 'black',
           }}>
-          {data.start_date}
+          {formatDate(data.start_date)}
         </Text>
       </View>
       <View
