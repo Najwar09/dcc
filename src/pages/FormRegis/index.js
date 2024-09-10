@@ -30,6 +30,7 @@ const FormRegis = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const cekStambuk = route.params?.dataStb;
+  // console.log(cekStambuk);
 
   const [currentForm, setCurrentForm] = useState(1);
 
@@ -69,6 +70,7 @@ const FormRegis = () => {
       !jenisKelamin ||
       !alamat
     ) {
+      // console.log(nama);
       Alert.alert('Failed', 'Isi semua Kolom Inputan anda');
     } else {
       validasiStambuk();
@@ -80,17 +82,13 @@ const FormRegis = () => {
     const cekStambuk2 = cekStambuk.find(item => item.stambuk == nim);
 
     if (cekStambuk2) {
-      setLoading(true);
-
-      setTimeout(() => {
-        setLoading(false);
-        Alert.alert('Failed', 'Stambuk yang anda Input sudah terdaftar', [
-          {
-            text: 'OKE',
-            onPress: () => setCurrentForm(1),
-          },
-        ]);
-      }, 3000);
+      setLoading(false);
+      Alert.alert('Failed', 'Stambuk yang anda Input sudah terdaftar', [
+        {
+          text: 'OKE',
+          onPress: () => setCurrentForm(1),
+        },
+      ]);
     } else {
       setCurrentForm(2);
     }
@@ -102,6 +100,7 @@ const FormRegis = () => {
     // const kode_unik = Math.floor(10000 + Math.random() * 90000);
 
     // Validasi utk mnghindari kolom inputan yg tdk di isi
+
     if (
       !asal ||
       !agama ||
@@ -136,7 +135,7 @@ const FormRegis = () => {
       });
 
       formData.append('angkatan', '27');
-
+      setLoading(true);
       try {
         const response = await axios.post(
           'https://dcc-testing.campa-bima.online/public/api/calgot/store',
@@ -148,20 +147,42 @@ const FormRegis = () => {
           },
         );
         console.log(response.data);
-        setLoading(true);
 
         setTimeout(() => {
-          setLoading(false);
-          navigation.navigate('AfterForm', {formData});
+          if (response.data.status == true) {
+            setLoading(false);
+            navigation.navigate('AfterForm', {formData});
+          } else {
+            setLoading(false);
+            Alert.alert(
+              'INFO',
+              'Gagal mendaftar coba cek koneksi Internet atau Inputan Anda Sebelumnya',
+            );
+            setTanggalLahir(null);
+            setJenisKelamin(null);
+            setPria(null);
+            setWanita(null);
+            setAsal(null);
+            setAgama(null);
+            setFoto(null);
+            setCurrentForm(1);
+          }
         }, 3500);
 
         // console.log(response.data.data.id);
       } catch (error) {
-        Alert.alert('Error', 'Gagal mengirim data');
-        console.error(
-          'Error sending data: ',
-          error.response?.data || error.message,
-        );
+        setTimeout(() => {
+          setLoading(false);
+
+          Alert.alert(
+            'Error',
+            'Gagal mengirim data, Coba Cek Koneksi Internet Anda',
+          );
+          console.error(
+            'Error sending data: ',
+            error.response?.data || error.message,
+          );
+        }, 3500);
       }
 
       console.log(formData);
@@ -171,8 +192,8 @@ const FormRegis = () => {
   const viewInputForm1 = () => {
     const data = [
       {
-        placeholder: 'Masukkan Nama Anda',
-        label: 'Nama',
+        placeholder: 'Masukkan Nama Lengkap Anda',
+        label: 'Nama Lengkap',
         type: 'default',
       },
       {
@@ -196,7 +217,7 @@ const FormRegis = () => {
         type: 'default',
       },
       {
-        placeholder: 'Masukkan Tanggal Lahir Anda',
+        placeholder: 'Pilih Tanggal Lahir Anda',
         label: 'Tanggal Lahir',
         type: 'default',
       },
@@ -228,7 +249,7 @@ const FormRegis = () => {
       <View
         key={key}
         style={{
-          marginTop: label == 'Nama' ? h(5) : h(3),
+          marginTop: label == 'Nama Lengkap' ? h(5) : h(3),
           flex: 1,
           marginLeft: w(4),
           height: h(10),
@@ -257,7 +278,7 @@ const FormRegis = () => {
   };
 
   const validasiInput = (data, label) => {
-    if (label == 'Nama') {
+    if (label == 'Nama Lengkap') {
       setNama(data);
     } else if (label == 'Nim') {
       setNim(data);
@@ -464,7 +485,7 @@ const FormRegis = () => {
               marginLeft: w(4),
               height: h(9.5),
             }}>
-            <Text style={style.labelInput}>Asal</Text>
+            <Text style={style.labelInput}>Asal (Kabupaten/Kota)</Text>
             <TextInput
               value={asal}
               keyboardType={'default'}
@@ -487,7 +508,7 @@ const FormRegis = () => {
                 selectedValue={agama}
                 onValueChange={label => setAgama(label)}>
                 <Picker.Item
-                  label="Pilih Agama Anda"
+                  label="--Pilih Agama Anda--"
                   value=""
                   enabled={false}
                   style={{color: 'black'}}
@@ -533,7 +554,7 @@ const FormRegis = () => {
             }}>
             <Text style={style.labelInput}>Pengalaman Organisasi</Text>
             <TextInput
-              placeholder="Ceritakan jika ada"
+              placeholder="Jika tdk punya pengalaman, Tulis Tdk ada"
               style={{
                 width: w(93),
                 height: h(10),
@@ -560,7 +581,7 @@ const FormRegis = () => {
               height: h(8),
               marginBottom: h(5),
             }}>
-            <Text style={style.labelInput}>Alasan</Text>
+            <Text style={style.labelInput}>Alasan Daftar</Text>
             <TextInput
               placeholder="Masukkan Alasan Anda Bergabung"
               placeholderTextColor={'black'}
@@ -622,21 +643,25 @@ const FormRegis = () => {
                   fontFamily: 'Poppins-Reguler',
                   textTransform: 'uppercase',
                 }}>
-                Open Album
+                Buka Album
               </Text>
             </TouchableOpacity>
           </View>
 
           <View style={{alignItems: 'center'}}>
-            <TouchableOpacity
-              style={style.button}
-              onPress={() => handleSubmission2()}>
-              <Text style={style.buttonText}>Daftar</Text>
-            </TouchableOpacity>
+            {/* Validasi untuk menghindari user mengirim data yang sama lebih dari 1 X dgn Mengklik banyak kali */}
+            {isLoading == true ? null : (
+              <TouchableOpacity
+                style={style.button}
+                // Validasi agr
+                onPress={() => handleSubmission2()}>
+                <Text style={style.buttonText}>Daftar</Text>
+              </TouchableOpacity>
+            )}
           </View>
           {isLoading ? (
             <Modal
-              transparent={true}
+              transparent={false}
               visible={isLoading}
               onRequestClose={() => setLoading(false)}
               style={{justifyContent: 'center', alignItems: 'center'}}>
@@ -647,8 +672,8 @@ const FormRegis = () => {
                 speed={speed}
                 resizeMode="center"
                 style={{
-                  width: w(60),
-                  height: h(30),
+                  width: w(30),
+                  height: h(15),
                   marginBottom: h(3),
                 }}
               />

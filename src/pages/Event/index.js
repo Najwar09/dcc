@@ -99,9 +99,13 @@ const Event = () => {
   };
 
   function formatDate(dateString) {
-    const parts = dateString.split('-');
-    const date = new Date(parts[0], parts[1] - 1, parts[2]); // Penyesuaian bulan
+    // Pecah string tanggal berdasarkan tanda "-"
+    const parts = dateString.split('-'); // ["YYYY", "MM", "DD"]
+
+    // Konversi Format bulan angka ke nama bulan
+    const date = new Date(parts[0], parts[1], parts[2]); // 2009-11-10
     const month = date.toLocaleString('default', {month: 'long'});
+    // Susun ulang ke format DD-MM-YYYY
     return `${parts[2]}-${month}-${parts[0]}`;
   }
 

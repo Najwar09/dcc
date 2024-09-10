@@ -18,7 +18,7 @@ const BeforeForm = ({navigation}) => {
       <View
         style={{
           alignItems: 'center',
-          marginTop: h(10),
+          marginTop: h(6),
         }}>
         <Image source={logo} style={{width: 141, height: 87}} />
         <Text
@@ -27,7 +27,7 @@ const BeforeForm = ({navigation}) => {
             fontSize: w(5),
             fontFamily: 'Inter-Regular',
             fontWeight: 'bold',
-            marginTop: 4,
+            marginTop: h(1.3),
           }}>
           Dipanegara Computer Club
         </Text>
@@ -50,7 +50,7 @@ const BeforeForm = ({navigation}) => {
           borderTopRightRadius: w(13),
           elevation: 2,
           alignItems: 'center',
-          paddingTop: 20,
+          paddingTop: h(3),
         }}>
         <Text style={{fontSize: w(10), color: '#ffffff', fontWeight: '600'}}>
           Selamat Datang!
