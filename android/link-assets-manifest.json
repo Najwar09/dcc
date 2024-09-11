@@ -1,0 +1,33 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/anu.ttf",
+      "sha1": "6a6fba860a4e64364f5b9d197bbd5479df0b2827"
+    },
+    {
+      "path": "src/assets/fonts/Inter-Regular.ttf",
+      "sha1": "bd1976c1f019853ab6143ef1246e25aa66fd990e"
+    },
+    {
+      "path": "src/assets/fonts/Inter-VariableFont_opsz,wght.ttf",
+      "sha1": "ee5c2e22ffeddefc433c9aa4c76779bb73a5c682"
+    },
+    {
+      "path": "src/assets/fonts/Itim-Regular.ttf",
+      "sha1": "541b4ee96a4419d10f67fcc001a739a055298e47"
+    },
+    {
+      "path": "src/assets/fonts/Poppins-Bold.ttf",
+      "sha1": "875cf0cecd647bcf22e79d633d868c1b1ec98dfa"
+    },
+    {
+      "path": "src/assets/fonts/Poppins-Regular.ttf",
+      "sha1": "fdd3002e7d814ee47c1c1b8487c72c6bbb3a2d00"
+    },
+    {
+      "path": "src/assets/fonts/Poppins-SemiBold.ttf",
+      "sha1": "8a4ace9392d06bcb7f8ea2f5169b07e4c383a90d"
+    }
+  ]
+}
