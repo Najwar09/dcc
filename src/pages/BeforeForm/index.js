@@ -10,7 +10,7 @@ import {useRoute} from '@react-navigation/native';
 
 const BeforeForm = ({navigation}) => {
   const route = useRoute();
-  const dataStb = route.params.data;
+  const dataStb = route.params.stambuk;
 
   return (
     <View style={{flex: 1, backgroundColor: '#F5F7F8'}}>

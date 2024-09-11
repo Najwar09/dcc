@@ -73,7 +73,7 @@ const CekStambuk = ({navigation}) => {
           Alert.alert('INFO', 'Stambuk anda belum terdaftar Ayo DAFTAR', [
             {
               text: 'OK',
-              onPress: () => navigation.navigate('BeforeForm', {data}),
+              onPress: () => navigation.navigate('BeforeForm', {stambuk}),
             },
           ]);
         }

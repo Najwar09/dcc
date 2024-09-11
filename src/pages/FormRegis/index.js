@@ -60,38 +60,40 @@ const FormRegis = () => {
 
   // Arahkan ke FORM 2
   const handleSubmission = () => {
+    setNim(cekStambuk);
     if (
       !nama ||
-      !nim ||
       !noTelpon ||
       !tempatLahir ||
       !tanggalLahir ||
       !jenisKelamin ||
       !alamat
     ) {
-      // console.log(nama);
+      // console.log(nim);
       Alert.alert('Failed', 'Isi semua Kolom Inputan anda');
     } else {
-      validasiStambuk();
-    }
-  };
-
-  const validasiStambuk = () => {
-    // Validasi agar Stambuk yg di Input tidak sama dengan stambuk yg ad di API
-    const cekStambuk2 = cekStambuk.find(item => item.stambuk == nim);
-
-    if (cekStambuk2) {
-      setLoading(false);
-      Alert.alert('Failed', 'Stambuk yang anda Input sudah terdaftar', [
-        {
-          text: 'OKE',
-          onPress: () => setCurrentForm(1),
-        },
-      ]);
-    } else {
+      console.log(nim);
+      // validasiStambuk();
       setCurrentForm(2);
     }
   };
+
+  // const validasiStambuk = () => {
+  //   // Validasi agar Stambuk yg di Input tidak sama dengan stambuk yg ad di API
+  //   const cekStambuk2 = cekStambuk.find(item => item.stambuk == nim);
+
+  //   if (cekStambuk2) {
+  //     setLoading(false);
+  //     Alert.alert('Failed', 'Stambuk yang anda Input sudah terdaftar', [
+  //       {
+  //         text: 'OKE',
+  //         onPress: () => setCurrentForm(1),
+  //       },
+  //     ]);
+  //   } else {
+  //     setCurrentForm(2);
+  //   }
+  // };
 
   // fungsi ini dijalankan ketika tombol DAFTAR ditekan
   const handleSubmission2 = async () => {
@@ -126,6 +128,7 @@ const FormRegis = () => {
       formData.append('nama_ibu', namaIbu);
       formData.append('organisasi', organisasi);
       formData.append('alasan', alasanDaftar);
+      formData.append('ket', 'Telah Mendaftar');
 
       formData.append('foto', {
         uri: foto,
@@ -181,10 +184,11 @@ const FormRegis = () => {
             'Error sending data: ',
             error.response?.data || error.message,
           );
-        }, 3500);
+          setCurrentForm(1);
+        }, 1500);
       }
 
-      console.log(formData);
+      // console.log(formData);
     }
   };
 
@@ -264,6 +268,7 @@ const FormRegis = () => {
             onPress={() => validasiDate()}></TextInput>
         ) : (
           <TextInput
+            value={label == 'Nim' ? cekStambuk : null}
             keyboardType={type}
             placeholder={placeholder}
             placeholderTextColor={'black'}
@@ -280,7 +285,7 @@ const FormRegis = () => {
     if (label == 'Nama Lengkap') {
       setNama(data);
     } else if (label == 'Nim') {
-      setNim(data);
+      setNim(cekStambuk);
     } else if (label == 'Email') {
       setEmail(data);
     } else if (label == 'Nomor Hp') {
@@ -436,6 +441,7 @@ const FormRegis = () => {
         backgroundColor={'#ffffff'}
         showHideTransition={'slide'}
       />
+
       <View
         style={{
           alignItems: 'center',
