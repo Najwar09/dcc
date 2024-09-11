@@ -30,6 +30,25 @@ const CekStambuk = ({navigation}) => {
       return;
     }
 
+    // Proses Validasi Format NIM
+    const isNumericString = value => {
+      // Mengonversi string menjadi angka dan cek apakah hasilnya adalah angka yang valid
+      const number = Number(value);
+      return (
+        !Number.isNaN(number) &&
+        /^\d+$/.test(number) &&
+        number.toString() === value
+      );
+    };
+
+    if (!isNumericString(stambuk)) {
+      Alert.alert(
+        'Peringatan',
+        'Stambuk harus berbentuk ANGKA dan sesuai Format NIM !',
+      );
+      return;
+    }
+
     try {
       const response = await axios.get(
         'https://dcc-testing.campa-bima.online/public/api/calgot', // Ganti dengan endpoint yang sesuai jika diperlukan
@@ -131,7 +150,7 @@ const CekStambuk = ({navigation}) => {
           </Text>
           <View style={styles.addressContainer}>
             <TextInput
-              keyboardType="default"
+              keyboardType="number-pad"
               placeholder="Masukkan Stambuk Anda"
               placeholderTextColor={'#595959'}
               style={styles.addressInput}
@@ -162,7 +181,15 @@ const CekStambuk = ({navigation}) => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={{marginBottom: h(2.5)}}
+            style={{
+              marginBottom: h(2.5),
+
+              width: w(32.5),
+              height: h(30.2),
+              alignItems: 'center',
+              justifyContent: 'center',
+              elevation: 3,
+            }}
             onPress={visibleModal}>
             <Image
               source={require('../../assets/images/event/Penerimaa.jpeg')}

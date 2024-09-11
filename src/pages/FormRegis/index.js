@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -9,8 +9,7 @@ import {
   StatusBar,
   StyleSheet,
   Alert,
-  Linking,
-  Pressable,
+  BackHandler,
 } from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {
@@ -156,7 +155,7 @@ const FormRegis = () => {
             setLoading(false);
             Alert.alert(
               'INFO',
-              'Gagal mendaftar coba cek koneksi Internet atau Inputan Anda Sebelumnya',
+              'Gagal mendaftar, cek koneksi Internet atau Inputan Anda Sebelumnya',
             );
             setTanggalLahir(null);
             setJenisKelamin(null);
@@ -415,6 +414,18 @@ const FormRegis = () => {
       }
     });
   };
+
+  // Menangani rute kembali halaman
+  const handleBackButton = () => {
+    currentForm == 2 ? setCurrentForm(1) : navigation.goBack();
+    return () => backHandler.remove();
+  };
+
+  // Tombol Back pd HP diKlik
+  const backHandler = BackHandler.addEventListener(
+    'hardwareBackPress',
+    handleBackButton,
+  );
 
   return (
     <ScrollView
