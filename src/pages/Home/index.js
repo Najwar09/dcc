@@ -75,10 +75,10 @@ const Home = () => {
 
   const GetDataArticle = async () => {
     try {
-      const res = await axios.get(
-        'https://dcc-testing.campa-bima.online/public/api/artikel',
-      );
-      setDataArticle(res.data.data);
+      const res = await axios.get('https://api-mobile.dcc-dp.com/api/artikel');
+
+      setDataArticle(res.data);
+      // console.log(res.data.data);
     } catch (error) {
       console.log(error);
     }

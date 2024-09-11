@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
+  Modal,
 } from 'react-native';
 import React, {useState} from 'react';
 import {useRoute} from '@react-navigation/native';
@@ -24,6 +25,7 @@ const EventDetail = () => {
   const route = useRoute();
   const data = route.params.item;
   const navigation = useNavigation();
+  const [modal, setModal] = useState(false);
 
   // Fungsi untuk menghapus semua tag HTML dan mengambil teksnya
   const getPlainText = html => {
@@ -32,6 +34,12 @@ const EventDetail = () => {
   };
 
   const cleanHtml = getPlainText(data.content);
+  const visibleModal = () => {
+    setModal(true);
+  };
+  const hideModal = () => {
+    setModal(false);
+  };
 
   return (
     <View
@@ -47,16 +55,51 @@ const EventDetail = () => {
           translucent={true}
           barStyle={'light-content'}
         />
-        <Image
-          source={{uri: data.image}}
-          resizeMode={'cover'}
-          style={{
-            width: w(100),
-            height: h(47),
-            borderBottomLeftRadius: w(20),
-            marginBottom: h(14),
-          }}
-        />
+        <TouchableOpacity onPress={visibleModal}>
+          <Image
+            source={{uri: data.image}}
+            resizeMode={'cover'}
+            style={{
+              width: w('100%'),
+              height: h('50%'),
+              borderBottomLeftRadius: w(20),
+            }}
+          />
+        </TouchableOpacity>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modal}
+          onRequestClose={hideModal}>
+          <View style={styles.modalOverlay}>
+            <TouchableOpacity
+              onPress={() => setModal(false)}
+              style={{
+                position: 'absolute',
+                backgroundColor: 'white',
+                borderRadius: w(5),
+                width: w(9),
+                height: h(4.5),
+                justifyContent: 'center',
+                alignItems: 'center',
+                top: h(4.8),
+                right: w(2),
+                zIndex: 1,
+                elevation: 6,
+              }}>
+              <Image
+                source={require('../../assets/images/exitX.png')}
+                resizeMode="cover"
+                style={{width: w(6), height: h(3)}}
+              />
+            </TouchableOpacity>
+            <Image
+              source={{uri: data.image}}
+              resizeMode="contain"
+              style={{width: w(90), height: w(165)}}
+            />
+          </View>
+        </Modal>
         {/* <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={{
@@ -79,7 +122,7 @@ const EventDetail = () => {
           style={{
             marginLeft: w(7.5),
             marginRight: w(8.4),
-            marginTop: h(-0.5),
+            marginTop: h(13),
             marginBottom: h(2),
           }}>
           <Text
@@ -133,3 +176,11 @@ const EventDetail = () => {
 };
 
 export default EventDetail;
+const styles = StyleSheet.create({
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Background overlay color
+  },
+});

@@ -67,12 +67,13 @@ const FormRegis = () => {
       !tempatLahir ||
       !tanggalLahir ||
       !jenisKelamin ||
-      !alamat
+      !alamat ||
+      !email
     ) {
-      // console.log(nim);
-      Alert.alert('Failed', 'Isi semua Kolom Inputan anda');
+      console.log(tempatLahir);
+      Alert.alert('Failed', 'Isi semua Kolom atau cek Format Inputan Anda');
     } else {
-      console.log(nim);
+      // console.log(nama);
       // validasiStambuk();
       setCurrentForm(2);
     }
@@ -111,24 +112,27 @@ const FormRegis = () => {
       !alasanDaftar ||
       !foto
     ) {
-      Alert.alert('FAILED', 'Anda harus mengisi semua kolom inputan !');
+      console.log(namaAyah);
+      Alert.alert('FAILED', 'Isi semua Kolom atau cek Format Inputan Anda');
     } else {
       const formData = new FormData();
       formData.append('stambuk', nim);
       formData.append('nama', nama);
+      formData.append('email', email);
       formData.append('tempat_lahir', tempatLahir);
       formData.append('tgl_lahir', tanggalLahir);
       formData.append('jkl', jenisKelamin);
       formData.append('agama', agama);
       formData.append('no_telp', noTelpon);
       formData.append('alamat', alamat);
-      formData.append('ket', '');
+      formData.append('ket', '-');
       formData.append('asal', asal);
       formData.append('nama_ayah', namaAyah);
       formData.append('nama_ibu', namaIbu);
       formData.append('organisasi', organisasi);
       formData.append('alasan', alasanDaftar);
-      formData.append('ket', 'Telah Mendaftar');
+      // formData.append('fee', '-');
+      // formData.append('registrasi', 'Sudah');
 
       formData.append('foto', {
         uri: foto,
@@ -136,11 +140,11 @@ const FormRegis = () => {
         name: nameFoto,
       });
 
-      formData.append('angkatan', '27');
+      // formData.append('angkatan', '27');
       setLoading(true);
       try {
         const response = await axios.post(
-          'https://dcc-testing.campa-bima.online/public/api/calgot/store',
+          'https://api-mobile.dcc-dp.com/api/calgot/store',
           formData,
           {
             headers: {
@@ -169,7 +173,7 @@ const FormRegis = () => {
             setFoto(null);
             setCurrentForm(1);
           }
-        }, 3500);
+        }, 3000);
 
         // console.log(response.data.data.id);
       } catch (error) {
@@ -182,13 +186,14 @@ const FormRegis = () => {
           );
           console.error(
             'Error sending data: ',
-            error.response?.data || error.message,
+            error.response.data || error.message,
           );
+
           setCurrentForm(1);
-        }, 1500);
+        }, 3000);
       }
 
-      // console.log(formData);
+      console.log(formData);
     }
   };
 
@@ -204,11 +209,11 @@ const FormRegis = () => {
         label: 'Nim',
         type: 'number-pad',
       },
-      // {
-      //   placeholder: 'Masukkan Email Anda',
-      //   label: 'Email',
-      //   type: 'email-address',
-      // },
+      {
+        placeholder: 'Masukkan Email Anda',
+        label: 'Email',
+        type: 'email-address',
+      },
       {
         placeholder: 'Masukkan No.hp Anda',
         label: 'Nomor Hp',
@@ -281,31 +286,50 @@ const FormRegis = () => {
     );
   };
 
+  // Fungsi untuk menghapus tag HTML dan menghindari SQL-INJECTION
+  const sanitizeInput = input => {
+    return input
+      .replace(/<\/?[^>]+(>|$)/g, '') //Hapus Tag HTML
+      .replace(/<\?php[\s\S]*?\?>/gi, '') //Nilai tdk terisi bila ad Tag PHP
+      .replace(/<\?=?\s*\S*?\s*\?>/gi, ''); //Nilai tdk terisi bila ad Tag PHP
+  };
+
   const validasiInput = (data, label) => {
     if (label == 'Nama Lengkap') {
-      setNama(data);
+      const iNama = sanitizeInput(data);
+      setNama(iNama);
     } else if (label == 'Nim') {
-      setNim(cekStambuk);
+      const iNim = sanitizeInput(data);
+      setNim(iNim);
     } else if (label == 'Email') {
-      setEmail(data);
+      const iEmail = sanitizeInput(data);
+      setEmail(iEmail);
     } else if (label == 'Nomor Hp') {
-      setNoTelpon(data);
+      const iNoTelpon = sanitizeInput(data);
+      setNoTelpon(iNoTelpon);
     } else if (label == 'Tempat Lahir') {
-      setTempatLahir(data);
+      const iTempatLahir = sanitizeInput(data);
+      setTempatLahir(iTempatLahir);
     } else if (label == 'Tanggal Lahir') {
       setTanggalLahir(data);
     } else if (label == 'Asal') {
-      setAsal(data);
+      const iAsal = sanitizeInput(data);
+      setAsal(iAsal);
     } else if (label == 'Agama') {
-      setAgama(data);
+      const iAgama = sanitizeInput(data);
+      setAgama(iAgama);
     } else if (label == 'Nama Ayah') {
-      setNamaAyah(data);
+      const iNamaAyah = sanitizeInput(data);
+      setNamaAyah(iNamaAyah);
     } else if (label == 'Nama Ibu') {
-      setNamaIbu(data);
+      const iNamaIbu = sanitizeInput(data);
+      setNamaIbu(iNamaIbu);
     } else if (label == 'Pengalaman Organisasi') {
-      setOrganisasi(data);
+      const iPengalaman = sanitizeInput(data);
+      setOrganisasi(iPengalaman);
     } else if (label == 'Alasan') {
-      setAlasanDaftar(data);
+      const iAlasan = sanitizeInput(data);
+      setAlasanDaftar(iAlasan);
     }
   };
 

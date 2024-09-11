@@ -57,7 +57,7 @@ const AfterForm = () => {
   };
 
   const handleGrup = async () => {
-    const url = 'https://www.example.com';
+    const url = 'https://chat.whatsapp.com/HeFzdIuJyukGpjqjXAub0I';
     await Linking.openURL(url);
   };
   return (
@@ -68,6 +68,7 @@ const AfterForm = () => {
         loop={true}
         style={styles.animation}
       />
+
       <Text
         style={{
           fontSize: w(8),
