@@ -6,7 +6,6 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
-  ActivityIndicator,
   ScrollView,
   Modal,
   TextInput,
@@ -14,7 +13,8 @@ import {
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {WebView} from 'react-native-webview';
-import Orientation from 'react-native-orientation-locker'; // Import Orientation
+import Orientation from 'react-native-orientation-locker';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
@@ -157,9 +157,9 @@ const YouTubeVideos = () => {
 
   useEffect(() => {
     if (selectedVideoId) {
-      Orientation.lockToLandscape(); // Kunci orientasi ke landscape
+      Orientation.lockToLandscape(); 
     } else {
-      Orientation.lockToPortrait(); // Kembalikan ke potrait
+      Orientation.lockToPortrait(); 
     }
   }, [selectedVideoId]);
 
@@ -177,10 +177,19 @@ const YouTubeVideos = () => {
       <View style={styles.playlistContainer}>{renderPlaylistButtons()}</View>
 
       {isLoading ? (
-        <View style={[styles.container, styles.loadingContainer]}>
-          <ActivityIndicator size="large" color="#0000ff" />
-          <Text>Loading...</Text>
-        </View>
+        <FlatList
+          contentContainerStyle={styles.videoList}
+          data={Array(10).fill(0)} 
+          renderItem={() => (
+            <SkeletonPlaceholder>
+              <View style={styles.skeletonCard}>
+                <View style={styles.skeletonThumbnail} />
+                <View style={styles.skeletonTitle} />
+              </View>
+            </SkeletonPlaceholder>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        />
       ) : (
         <FlatList
           contentContainerStyle={styles.videoList}
@@ -207,8 +216,6 @@ const YouTubeVideos = () => {
   );
 };
 
-
-
 export default YouTubeVideos;
 
 const styles = StyleSheet.create({
@@ -216,11 +223,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f0f0f0',
     padding: w(2),
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   playlistContainer: {
     marginBottom: h(2),
@@ -315,5 +317,26 @@ const styles = StyleSheet.create({
   icon: {
     position: 'absolute',
     right: w(2),
+  },
+  skeletonCard: {
+    backgroundColor: '#fff',
+    borderRadius: w(2),
+    marginBottom: h(2),
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: h(0.5)},
+    shadowOpacity: 0.3,
+    shadowRadius: w(1),
+    elevation: 3,
+  },
+  skeletonThumbnail: {
+    width: '100%',
+    height: h(25),
+    borderRadius: w(2),
+  },
+  skeletonTitle: {
+    width: '80%',
+    height: h(4),
+    borderRadius: w(1),
+    margin: w(2),
   },
 });
