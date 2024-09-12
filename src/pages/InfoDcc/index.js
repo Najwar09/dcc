@@ -155,9 +155,9 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: '#79A1ED',
     width: w(100),
-    paddingVertical: h(5),
+    paddingVertical: h(2),
     alignItems: 'center',
-    marginBottom: h(4),
+    // marginBottom: h(4),
     borderRadius: w(5),
     overflow: 'hidden',
     marginTop: h(-2),
