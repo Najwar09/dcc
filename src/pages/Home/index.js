@@ -177,15 +177,17 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#F8F8',
+    // backgroundColor: 'orange',
   },
   scrollContainer: {
     flex: 1,
-    padding: w(5),
+    // padding: w(5),
+    paddingHorizontal: w(5),
     // backgroundColor: 'red',
   },
   swapperContainer: {
     alignItems: 'center',
+    // marginTop: w(-5.5),
   },
   divider: {
     width: w(200),

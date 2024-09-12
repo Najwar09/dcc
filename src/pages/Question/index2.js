@@ -29,8 +29,8 @@ const Question2 = () => {
   const [timeRemaining, setTimeRemaining] = useState(30);
   const [modalVisible, setModalVisible] = useState(true);
 
-  const stambuk = route.params?.stambuk;
-  console.log(stambuk);
+  const idCalgot = route.params?.idCalgot;
+  console.log('id calgot : ',idCalgot);
 
   const GetData = async () => {
     try {
@@ -85,7 +85,7 @@ const Question2 = () => {
                   onPress: () =>
                     navigation.replace('Quiz', {
                       lastscore: correctAnswersCount,
-                      stambuksend: stambuk,
+                      idSend: idCalgot,
                     }),
                 },
               ],
@@ -98,7 +98,7 @@ const Question2 = () => {
     }
 
     return () => clearInterval(timer);
-  }, [modalVisible, navigation, correctAnswersCount, stambuk]);
+  }, [modalVisible, navigation, correctAnswersCount]);
 
   if (!questions.length) {
     return (
@@ -137,7 +137,7 @@ const Question2 = () => {
               onPress: () =>
                 navigation.replace('Quiz', {
                   lastscore: correctAnswersCount,
-                  stambuksend: stambuk,
+                  idSend: idCalgot,
                 }),
             },
           ],
@@ -151,15 +151,11 @@ const Question2 = () => {
 
   return (
     <View style={styles.container}>
-      {/* Modal untuk petunjuk pengerjaan soal */}
       <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => {
-          // Menangani penutupan modal dengan tombol back
-          setModalVisible(false);
-        }}>
+        onRequestClose={() => {}}>
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <ScrollView>
@@ -167,8 +163,8 @@ const Question2 = () => {
               <Text style={styles.modalText}>
                 1. Baca setiap pertanyaan dengan seksama.{'\n'}
                 2. Pilih salah satu jawaban yang menurut Anda benar.{'\n'}
-                3. Tekan tombol "Selanjutnya" untuk melanjutkan ke pertanyaan berikutnya.{'\n'}
-                4. Waktu pengerjaan adalah 30 detik. Pastikan Anda menjawab sebelum waktu habis.{'\n'}
+                3. Tekan tombol "Next" untuk melanjutkan ke pertanyaan berikutnya.{'\n'}
+                4. Waktu pengerjaan adalah 15 Menit. Pastikan Anda menjawab sebelum waktu habis.{'\n'}
                 5. Setelah selesai, skor Anda akan ditampilkan.
               </Text>
             </ScrollView>
@@ -226,7 +222,7 @@ const Question2 = () => {
           <LinearGradient
             colors={['#FF512F', '#DD2476']}
             style={styles.nextButtonBackground}>
-            <Text style={styles.nextButtonText}>Selanjutnya</Text>
+            <Text style={styles.nextButtonText}>Next</Text>
           </LinearGradient>
         </TouchableOpacity>
       </View>

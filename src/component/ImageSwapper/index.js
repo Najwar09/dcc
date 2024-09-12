@@ -1,6 +1,7 @@
 import React from 'react';
 import Swiper from 'react-native-swiper';
-import {StyleSheet, Image, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
+import {StyleSheet, View} from 'react-native';
 import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
@@ -11,6 +12,8 @@ const images = [
   {id: 1, uri: require('./../../assets/images/satu.jpg')},
   {id: 2, uri: require('./../../assets/images/tes.jpg')},
   {id: 3, uri: require('./../../assets/images/tiga.jpg')},
+  {id: 4, uri: require('./../../assets/images/lima.jpg')},
+  {id: 5, uri: require('./../../assets/images/enam.jpg')},
 ];
 
 const ImageSwipper = () => {
@@ -24,7 +27,7 @@ const ImageSwipper = () => {
           showsPagination={true}>
           {images.map(image => (
             <View key={image.id} style={styles.slide}>
-              <Image source={image.uri} style={styles.image} />
+              <FastImage source={image.uri} style={styles.image} />
             </View>
           ))}
         </Swiper>

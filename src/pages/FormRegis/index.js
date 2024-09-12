@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -9,8 +9,7 @@ import {
   StatusBar,
   StyleSheet,
   Alert,
-  Linking,
-  Pressable,
+  BackHandler,
 } from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {
@@ -30,8 +29,7 @@ const FormRegis = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const cekStambuk = route.params?.dataStb;
-  const newStambuk = route.params?.newNim;
-  // console.log(newStambuk);
+  // console.log(cekStambuk);
 
   const [currentForm, setCurrentForm] = useState(1);
 
@@ -60,52 +58,43 @@ const FormRegis = () => {
   const [isLoading, setLoading] = useState(false);
   const [speed, setSpeed] = useState(0.8);
 
-  console.log('variabel nim ', nim);
-  console.log('new stambk ', newStambuk);
-  
-  useEffect(() => {
-    if (newStambuk) {
-      setNim(newStambuk);
-    }
-  },[newStambuk])
-  
   // Arahkan ke FORM 2
   const handleSubmission = () => {
+    setNim(cekStambuk);
     if (
       !nama ||
-      !nim ||
       !noTelpon ||
       !tempatLahir ||
       !tanggalLahir ||
       !jenisKelamin ||
-      !alamat
+      !alamat ||
+      !email
     ) {
-      Alert.alert('Failed', 'Isi semua Kolom Inputan anda');
+      console.log(tempatLahir);
+      Alert.alert('Failed', 'Isi semua Kolom atau cek Format Inputan Anda');
     } else {
-      validasiStambuk();
-    }
-  };
-  
-  const validasiStambuk = () => {
-    // Validasi agar Stambuk yg di Input tidak sama dengan stambuk yg ad di API
-    const cekStambuk2 = cekStambuk.find(item => item.stambuk == nim);
-
-    if (cekStambuk2) {
-      setLoading(true);
-
-      setTimeout(() => {
-        setLoading(false);
-        Alert.alert('Failed', 'Stambuk yang anda Input sudah terdaftar', [
-          {
-            text: 'OKE',
-            onPress: () => setCurrentForm(1),
-          },
-        ]);
-      }, 3000);
-    } else {
+      // console.log(nama);
+      // validasiStambuk();
       setCurrentForm(2);
     }
   };
+
+  // const validasiStambuk = () => {
+  //   // Validasi agar Stambuk yg di Input tidak sama dengan stambuk yg ad di API
+  //   const cekStambuk2 = cekStambuk.find(item => item.stambuk == nim);
+
+  //   if (cekStambuk2) {
+  //     setLoading(false);
+  //     Alert.alert('Failed', 'Stambuk yang anda Input sudah terdaftar', [
+  //       {
+  //         text: 'OKE',
+  //         onPress: () => setCurrentForm(1),
+  //       },
+  //     ]);
+  //   } else {
+  //     setCurrentForm(2);
+  //   }
+  // };
 
   // fungsi ini dijalankan ketika tombol DAFTAR ditekan
   const handleSubmission2 = async () => {
@@ -113,6 +102,7 @@ const FormRegis = () => {
     // const kode_unik = Math.floor(10000 + Math.random() * 90000);
 
     // Validasi utk mnghindari kolom inputan yg tdk di isi
+
     if (
       !asal ||
       !agama ||
@@ -122,11 +112,13 @@ const FormRegis = () => {
       !alasanDaftar ||
       !foto
     ) {
-      Alert.alert('FAILED', 'Anda harus mengisi semua kolom inputan !');
+      console.log(namaAyah);
+      Alert.alert('FAILED', 'Isi semua Kolom atau cek Format Inputan Anda');
     } else {
       const formData = new FormData();
       formData.append('stambuk', nim);
       formData.append('nama', nama);
+      formData.append('email', email);
       formData.append('tempat_lahir', tempatLahir);
       formData.append('tgl_lahir', tanggalLahir);
       formData.append('jkl', jenisKelamin);
@@ -139,6 +131,8 @@ const FormRegis = () => {
       formData.append('nama_ibu', namaIbu);
       formData.append('organisasi', organisasi);
       formData.append('alasan', alasanDaftar);
+      // formData.append('fee', '-');
+      // formData.append('registrasi', 'Sudah');
 
       formData.append('foto', {
         uri: foto,
@@ -146,11 +140,11 @@ const FormRegis = () => {
         name: nameFoto,
       });
 
-      formData.append('angkatan', '27');
-
+      // formData.append('angkatan', '27');
+      setLoading(true);
       try {
         const response = await axios.post(
-          'https://dcc-testing.campa-bima.online/public/api/calgot/store',
+          'https://api-mobile.dcc-dp.com/api/calgot/store',
           formData,
           {
             headers: {
@@ -159,20 +153,44 @@ const FormRegis = () => {
           },
         );
         console.log(response.data);
-        setLoading(true);
 
         setTimeout(() => {
-          setLoading(false);
-          navigation.replace('AfterForm', {formData});
-        }, 3500);
+          if (response.data.status == true) {
+            setLoading(false);
+            navigation.navigate('AfterForm', {formData});
+          } else {
+            setLoading(false);
+            Alert.alert(
+              'INFO',
+              'Gagal mendaftar, cek koneksi Internet atau Inputan Anda Sebelumnya',
+            );
+            setTanggalLahir(null);
+            setJenisKelamin(null);
+            setPria(null);
+            setWanita(null);
+            setAsal(null);
+            setAgama(null);
+            setFoto(null);
+            setCurrentForm(1);
+          }
+        }, 3000);
 
         // console.log(response.data.data.id);
       } catch (error) {
-        Alert.alert('Error', 'Gagal mengirim data');
-        console.error(
-          'Error sending data: ',
-          error.response?.data || error.message,
-        );
+        setTimeout(() => {
+          setLoading(false);
+
+          Alert.alert(
+            'Error',
+            'Gagal mengirim data, Coba Cek Koneksi Internet Anda',
+          );
+          console.error(
+            'Error sending data: ',
+            error.response.data || error.message,
+          );
+
+          setCurrentForm(1);
+        }, 3000);
       }
 
       console.log(formData);
@@ -182,8 +200,8 @@ const FormRegis = () => {
   const viewInputForm1 = () => {
     const data = [
       {
-        placeholder: 'Masukkan Nama Anda',
-        label: 'Nama',
+        placeholder: 'Masukkan Nama Lengkap Anda',
+        label: 'Nama Lengkap',
         type: 'default',
       },
       {
@@ -191,11 +209,11 @@ const FormRegis = () => {
         label: 'Nim',
         type: 'number-pad',
       },
-      // {
-      //   placeholder: 'Masukkan Email Anda',
-      //   label: 'Email',
-      //   type: 'email-address',
-      // },
+      {
+        placeholder: 'Masukkan Email Anda',
+        label: 'Email',
+        type: 'email-address',
+      },
       {
         placeholder: 'Masukkan No.hp Anda',
         label: 'Nomor Hp',
@@ -207,7 +225,7 @@ const FormRegis = () => {
         type: 'default',
       },
       {
-        placeholder: 'Masukkan Tanggal Lahir Anda',
+        placeholder: 'Pilih Tanggal Lahir Anda',
         label: 'Tanggal Lahir',
         type: 'default',
       },
@@ -234,12 +252,12 @@ const FormRegis = () => {
     );
   };
 
-  const inputKolom = (placeholder, label, key, type,value) => {
+  const inputKolom = (placeholder, label, key, type) => {
     return (
       <View
         key={key}
         style={{
-          marginTop: label == 'Nama' ? h(5) : h(3),
+          marginTop: label == 'Nama Lengkap' ? h(5) : h(3),
           flex: 1,
           marginLeft: w(4),
           height: h(10),
@@ -255,12 +273,11 @@ const FormRegis = () => {
             onPress={() => validasiDate()}></TextInput>
         ) : (
           <TextInput
-            editable={label == 'Nim' ? false : true}
+            value={label == 'Nim' ? cekStambuk : null}
             keyboardType={type}
             placeholder={placeholder}
             placeholderTextColor={'black'}
             maxLength={label == 'Nim' ? 6 : null}
-            value={label == 'Nim' ? newStambuk : null}
             style={style.TextInput}
             onChangeText={data => validasiInput(data, label)}
           />
@@ -269,31 +286,50 @@ const FormRegis = () => {
     );
   };
 
+  // Fungsi untuk menghapus tag HTML dan menghindari SQL-INJECTION
+  const sanitizeInput = input => {
+    return input
+      .replace(/<\/?[^>]+(>|$)/g, '') //Hapus Tag HTML
+      .replace(/<\?php[\s\S]*?\?>/gi, '') //Nilai tdk terisi bila ad Tag PHP
+      .replace(/<\?=?\s*\S*?\s*\?>/gi, ''); //Nilai tdk terisi bila ad Tag PHP
+  };
+
   const validasiInput = (data, label) => {
-    if (label == 'Nama') {
-      setNama(data);
+    if (label == 'Nama Lengkap') {
+      const iNama = sanitizeInput(data);
+      setNama(iNama);
     } else if (label == 'Nim') {
-      setNim(newStambuk);
+      const iNim = sanitizeInput(data);
+      setNim(iNim);
     } else if (label == 'Email') {
-      setEmail(data);
+      const iEmail = sanitizeInput(data);
+      setEmail(iEmail);
     } else if (label == 'Nomor Hp') {
-      setNoTelpon(data);
+      const iNoTelpon = sanitizeInput(data);
+      setNoTelpon(iNoTelpon);
     } else if (label == 'Tempat Lahir') {
-      setTempatLahir(data);
+      const iTempatLahir = sanitizeInput(data);
+      setTempatLahir(iTempatLahir);
     } else if (label == 'Tanggal Lahir') {
       setTanggalLahir(data);
     } else if (label == 'Asal') {
-      setAsal(data);
+      const iAsal = sanitizeInput(data);
+      setAsal(iAsal);
     } else if (label == 'Agama') {
-      setAgama(data);
+      const iAgama = sanitizeInput(data);
+      setAgama(iAgama);
     } else if (label == 'Nama Ayah') {
-      setNamaAyah(data);
+      const iNamaAyah = sanitizeInput(data);
+      setNamaAyah(iNamaAyah);
     } else if (label == 'Nama Ibu') {
-      setNamaIbu(data);
+      const iNamaIbu = sanitizeInput(data);
+      setNamaIbu(iNamaIbu);
     } else if (label == 'Pengalaman Organisasi') {
-      setOrganisasi(data);
+      const iPengalaman = sanitizeInput(data);
+      setOrganisasi(iPengalaman);
     } else if (label == 'Alasan') {
-      setAlasanDaftar(data);
+      const iAlasan = sanitizeInput(data);
+      setAlasanDaftar(iAlasan);
     }
   };
 
@@ -342,7 +378,7 @@ const FormRegis = () => {
             {pria == 'L' ? (
               <Image
                 source={require('../../assets/icons/check.png')}
-                style={{width: w(6), height: h(3)}}
+                style={{width: w(4), height: h(2)}}
               />
             ) : null}
           </TouchableOpacity>
@@ -353,7 +389,7 @@ const FormRegis = () => {
             {wanita == 'P' ? (
               <Image
                 source={require('../../assets/icons/check.png')}
-                style={{width: w(6), height: h(3)}}
+                style={{width: w(4), height: h(2)}}
               />
             ) : null}
           </TouchableOpacity>
@@ -408,6 +444,18 @@ const FormRegis = () => {
     });
   };
 
+  // Menangani rute kembali halaman
+  const handleBackButton = () => {
+    currentForm == 2 ? setCurrentForm(1) : navigation.goBack();
+    return () => backHandler.remove();
+  };
+
+  // Tombol Back pd HP diKlik
+  const backHandler = BackHandler.addEventListener(
+    'hardwareBackPress',
+    handleBackButton,
+  );
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -417,6 +465,7 @@ const FormRegis = () => {
         backgroundColor={'#ffffff'}
         showHideTransition={'slide'}
       />
+
       <View
         style={{
           alignItems: 'center',
@@ -477,7 +526,7 @@ const FormRegis = () => {
               marginLeft: w(4),
               height: h(9.5),
             }}>
-            <Text style={style.labelInput}>Asal</Text>
+            <Text style={style.labelInput}>Asal (Kabupaten/Kota)</Text>
             <TextInput
               value={asal}
               keyboardType={'default'}
@@ -500,9 +549,9 @@ const FormRegis = () => {
                 selectedValue={agama}
                 onValueChange={label => setAgama(label)}>
                 <Picker.Item
-                  label="--- Pilih Agama ---"
+                  label="--Pilih Agama Anda--"
                   value=""
-                  // enabled={false}
+                  enabled={false}
                   style={{color: 'black'}}
                 />
                 <Picker.Item label="Islam" value="I" style={{color: 'black'}} />
@@ -546,7 +595,7 @@ const FormRegis = () => {
             }}>
             <Text style={style.labelInput}>Pengalaman Organisasi</Text>
             <TextInput
-              placeholder="Ceritakan jika ada"
+              placeholder="Jika tdk punya pengalaman, Tulis Tdk ada"
               style={{
                 width: w(93),
                 height: h(10),
@@ -592,7 +641,7 @@ const FormRegis = () => {
               onChangeText={value => validasiInput(value, 'Alasan')}
             />
           </View>
-          
+
           <View
             style={{
               marginTop: h(5),
@@ -614,7 +663,6 @@ const FormRegis = () => {
               />
             ) : (
               <Text style={{color: 'black'}}>Tidak Foto yang di Pilih</Text>
-              // <Text style={style.labelInput}>Alasan</Text>
             )}
             <TouchableOpacity
               style={{
@@ -636,21 +684,25 @@ const FormRegis = () => {
                   fontFamily: 'Poppins-Reguler',
                   textTransform: 'uppercase',
                 }}>
-                Masukkan Foto
+                Buka Album
               </Text>
             </TouchableOpacity>
           </View>
 
           <View style={{alignItems: 'center'}}>
-            <TouchableOpacity
-              style={style.button}
-              onPress={() => handleSubmission2()}>
-              <Text style={style.buttonText}>Daftar</Text>
-            </TouchableOpacity>
+            {/* Validasi untuk menghindari user mengirim data yang sama lebih dari 1 X dgn Mengklik banyak kali */}
+            {isLoading == true ? null : (
+              <TouchableOpacity
+                style={style.button}
+                // Validasi agr
+                onPress={() => handleSubmission2()}>
+                <Text style={style.buttonText}>Daftar</Text>
+              </TouchableOpacity>
+            )}
           </View>
           {isLoading ? (
             <Modal
-              transparent={true}
+              transparent={false}
               visible={isLoading}
               onRequestClose={() => setLoading(false)}
               style={{justifyContent: 'center', alignItems: 'center'}}>
@@ -661,8 +713,8 @@ const FormRegis = () => {
                 speed={speed}
                 resizeMode="center"
                 style={{
-                  width: w(60),
-                  height: h(30),
+                  width: w(30),
+                  height: h(15),
                   marginBottom: h(3),
                 }}
               />
@@ -724,8 +776,8 @@ const style = StyleSheet.create({
     textTransform: 'uppercase',
   },
   radioBoxKelamin: {
-    width: w(6),
-    height: h(3),
+    width: w(5),
+    height: h(2.5),
     borderRadius: w(8),
     alignItems: 'center',
     justifyContent: 'center',

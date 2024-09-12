@@ -12,24 +12,24 @@ const StickyHeader = () => {
     const today = new Date();
     const options = {
       weekday: 'long',
-      year: 'numeric',
-      month: 'long',
       day: 'numeric',
+      month: 'long',
+      year: 'numeric',
     };
-    return today.toLocaleDateString('en-US', options);
+    return today.toLocaleDateString('id-ID', options);
   };
 
   // Fungsi untuk menentukan ucapan berdasarkan waktu saat ini
   const getGreeting = () => {
     const currentHour = new Date().getHours();
     if (currentHour < 12) {
-      return 'Selamat pagi!';
+      return 'Good Morning!';
     } else if (currentHour < 15) {
-      return 'Selamat siang!';
+      return 'Good Afternoon!';
     } else if (currentHour < 18) {
-      return 'Selamat sore!';
+      return 'Good Afternoon!';
     } else {
-      return 'Selamat malam!';
+      return 'Good Evening!';
     }
   };
 
@@ -66,10 +66,6 @@ const styles = StyleSheet.create({
     height: h(20),
     // Properti shadow
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,

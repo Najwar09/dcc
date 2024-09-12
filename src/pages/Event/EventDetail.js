@@ -6,11 +6,13 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
+  Modal,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {useRoute} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {useNavigation} from '@react-navigation/native';
+import RenderHTML from 'react-native-render-html';
 import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
@@ -23,53 +25,21 @@ const EventDetail = () => {
   const route = useRoute();
   const data = route.params.item;
   const navigation = useNavigation();
+  const [modal, setModal] = useState(false);
 
-  // const speaker = data => {
-  //   return data.map((item, key) => {
-  //     return (
-  //       <View
-  //         key={key}
-  //         style={{
-  //           marginLeft: w(4.5),
-  //           marginRight: w(6),
-  //           marginTop: h(0.5),
-  //           alignItems: 'center',
-  //           height: h(16),
-  //         }}>
-  //         <Image
-  //           source={{uri: item.gambarS}}
-  //           style={{
-  //             width: w(20.5),
-  //             height: h(10.3),
-  //             borderRadius: w(10),
-  //             elevation: 3,
-  //           }}
-  //         />
-  //         <View
-  //           style={{
-  //             height: h(3.5),
-  //             backgroundColor: '#80AF81',
-  //             marginTop: h(1),
-  //             alignItems: 'center',
-  //             justifyContent: 'center',
-  //             borderRadius: w(3),
-  //             elevation: 1,
-  //           }}>
-  //           <Text
-  //             style={{
-  //               color: 'black',
-  //               marginLeft: w(2),
-  //               marginRight: w(2.5),
-  //               fontSize: w(3),
-  //               fontFamily: 'Poppins-Regular',
-  //             }}>
-  //             {item.tipe} : <Text>{item.speakerD}</Text>
-  //           </Text>
-  //         </View>
-  //       </View>
-  //     );
-  //   });
-  // };
+  // Fungsi untuk menghapus semua tag HTML dan mengambil teksnya
+  const getPlainText = html => {
+    // Menggunakan regex untuk menghapus tag HTML
+    return html.replace(/<\/?[^>]+(>|$)/g, '');
+  };
+
+  const cleanHtml = getPlainText(data.content);
+  const visibleModal = () => {
+    setModal(true);
+  };
+  const hideModal = () => {
+    setModal(false);
+  };
 
   return (
     <View
@@ -85,17 +55,52 @@ const EventDetail = () => {
           translucent={true}
           barStyle={'light-content'}
         />
-        <Image
-          source={{uri: data.image}}
-          resizeMode={'cover'}
-          style={{
-            width: w(100),
-            height: h(47),
-            borderBottomLeftRadius: w(20),
-            marginBottom: h(14),
-          }}
-        />
-        <TouchableOpacity
+        <TouchableOpacity onPress={visibleModal}>
+          <Image
+            source={{uri: data.image}}
+            resizeMode={'cover'}
+            style={{
+              width: w('100%'),
+              height: h('50%'),
+              borderBottomLeftRadius: w(20),
+            }}
+          />
+        </TouchableOpacity>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modal}
+          onRequestClose={hideModal}>
+          <View style={styles.modalOverlay}>
+            <TouchableOpacity
+              onPress={() => setModal(false)}
+              style={{
+                position: 'absolute',
+                backgroundColor: 'white',
+                borderRadius: w(5),
+                width: w(9),
+                height: h(4.5),
+                justifyContent: 'center',
+                alignItems: 'center',
+                top: h(4.8),
+                right: w(2),
+                zIndex: 1,
+                elevation: 6,
+              }}>
+              <Image
+                source={require('../../assets/images/exitX.png')}
+                resizeMode="cover"
+                style={{width: w(6), height: h(3)}}
+              />
+            </TouchableOpacity>
+            <Image
+              source={{uri: data.image}}
+              resizeMode="contain"
+              style={{width: w(90), height: w(165)}}
+            />
+          </View>
+        </Modal>
+        {/* <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={{
             width: w(12),
@@ -110,29 +115,14 @@ const EventDetail = () => {
             elevation: 2,
           }}>
           <Icon name="arrow-left" size={w(7)} color={'black'} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <JadwalD data={data} />
-
-        {/* {data.judul == 'Pendaftaran Calon Anggota' ? (
-          ''
-        ) : (
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={{
-              width: w(102),
-              marginTop: h(-3.2),
-            }}>
-            {speaker(data.speaker)}
-          </ScrollView>
-        )} */}
-
         <View
           style={{
             marginLeft: w(7.5),
             marginRight: w(8.4),
-            marginTop: h(-0.5),
+            marginTop: h(13),
             marginBottom: h(2),
           }}>
           <Text
@@ -150,7 +140,7 @@ const EventDetail = () => {
               fontSize: w(3.5),
               color: 'black',
             }}>
-            {data.content}
+            {cleanHtml}
           </Text>
 
           {data.title == 'Pendaftaran Calon Anggota' ? (
@@ -186,3 +176,11 @@ const EventDetail = () => {
 };
 
 export default EventDetail;
+const styles = StyleSheet.create({
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Background overlay color
+  },
+});

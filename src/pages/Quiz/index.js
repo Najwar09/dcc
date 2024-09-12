@@ -21,7 +21,8 @@ import {
 } from '../../../responsive';
 import playwithoutcode from '../../assets/icons/playwithoutcode.png';
 import playwithcode from '../../assets/icons/playwithcode.png';
-
+import { getItem } from '../../../utils/asyncStorate';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Quiz = () => {
   const route = useRoute();
@@ -29,26 +30,49 @@ const Quiz = () => {
 
   const lastscore = route.params?.lastscore;
   const lastscorecode = route.params?.lastscorecode;
-  const stambukreceive = route.params?.stambuksend;
-  
+  const idCalgotReceive = route.params?.idSend;
+  const disable = route.params?.disable;
+
   const [inputCode, setInputCode] = useState('');
   const [loading, setLoading] = useState(false);
-  const [buttonVisible, setButtonVisible] = useState(true);
-  
+  const [buttonVisible, setButtonVisible] = useState(false);
+  const [buttonVisible2, setButtonVisible2] = useState(true);
+
   const [nim, setNim] = useState('');
   const [nimModalVisible, setNimModalVisible] = useState(true);
   const [nimConfirmationModalVisible, setNimConfirmationModalVisible] = useState(false);
   const [uniqueCode, setUniqueCode] = useState('');
+  const [idCalgot, setIdCalgot] = useState('');
 
-  console.log('stambuk',nim);
-  console.log('stambuk receive',stambukreceive);
+  console.log('stambuk', nim);
+  console.log('id calgot receive', idCalgotReceive);
 
   useEffect(() => {
-    if (stambukreceive != null && stambukreceive != undefined) {
-      setNim(stambukreceive);
+    const fetchAsyncStorageData = async () => {
+      try {
+        const disableData = await getItem('disable');
+        console.log('disable event', disableData);
+        // setButtonVisible2(disable);
+      } catch (error) {
+        console.error('Gagal mengambil data dari AsyncStorage:', error);
+      }
+    };
+
+    fetchAsyncStorageData();
+  }, []);
+
+
+  useEffect(() => {
+    getDataActive();
+    if (idCalgotReceive != null && idCalgotReceive != undefined) {
+      setIdCalgot(idCalgotReceive);
     }
+    if (disable != null && disable != undefined) {
+      setButtonVisible2(disable);
+    }
+
   },);
-  
+
   useEffect(() => {
     if (typeof lastscore === 'number' || typeof lastscorecode === 'number') {
       setNimModalVisible(false);
@@ -66,7 +90,12 @@ const Quiz = () => {
       const quizData = res.data.quizzes;
       if (quizData && quizData.length > 0) {
         setLoading(false);
-        navigation.replace('Question', { soal: quizData,kode_unik : uniqueCode, stambuk : nim});
+        navigation.replace('Question', {
+          soal: quizData,
+          kode_unik: uniqueCode,
+          stambuk: nim,
+          idCalgotSend: idCalgot,
+        });
       } else {
         setLoading(false);
         Alert.alert('Kode Salah', 'Kode unik yang Anda masukkan tidak valid.');
@@ -86,13 +115,28 @@ const Quiz = () => {
       );
       const data = res.data;
       if (data.status) {
-        const { kode_unik } = data.result;
-        setUniqueCode(kode_unik); 
-        setNimModalVisible(false); 
+        const { kode_unik, id } = data.result;
+        setUniqueCode(kode_unik);
+        setIdCalgot(id);
+        setNimModalVisible(false);
         setNimConfirmationModalVisible(true);
       } else {
         Alert.alert('NIM Tidak Ditemukan', 'NIM yang Anda masukkan tidak terdaftar.');
       }
+    } catch (error) {
+      Alert.alert('Error', 'Terjadi kesalahan saat mengambil data NIM.');
+    }
+  };
+
+  // get status event active or no active
+  const getDataActive = async () => {
+    try {
+      const res = await axios.get(
+        'https://dcc-testing.campa-bima.online/public/api/is_active_event',
+      );
+      const data = res.data.status;
+      console.log('data active : ', data);
+      setButtonVisible(data);
     } catch (error) {
       Alert.alert('Error', 'Terjadi kesalahan saat mengambil data NIM.');
     }
@@ -107,7 +151,7 @@ const Quiz = () => {
       Alert.alert('Error', 'NIM tidak boleh kosong!');
       return;
     }
-    getDataCalgot(); 
+    getDataCalgot();
   };
 
   const handleCloseConfirmationModal = () => {
@@ -129,19 +173,19 @@ const Quiz = () => {
         {/* play without code */}
         <TouchableOpacity
           // style={styles.button}
-          onPress={() => navigation.replace('Question2',{stambuk : nim})}
+          onPress={() => navigation.replace('Question2', { idCalgot: idCalgot })}
         >
-          <Image source={playwithoutcode} style={{width: 200,height: 100,}} resizeMode='contain'/>
+          <Image source={playwithoutcode} style={{ width: 200, height: 100, }} resizeMode='contain' />
           {/* <Text style={styles.buttonText}>PLAY WITHOUT CODE</Text> */}
         </TouchableOpacity>
 
         {/* play with code */}
-        {buttonVisible && (
+        {buttonVisible && buttonVisible2 && (
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
               placeholder="Enter your code"
-              placeholderTextColor="#888"
+              placeholderTextColor="white"
               value={inputCode}
               onChangeText={setInputCode}
               textAlign="center"
@@ -155,7 +199,7 @@ const Quiz = () => {
                 <ActivityIndicator size="small" color="#fff" />
               ) : (
                 // <Text style={styles.enterCodeButtonText}>PLAY WITH CODE</Text>
-                <Image source={playwithcode} style={{width: 180,height: 100,marginLeft: w(5),}} resizeMode='contain'/>
+                <Image source={playwithcode} style={{ width: 180, height: 100, marginLeft: w(5), }} resizeMode='contain' />
               )}
             </TouchableOpacity>
           </View>
@@ -170,66 +214,106 @@ const Quiz = () => {
       </View>
 
       {/* Modal for NIM input */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={nimModalVisible}
-        onRequestClose={() => setNimModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Enter Your NIM</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter Your Nim"
-              placeholderTextColor="#888"
-              value={nim}
-              onChangeText={setNim}
-              textAlign="center"
-              keyboardType="numeric"
-              maxLength={6}
-            />
-            <TouchableOpacity
-              style={styles.confirmButton}
-              onPress={handleConfirmNim}
-            >
-              <Text style={styles.confirmButtonText}>CONFIRM</Text>
-            </TouchableOpacity>
+      {buttonVisible && buttonVisible2 && (
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={nimModalVisible}
+          onRequestClose={() => { }}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>Enter Your NIM</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter Your Nim"
+                placeholderTextColor="#888"
+                value={nim}
+                onChangeText={setNim}
+                textAlign="center"
+                keyboardType="numeric"
+                maxLength={6}
+              />
+              <View style={{flexDirection: 'row',}}>
+
+              {/* button back */}
+              <TouchableOpacity
+                style={styles.confirmButton}
+                onPress={() => {navigation.replace('MainScreen')}}
+              >
+                <LinearGradient
+                  colors={['#007BFF', '#00BFFF']}
+                  style={styles.cofirmButtonBackground}>
+                  <Text style={styles.confirmButtonText}>BACK</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+              {/* end button back */}
+
+              <View style={{marginHorizontal: w(5),}}>
+              </View>
+
+              {/* button Confirm */}
+              <TouchableOpacity
+                style={styles.confirmButton}
+                onPress={handleConfirmNim}
+              >
+                <LinearGradient
+                  colors={['#FF512F', '#DD2476']}
+                  style={styles.cofirmButtonBackground}>
+                  <Text style={styles.confirmButtonText}>CONFIRM</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+              {/* end button confirm */}
+              </View>
+
+              
+            </View>
           </View>
-        </View>
-      </Modal>
+        </Modal>
+      )}
 
       {/* Modal for showing unique code */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={nimConfirmationModalVisible}
-        onRequestClose={handleCloseConfirmationModal}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>NIM Anda</Text>
-            <Text style={styles.nimText}>{nim}</Text>
-            <Text style={styles.modalTitle}>Kode Unik Anda</Text>
-            <Text style={styles.nimText}>{uniqueCode}</Text>
+      {buttonVisible && buttonVisible2 && (
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={nimConfirmationModalVisible}
+          onRequestClose={handleCloseConfirmationModal}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>NIM Anda</Text>
+              <Text style={styles.nimText}>{nim}</Text>
+              <Text style={styles.modalTitle}>Kode Unik Anda</Text>
+              <Text style={styles.nimText}>{uniqueCode}</Text>
 
-            {/* Inform user they can copy the code */}
-            <TouchableOpacity
-              style={styles.copyButton}
-              onPress={copyToClipboard}
-            >
-              <Text style={styles.copyButtonText}>COPY KODE UNIK</Text>
-            </TouchableOpacity>
+              {/* button copy code unique */}
+              <TouchableOpacity
+                style={styles.confirmButton}
+                onPress={copyToClipboard}
+              >
+                <LinearGradient
+                  colors={['#FF512F', '#DD2476']}
+                  style={styles.cofirmButtonBackground}>
+                  <Text style={styles.confirmButtonText}>COPY CODE UNIQUE</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+              {/* button copy code unique */}
 
-            <TouchableOpacity
-              style={styles.confirmButton}
-              onPress={handleCloseConfirmationModal}
-            >
-              <Text style={styles.confirmButtonText}>CLOSE</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.confirmButton}
+                onPress={handleCloseConfirmationModal}
+              >
+                <LinearGradient
+                  colors={['#007BFF', '#00BFFF']}
+                  style={styles.cofirmButtonBackground}>
+                  <Text style={styles.confirmButtonText}>CLOSE</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </Modal>
+        </Modal>
+      )}
     </View>
   );
 };
@@ -289,12 +373,12 @@ const styles = StyleSheet.create({
   input: {
     height: h(6),
     borderWidth: 3,
-    borderColor: 'gray',
+    borderColor: 'orange',
     borderRadius: w(5),
     paddingHorizontal: w(4),
     fontSize: w(4.5),
+    fontWeight: 'bold',
     color: 'black',
-
   },
   enterCodeButton: {
     backgroundColor: '#4CAF50',
@@ -352,11 +436,9 @@ const styles = StyleSheet.create({
     marginBottom: h(2),
   },
   confirmButton: {
-    backgroundColor: '#1e90ff',
-    paddingVertical: h(2.5),
-    paddingHorizontal: w(5),
-    borderRadius: w(5),
     marginTop: h(2),
+    borderRadius: w(2),
+    overflow: 'hidden',
   },
   confirmButtonText: {
     color: 'white',
@@ -374,6 +456,12 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: w(4.5),
   },
+  cofirmButtonBackground: {
+    paddingVertical: h(2),
+    paddingHorizontal: w(5),
+    alignItems: 'center',
+  },
+
 });
 
 export default Quiz;

@@ -5,6 +5,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { widthPercentageToDP as w, heightPercentageToDP as h } from '../../../responsive';
 import LinearGradient from 'react-native-linear-gradient';
 import axios from 'axios';
+import { setItem } from '../../../utils/asyncStorate';
 
 const Question = () => {
   const route = useRoute();
@@ -18,16 +19,15 @@ const Question = () => {
   const [selectedAnswers, setSelectedAnswers] = useState([]);
   const [idCalgot, setIdCalgot] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(true);
-  const [Stambuk,setStambuk] = useState(0);
 
-  console.log('stambuk dengan code ada ',Stambuk);
-  console.log("id calgotnya : " ,idCalgot);
+  console.log("id calgotnya : ", idCalgot);
 
   useEffect(() => {
     const soal = route.params?.soal;
-    const stambuk = route.params?.stambuk;
-    if (stambuk != null && stambuk != undefined) {
-      setStambuk(stambuk);
+    const idCalgotReceive = route.params?.idCalgotSend;
+    console.log('id calgot receive ', idCalgotReceive);
+    if (idCalgotReceive != null && idCalgotReceive != undefined) {
+      setIdCalgot(idCalgotReceive);
     }
     if (soal) {
       const parsedQuestions = soal.map(item => ({
@@ -39,7 +39,7 @@ const Question = () => {
       setQuestions(shuffleArray(parsedQuestions));
     }
   }, [route.params?.soal]);
-  
+
   useEffect(() => {
     let timer;
     if (!isModalVisible) {
@@ -56,7 +56,7 @@ const Question = () => {
                 {
                   text: 'OK',
                   onPress: () => {
-                    handleQuizCompletion(); 
+                    handleQuizCompletion();
                   },
                 },
               ],
@@ -125,8 +125,8 @@ const Question = () => {
 
   const handleQuizCompletion = async () => {
     try {
-      UpdateScore();
-      navigation.replace('Quiz', { lastscorecode: score,stambuksend : Stambuk });
+      await UpdateScore();
+      navigation.replace('Quiz', { lastscorecode: score, disable: false });
     } catch (error) {
       console.error(error);
       Alert.alert('Error', 'An error occurred while updating the score.');
@@ -147,8 +147,9 @@ const Question = () => {
     }
   };
 
-  const closeModalAndStartTimer = () => {
-    setIsModalVisible(false); // Tutup modal dan mulai timer
+  const closeModalAndStartTimer = async () => {
+    setIsModalVisible(false);
+    await setItem('disable', JSON.stringify(false));
   };
 
   return (
@@ -164,12 +165,16 @@ const Question = () => {
         visible={isModalVisible}
         animationType="slide"
         transparent={true}
-        onRequestClose={() => {}}>
+        onRequestClose={() => { }}>
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Petunjuk Pengerjaan Soal</Text>
             <Text style={styles.modalText}>
-              Jawab setiap pertanyaan dengan teliti. Waktu pengerjaan dibatasi selama 30 detik untuk setiap soal.
+              1. Quiz Play With Code hanya bisa dikerjakan sekali.{'\n'}
+              2. Terdapat 20 pertanyaan yang harus dikerjakan.{'\n'}
+              3. Tekan tombol "Next" untuk melanjutkan ke pertanyaan berikutnya.{'\n'}
+              4. Waktu pengerjaan adalah 15 Menit. Pastikan Anda menjawab sebelum waktu habis.{'\n'}
+              5. Setelah selesai, skor Anda akan ditampilkan.
             </Text>
             <TouchableOpacity
               style={styles.closeButton}
@@ -205,8 +210,8 @@ const Question = () => {
               <LinearGradient
                 colors={
                   selectedAnswer === index
-                    ? ['#FFD700', '#FFA500', '#FF4500'] 
-                    : ['#4c669f', '#3b5998', '#192f6a'] 
+                    ? ['#FFD700', '#FFA500', '#FF4500']
+                    : ['#4c669f', '#3b5998', '#192f6a']
                 }
                 style={styles.optionBackground}>
                 <Text style={styles.optionText}>{option}</Text>
@@ -320,13 +325,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: h(2),
     textAlign: 'center',
-    color : 'black',
+    color: 'black',
   },
   modalText: {
     fontSize: w(4),
     marginBottom: h(4),
     textAlign: 'left',
-    color : 'black',
+    color: 'black',
   },
   closeButton: {
     width: '100%',
@@ -346,9 +351,9 @@ const styles = StyleSheet.create({
   modalOverlay: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',  
-    backgroundColor: 'rgba(0, 0, 0, 0.7)', 
-  },  
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+  },
 });
 
 export default Question;
