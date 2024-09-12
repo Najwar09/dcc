@@ -16,7 +16,7 @@ import RenderHtml from 'react-native-render-html';
 const formatDate = createdAt => {
   const options = {month: 'long', day: 'numeric', year: 'numeric'};
   const date = new Date(createdAt);
-  return date.toLocaleDateString('en-US', options);
+  return date.toLocaleDateString('id-ID', options);
 };
 
 const ArticleDetail = ({route}) => {

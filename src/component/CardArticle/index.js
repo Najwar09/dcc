@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const formatDate = createdAt => {
   const options = {month: 'long', day: 'numeric', year: 'numeric'};
   const date = new Date(createdAt);
-  return date.toLocaleDateString('en-US', options);
+  return date.toLocaleDateString('id-ID', options);
 };
 
 const CardArticle = ({title, imageUri, onPress,name,time}) => {
