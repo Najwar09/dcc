@@ -12,7 +12,8 @@ import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 const Article = () => {
   const [dataArticle, setDataArticle] = useState([]);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
   const navigation = useNavigation();
 
   const GetDataArticle = async () => {
@@ -32,6 +33,11 @@ const Article = () => {
     GetDataArticle();
   }, []);
 
+  // Fungsi untuk memfilter artikel berdasarkan pencarian
+  const filteredArticles = dataArticle.filter(article =>
+    article.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <>
       <View style={{flex: 1, alignItems: 'center', backgroundColor: '#fff'}}>
@@ -40,13 +46,14 @@ const Article = () => {
             style={styles.input}
             placeholder="Telusuri"
             placeholderTextColor="#666"
+            value={searchQuery}
+            onChangeText={text => setSearchQuery(text)}
           />
           <Icon name="search" size={20} color="#666" style={styles.icon} />
         </View>
 
         <ScrollView showsVerticalScrollIndicator={false}>
           {loading ? (
-            // Menampilkan skeleton loading jika data masih dalam proses pengambilan
             <SkeletonPlaceholder>
               <View style={styles.skeletonCard} />
               <View style={styles.skeletonCard} />
@@ -56,18 +63,20 @@ const Article = () => {
               <View style={styles.skeletonCard} />
             </SkeletonPlaceholder>
           ) : (
-            // Menampilkan data setelah loading selesai
-            dataArticle &&
-            dataArticle.map(article => (
-              <CardArticle
-                title={article.title}
-                imageUri={article.image}
-                name={article.category.name}
-                time={article.created_at}
-                key={article.id}
-                onPress={() => navigation.navigate('ArticleDetails', {article})}
-              />
-            ))
+            filteredArticles.length > 0 ? (
+              filteredArticles.map(article => (
+                <CardArticle
+                  title={article.title}
+                  imageUri={article.image}
+                  name={article.category.name}
+                  time={article.created_at}
+                  key={article.id}
+                  onPress={() => navigation.navigate('ArticleDetails', {article})}
+                />
+              ))
+            ) : (
+              <Text style={styles.noResultsText}>Artikel tidak ditemukan</Text>
+            )
           )}
         </ScrollView>
       </View>
@@ -116,5 +125,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginVertical: h(1.5),
     alignSelf: 'center',
+  },
+  noResultsText: {
+    textAlign: 'center',
+    marginTop: h(2),
+    fontSize: 16,
+    color: '#666',
   },
 });
