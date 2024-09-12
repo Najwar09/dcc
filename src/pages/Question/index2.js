@@ -35,7 +35,7 @@ const Question2 = () => {
   const GetData = async () => {
     try {
       const res = await axios.get(
-        'https://dcc-testing.campa-bima.online/public/api/quiz_without_code',
+        'https://api-mobile.dcc-dp.com/api/quiz_without_code',
       );
       console.log(res.data);
       const soal = res.data.data;

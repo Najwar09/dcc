@@ -8,10 +8,12 @@ import {
 } from '../../../responsive';
 import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder'; 
 
 const Article = () => {
   const [dataArticle, setDataArticle] = useState([]);
-  const navigation = useNavigation(); // Tambahkan ini
+  const [loading, setLoading] = useState(true); 
+  const navigation = useNavigation();
 
   const GetDataArticle = async () => {
     try {
@@ -21,6 +23,8 @@ const Article = () => {
       setDataArticle(res.data.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -30,7 +34,7 @@ const Article = () => {
 
   return (
     <>
-      <View style={{flex: 1, alignItems: 'center',backgroundColor: '#fff',}}>
+      <View style={{flex: 1, alignItems: 'center', backgroundColor: '#fff'}}>
         <View style={styles.container}>
           <TextInput
             style={styles.input}
@@ -40,8 +44,20 @@ const Article = () => {
           <Icon name="search" size={20} color="#666" style={styles.icon} />
         </View>
 
-        <ScrollView showsVerticalScrollIndicator={false} style={{}}>
-          {dataArticle &&
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {loading ? (
+            // Menampilkan skeleton loading jika data masih dalam proses pengambilan
+            <SkeletonPlaceholder>
+              <View style={styles.skeletonCard} />
+              <View style={styles.skeletonCard} />
+              <View style={styles.skeletonCard} />
+              <View style={styles.skeletonCard} />
+              <View style={styles.skeletonCard} />
+              <View style={styles.skeletonCard} />
+            </SkeletonPlaceholder>
+          ) : (
+            // Menampilkan data setelah loading selesai
+            dataArticle &&
             dataArticle.map(article => (
               <CardArticle
                 title={article.title}
@@ -51,7 +67,8 @@ const Article = () => {
                 key={article.id}
                 onPress={() => navigation.navigate('ArticleDetails', {article})}
               />
-            ))}
+            ))
+          )}
         </ScrollView>
       </View>
     </>
@@ -78,7 +95,7 @@ const styles = StyleSheet.create({
     elevation: 3,
     width: w(90),
     height: h(6),
-    position: 'relative', // Ditambahkan untuk membuat icon absolute bekerja dalam container
+    position: 'relative',
   },
   input: {
     flex: 1,
@@ -91,6 +108,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 15,
     top: '50%',
-    transform: [{translateY: -10}], // Menyesuaikan posisi vertikal ikon
+    transform: [{translateY: -10}],
+  },
+  skeletonCard: {
+    width: w(90),
+    height: h(15),
+    borderRadius: 10,
+    marginVertical: h(1.5),
+    alignSelf: 'center',
   },
 });

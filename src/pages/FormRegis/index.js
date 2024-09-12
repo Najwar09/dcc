@@ -28,8 +28,8 @@ import axios from 'axios';
 const FormRegis = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const cekStambuk = route.params?.dataStb;
-  // console.log(cekStambuk);
+  const cekStambuk = route.params?.newNim;
+  console.log(cekStambuk);
 
   const [currentForm, setCurrentForm] = useState(1);
 
@@ -551,7 +551,7 @@ const FormRegis = () => {
                 <Picker.Item
                   label="--Pilih Agama Anda--"
                   value=""
-                  enabled={false}
+                  // enabled={false}
                   style={{color: 'black'}}
                 />
                 <Picker.Item label="Islam" value="I" style={{color: 'black'}} />

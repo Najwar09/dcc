@@ -79,7 +79,7 @@ const Question = () => {
 
   const GetDatasAll = async (kode_unik) => {
     try {
-      const response = await axios.get('https://dcc-testing.campa-bima.online/public/api/calgot');
+      const response = await axios.get('https://api-mobile.dcc-dp.com/api/calgot');
       const data = response.data.data;
       const datacalgot = data.find(item => item.kode_unik === kode_unik);
       if (datacalgot) {
@@ -138,7 +138,7 @@ const Question = () => {
       console.log('Data yang akan dikirim:', { answer: selectedAnswers });
       try {
         await axios.post(
-          `https://dcc-testing.campa-bima.online/public/api/calgot/${idCalgot}/quiz/submit`,
+          `https://api-mobile.dcc-dp.com/api/calgot/${idCalgot}/quiz/submit`,
           { answer: selectedAnswers },
         );
       } catch (error) {

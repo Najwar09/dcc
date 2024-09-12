@@ -23,6 +23,8 @@ import playwithoutcode from '../../assets/icons/playwithoutcode.png';
 import playwithcode from '../../assets/icons/playwithcode.png';
 import { getItem } from '../../../utils/asyncStorate';
 import LinearGradient from 'react-native-linear-gradient';
+import FastImage from 'react-native-fast-image';
+
 
 const Quiz = () => {
   const route = useRoute();
@@ -52,7 +54,7 @@ const Quiz = () => {
       try {
         const disableData = await getItem('disable');
         console.log('disable event', disableData);
-        // setButtonVisible2(disable);
+        setButtonVisible2(disable);
       } catch (error) {
         console.error('Gagal mengambil data dari AsyncStorage:', error);
       }
@@ -84,7 +86,7 @@ const Quiz = () => {
     setLoading(true);
     try {
       const res = await axios.post(
-        'https://dcc-testing.campa-bima.online/public/api/cek-kode-unik',
+        'https://api-mobile.dcc-dp.com/api/cek-kode-unik',
         { kode_unik: inputCode },
       );
       const quizData = res.data.quizzes;
@@ -110,7 +112,7 @@ const Quiz = () => {
   const getDataCalgot = async () => {
     try {
       const res = await axios.post(
-        'https://dcc-testing.campa-bima.online/public/api/cek-stambuk',
+        'https://api-mobile.dcc-dp.com/api/cek-stambuk',
         { stambuk: nim },
       );
       const data = res.data;
@@ -132,7 +134,7 @@ const Quiz = () => {
   const getDataActive = async () => {
     try {
       const res = await axios.get(
-        'https://dcc-testing.campa-bima.online/public/api/is_active_event',
+        'https://api-mobile.dcc-dp.com/api/is_active_event',
       );
       const data = res.data.status;
       console.log('data active : ', data);
@@ -172,13 +174,16 @@ const Quiz = () => {
 
         {/* play without code */}
         <TouchableOpacity
-          // style={styles.button}
           onPress={() => navigation.replace('Question2', { idCalgot: idCalgot })}
         >
-          <Image source={playwithoutcode} style={{ width: 200, height: 100, }} resizeMode='contain' />
-          {/* <Text style={styles.buttonText}>PLAY WITHOUT CODE</Text> */}
+          <FastImage
+            source={playwithoutcode}
+            style={{ width: 200, height: 100 }}
+            resizeMode={FastImage.resizeMode.contain}
+          />
         </TouchableOpacity>
 
+        {/* play with code */}
         {/* play with code */}
         {buttonVisible && buttonVisible2 && (
           <View style={styles.inputContainer}>
@@ -191,15 +196,17 @@ const Quiz = () => {
               textAlign="center"
             />
             <TouchableOpacity
-              // style={styles.enterCodeButton}
               onPress={handleEnterCode}
               disabled={loading}
             >
               {loading ? (
                 <ActivityIndicator size="small" color="#fff" />
               ) : (
-                // <Text style={styles.enterCodeButtonText}>PLAY WITH CODE</Text>
-                <Image source={playwithcode} style={{ width: 180, height: 100, marginLeft: w(5), }} resizeMode='contain' />
+                <FastImage
+                  source={playwithcode}
+                  style={{ width: 180, height: 100, marginLeft: w(5) }}
+                  resizeMode={FastImage.resizeMode.contain}
+                />
               )}
             </TouchableOpacity>
           </View>
