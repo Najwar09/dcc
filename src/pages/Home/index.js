@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,10 +7,11 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import StickyHeader from '../../component/Header';
 import ImageSwapper from '../../component/ImageSwapper';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
@@ -26,31 +27,32 @@ import Quiz from '../../assets/icons/Quiz.png';
 import Content from '../../assets/images/konten.png';
 import Game from '../../assets/icons/newspaper.png';
 
-import {removeItem} from '../../../utils/asyncStorate';
+import { removeItem } from '../../../utils/asyncStorate';
 import axios from 'axios';
-
 
 const Home = () => {
   const navigation = useNavigation();
   const [showLottie, setShowLottie] = useState(true);
   const [goldBoxIndex, setGoldBoxIndex] = useState(3);
   const [dataArticle, setDataArticle] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // card article
-  const Artikel = ({title, description, imageUri, onPress}) => (
+  const Artikel = ({ title, description, imageUri, onPress }) => (
     <TouchableOpacity style={styles.card} onPress={onPress}>
       <View style={styles.imageContainer}>
-        <Image source={{uri: imageUri}} style={styles.image} />
+        <Image source={{ uri: imageUri }} style={styles.image} />
       </View>
       <View style={styles.articleTextContainer}>
-        <Text style={styles.articleTitle}>{title}</Text>
-        <Text style={styles.articleDescription} numberOfLines={2}>
-          {description}
+        <Text style={styles.articleTitle} numberOfLines={2} ellipsizeMode='tail'>
+          {title}
         </Text>
+        {/* <Text style={styles.articleDescription} numberOfLines={3} ellipsizeMode='tail'>
+          {description}
+        </Text> */}
       </View>
     </TouchableOpacity>
   );
-
 
   const Reset = async () => {
     await removeItem('onboarded');
@@ -63,7 +65,7 @@ const Home = () => {
       label: 'Article',
       action: () => navigation.navigate('Article'),
     },
-    {icon: Quiz, label: 'Quiz', action: () => navigation.navigate('Quiz')},
+    { icon: Quiz, label: 'Quiz', action: () => navigation.navigate('Quiz') },
     {
       icon: Dcc,
       label: 'About Us',
@@ -78,12 +80,12 @@ const Home = () => {
 
   const GetDataArticle = async () => {
     try {
-      const res = await axios.get(
-        'https://dcc-testing.campa-bima.online/public/api/artikel',
-      );
-      setDataArticle(res.data.data);
+      const res = await axios.get('https://api-mobile.dcc-dp.com/api/artikel');
+      setDataArticle(res.data.data.slice(0, 5));
+      setLoading(false); 
     } catch (error) {
       console.log(error);
+      setLoading(false); 
     }
   };
 
@@ -94,18 +96,10 @@ const Home = () => {
   return (
     <>
       {/* card header */}
-      <StickyHeader/>
+      <StickyHeader />
       {/* end card header */}
 
       <View style={styles.container}>
-        {/* <LottieView
-          resizeMode="center"
-          source={require('../../assets/animation/tet.json')}
-          autoPlay
-          loop
-          style={styles.backgroundLottie}
-        /> */}
-
         <ScrollView
           style={styles.scrollContainer}
           showsVerticalScrollIndicator={false}>
@@ -127,7 +121,7 @@ const Home = () => {
                 key={index}
                 style={[
                   styles.box,
-                  index === goldBoxIndex ? {backgroundColor: '#FFD700'} : null,
+                  index === goldBoxIndex ? { backgroundColor: '#FFD700' } : null,
                 ]}
                 onPress={item.action}>
                 <Image source={item.icon} style={styles.menu} />
@@ -142,20 +136,61 @@ const Home = () => {
             <Text style={styles.sectionTitle}>Latest Post</Text>
           </View>
 
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.articleContainer}>
-            {dataArticle.map(article => (
-              <Artikel
-                imageUri={article.image}
-                key={article.id}
-                title={article.title}
-                description={article.description}
-                onPress={() => navigation.navigate('ArticleDetails', {article})}
-              />
-            ))}
-          </ScrollView>
+          {loading ? (
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.articleContainer}>
+              <SkeletonPlaceholder>
+                <View style={styles.card}>
+                  <View style={styles.imageContainer}>
+                    <View style={styles.skeletonImage} />
+                  </View>
+                  <View style={styles.articleTextContainer}>
+                    <View style={styles.skeletonTitle} />
+                    <View style={styles.skeletonDescription} />
+                  </View>
+                </View>
+              </SkeletonPlaceholder>
+              <SkeletonPlaceholder>
+                <View style={styles.card}>
+                  <View style={styles.imageContainer}>
+                    <View style={styles.skeletonImage} />
+                  </View>
+                  <View style={styles.articleTextContainer}>
+                    <View style={styles.skeletonTitle} />
+                    <View style={styles.skeletonDescription} />
+                  </View>
+                </View>
+              </SkeletonPlaceholder>
+              <SkeletonPlaceholder>
+                <View style={styles.card}>
+                  <View style={styles.imageContainer}>
+                    <View style={styles.skeletonImage} />
+                  </View>
+                  <View style={styles.articleTextContainer}>
+                    <View style={styles.skeletonTitle} />
+                    <View style={styles.skeletonDescription} />
+                  </View>
+                </View>
+              </SkeletonPlaceholder>
+            </ScrollView>
+          ) : (
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.articleContainer}>
+              {dataArticle.map(article => (
+                <Artikel
+                  imageUri={article.image}
+                  key={article.id}
+                  title={article.title}
+                  description={article.description}
+                  onPress={() => navigation.navigate('ArticleDetails', { article })}
+                />
+              ))}
+            </ScrollView>
+          )}
 
           {showLottie && (
             <LottieView
@@ -177,17 +212,13 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: 'orange',
   },
   scrollContainer: {
     flex: 1,
-    // padding: w(5),
     paddingHorizontal: w(5),
-    // backgroundColor: 'red',
   },
   swapperContainer: {
     alignItems: 'center',
-    // marginTop: w(-5.5),
   },
   divider: {
     width: w(200),
@@ -225,7 +256,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     letterSpacing: 1,
     textShadowColor: 'rgba(0, 0, 0, 0.25)',
-    textShadowOffset: {width: 1, height: 1},
+    textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
   },
   box: {
@@ -252,10 +283,9 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
     backgroundColor: '#FFF',
+    overflow: 'hidden',
   },
   imageContainer: {
-    // width: '200%',
-    // height: '70%',
     borderTopLeftRadius: w(5),
     borderTopRightRadius: w(5),
     overflow: 'hidden',
@@ -266,16 +296,20 @@ const styles = StyleSheet.create({
     height: w(25),
   },
   articleTextContainer: {
-    padding: w(2),
+    padding: w(1),
+    flex: 1,
   },
   articleTitle: {
     fontSize: w(4),
     fontWeight: 'bold',
     color: '#333',
+    flexShrink: 1,
+    marginBottom: h(1),
   },
   articleDescription: {
     fontSize: w(3),
     color: '#777',
+    flexShrink: 1,
   },
   articleContainer: {
     paddingVertical: w(2),
@@ -287,8 +321,24 @@ const styles = StyleSheet.create({
     left: w(40),
     width: w(100),
     height: w(100),
-    transform: [{translateX: -w(50)}, {translateY: -w(50)}],
+    transform: [{ translateX: -w(50) }, { translateY: -w(50) }],
     zIndex: 1,
-    // backgroundColor: 'red',
+  },
+  skeletonImage: {
+    width: '100%',
+    height: '80%',
+    borderRadius: w(5),
+  },
+  skeletonTitle: {
+    marginTop: w(2),
+    width: '80%',
+    height: w(4),
+    borderRadius: w(2),
+  },
+  skeletonDescription: {
+    marginTop: w(2),
+    width: '60%',
+    height: w(3),
+    borderRadius: w(2),
   },
 });
